@@ -22,7 +22,7 @@ steps:
  - task: UsePythonVersion@0
    inputs:
      versionSpec: '3.10'
-   architecture: 'x64'
+     architecture: 'x64'
 
  - bash: |
      pip install -r llama-requirements.txt
