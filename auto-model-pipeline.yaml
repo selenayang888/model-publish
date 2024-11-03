@@ -50,4 +50,4 @@ steps:
 
    displayName: "Convert Huggingface model to ONNX model"
      
-   workingDirectory: $(Build.BinariesDirectory)
+   workingDirectory: $(Build.SourcesDirectory)
