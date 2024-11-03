@@ -40,6 +40,13 @@ steps:
 
    displayName: "Authentication to Huggingface repo" 
 
+ - bash: |
+    pip list 
+   displayName: "dump pip list"
+
+ #- bash: |
+ #   nvidia-smi
+ #  displayName: "dump nvidia-smi"
 
  - script: | 
 
