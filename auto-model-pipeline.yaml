@@ -18,6 +18,12 @@ pool:
 
  vmImage: "ubuntu-latest" 
 
+parameters:
+ - name: model_name
+   displayName: mode name on huggingface website
+   type: string
+   default: meta-llama/Llama-3.2-3B-Instruct
+
 steps:
  - task: UsePythonVersion@0
    inputs:
