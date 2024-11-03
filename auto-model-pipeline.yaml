@@ -14,16 +14,13 @@ schedules:
 
    always: true 
 
-pool: 
-
- vmImage: "ubuntu-latest" 
-
 parameters:
  - name: model_name
    displayName: mode name on huggingface website
    type: string
    default: meta-llama/Llama-3.2-3B-Instruct
 
+pool: onnxruntime-Linux-GPU-T4
 steps:
  - task: UsePythonVersion@0
    inputs:
@@ -46,7 +43,7 @@ steps:
 
  - script: | 
 
-     python $(Build.SourcesDirectory)/llama_model_builder.py --model_name '${{ parameters.model_name }}'
+     python $(Build.SourcesDirectory)/llama_model_builder.py --model_name '${{ parameters.model_name }}' --output_dir '$(Build.BinariesDirectory)'
 
    displayName: "Convert Huggingface model to ONNX model"
      
