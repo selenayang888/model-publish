@@ -59,6 +59,7 @@ steps:
 
  - script: | 
 
-     az login --identity --username $(az_client_id)
+     az ml data create --name llama32-3b-instruct-for-test-only --version 1 --path ./model --registry-name Genai-model-registry --description "llama3.2-3b-instruct-test-only from pipeline"
 
-   displayName: "az login"
+   displayName: "upload model to AzureML registry"
+   workingDirectory: $(Build.BinariesDirectory)/mnt/vss/_work/1/b/models/'${{ parameters.model_name }}'/output_model 
