@@ -55,3 +55,10 @@ steps:
    displayName: "Convert Huggingface model to ONNX model"
      
    workingDirectory: $(Build.SourcesDirectory)
+
+
+ - script: | 
+
+     az login --identity --username $(az_client_id)
+
+   displayName: "az login"
