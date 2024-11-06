@@ -59,7 +59,7 @@ steps:
  - task: AzureCLI@2
    displayName: 'install az ml'
    inputs:
-     azureSubscription: AIInfraBuildOnnxRuntimeOSS
+     azureSubscription: AIInfraBuild
      scriptLocation: inlineScript
      scriptType: bash
      inlineScript: |
