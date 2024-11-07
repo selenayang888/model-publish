@@ -70,6 +70,6 @@ steps:
      scriptLocation: inlineScript
      scriptType: bash
      inlineScript: |
-       az ml data create --name llama32-3b-instruct-for-test-only --version 1 --path ./model --registry-name Genai-model-registry --description "llama3.2-3b-instruct-test-only from pipeline"
-   workingDirectory: $(Build.BinariesDirectory)/models/${{ parameters.model_name }}/output_model 
+       az ml data create --name llama32-3b-instruct-for-test-only --version 1 --path ./models/${{ parameters.model_name }}/output_model/model --registry-name Genai-model-registry --description "llama3.2-3b-instruct-test-only from pipeline"
+   workingDirectory: $(Build.BinariesDirectory) 
    
