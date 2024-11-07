@@ -61,7 +61,6 @@ steps:
      curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash 
      az extension add -n ml -y
    displayName: "install az ml"
-   workingDirectory: $(Build.BinariesDirectory)
 
  - task: AzureCLI@2
    displayName: 'upload model to AzureML registry'
@@ -70,6 +69,6 @@ steps:
      scriptLocation: inlineScript
      scriptType: bash
      inlineScript: |
+       cd $(Build.BinariesDirectory)
        az ml data create --name llama32-3b-instruct-for-test-only --version 1 --path ./models/${{ parameters.model_name }}/output_model/model --registry-name Genai-model-registry --description "llama3.2-3b-instruct-test-only from pipeline"
-   workingDirectory: $(Build.BinariesDirectory) 
    
