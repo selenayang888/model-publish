@@ -79,6 +79,11 @@ steps:
  #- bash: |
  #   nvidia-smi
  #  displayName: "dump nvidia-smi"
+ - bash: |
+     pip install fastapi
+     pip install uvicorn
+
+   displayName: install fastapi packages
 
  - script: | 
 
@@ -87,6 +92,7 @@ steps:
    displayName: "Convert Huggingface model to ONNX model"
      
    workingDirectory: $(Build.SourcesDirectory)
+
 
  - script: | 
 
