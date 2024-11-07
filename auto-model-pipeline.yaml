@@ -33,6 +33,12 @@ steps:
    displayName: install the necessary packages
    workingDirectory: $(Build.SourcesDirectory)
 
+ - script: pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge
+   displayName: 'upgrade azure cli'
+
+ - script: az --version
+   displayName: 'Show Azure CLI version'
+
  - task: AzureCLI@2
    displayName: 'diagnosis azcli 1'
    inputs:
@@ -54,11 +60,6 @@ steps:
        az extension add -n ml -y
        az extension list
        az --version
-
- - script: |
-     which az
-     az --version
-   displayName: "diagnosis 1"
 
  - script: |
      az extension add -n ml -y
@@ -101,5 +102,5 @@ steps:
      scriptType: bash
      inlineScript: |
        cd $(Build.BinariesDirectory)
-       az ml data create --name llama32-3b-instruct-for-test-only --version 1 --path ./models/${{ parameters.model_name }}/output_model/model --registry-name Genai-model-registry --description "llama3.2-3b-instruct-test-only from pipeline"
+       az ml data create --name llama32-3b-instruct-for-test-only --version 1 --path './models/${{ parameters.model_name }}/output_model/model' --registry-name Genai-model-registry --description "llama3.2-3b-instruct-test-only from pipeline"
    
