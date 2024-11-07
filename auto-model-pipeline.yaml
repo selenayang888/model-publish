@@ -82,25 +82,27 @@ steps:
 
  - script: | 
 
-     python $(Build.SourcesDirectory)/llama_model_builder.py --model_name '${{ parameters.model_name }}' --output_dir '$(Build.BinariesDirectory)'
+     python $(Build.SourcesDirectory)/llama_model_builder.py --model_name '${{ parameters.model_name }}' --output_dir '$(Build.SourcesDirectory)'
 
    displayName: "Convert Huggingface model to ONNX model"
      
    workingDirectory: $(Build.SourcesDirectory)
 
+ - script: | 
 
-#  - script: | 
-#      curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash 
-#      az extension add -n ml -y
-#    displayName: "install az ml"
+     main:app --reload
 
- - task: AzureCLI@2
-   displayName: 'upload model to AzureML registry'
-   inputs:
-     azureSubscription: AIInfraBuild
-     scriptLocation: inlineScript
-     scriptType: bash
-     inlineScript: |
-       cd $(Build.BinariesDirectory)
-       az ml data create --name llama32-3b-instruct-for-test-only --version 1 --path './models/${{ parameters.model_name }}/output_model/model' --registry-name Genai-model-registry --description "llama3.2-3b-instruct-test-only from pipeline"
+   displayName: "Start model endpoint"
+     
+   workingDirectory: $(Build.SourcesDirectory)
+
+# - task: AzureCLI@2
+#   displayName: 'upload model to AzureML registry'
+#   inputs:
+#     azureSubscription: AIInfraBuild
+#     scriptLocation: inlineScript
+#     scriptType: bash
+#     inlineScript: |
+#       cd $(Build.BinariesDirectory)
+#       az ml data create --name llama32-3b-instruct-for-test-only --version 1 --path './models/${{ parameters.model_name }}/output_model/model' --registry-name Genai-model-registry --description "llama3.2-3b-instruct-test-only from pipeline"
    
