@@ -39,9 +39,8 @@ steps:
    displayName: "diagnosis 1"
 
  - script: |
-     az ml --version
-   displayName: "diagnosis 2"
-
+     az extension add -n ml -y
+   displayName: "az install ml extension"
 
  - bash: |
      echo Authenticate with Huggingface repository 
