@@ -33,6 +33,28 @@ steps:
    displayName: install the necessary packages
    workingDirectory: $(Build.SourcesDirectory)
 
+ - task: AzureCLI@2
+   displayName: 'diagnosis azcli 1'
+   inputs:
+     azureSubscription: AIInfraBuild
+     scriptLocation: inlineScript
+     scriptType: bash
+     inlineScript: |
+       which az
+       az --version
+       az extension list
+
+ - task: AzureCLI@2
+   displayName: 'diagnosis azcli 2'
+   inputs:
+     azureSubscription: AIInfraBuild
+     scriptLocation: inlineScript
+     scriptType: bash
+     inlineScript: |
+       az extension add -n ml -y
+       az extension list
+       az --version
+
  - script: |
      which az
      az --version
