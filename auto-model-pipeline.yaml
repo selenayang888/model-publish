@@ -33,6 +33,16 @@ steps:
    displayName: install the necessary packages
    workingDirectory: $(Build.SourcesDirectory)
 
+ - script: |
+     which az
+     az --version
+   displayName: "diagnosis 1"
+
+ - script: |
+     az ml --version
+   displayName: "diagnosis 2"
+
+
  - bash: |
      echo Authenticate with Huggingface repository 
 
@@ -57,10 +67,10 @@ steps:
    workingDirectory: $(Build.SourcesDirectory)
 
 
- - script: | 
-     curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash 
-     az extension add -n ml -y
-   displayName: "install az ml"
+#  - script: | 
+#      curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash 
+#      az extension add -n ml -y
+#    displayName: "install az ml"
 
  - task: AzureCLI@2
    displayName: 'upload model to AzureML registry'
