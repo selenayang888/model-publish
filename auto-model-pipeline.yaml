@@ -91,6 +91,7 @@ steps:
  - bash: |
      pip install fastapi
      pip install uvicorn
+     pip install onnxruntime-genai-cuda
 
    displayName: install fastapi packages
 
