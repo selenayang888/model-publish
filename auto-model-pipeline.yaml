@@ -50,16 +50,6 @@ steps:
        az --version
        az extension list
 
- - task: AzureCLI@2
-   displayName: 'diagnosis azcli 2'
-   inputs:
-     azureSubscription: AIInfraBuild
-     scriptLocation: inlineScript
-     scriptType: bash
-     inlineScript: |
-       az extension add -n ml -y
-       az extension list
-       az --version
 
  - script: |
      az extension add -n ml -y
@@ -88,28 +78,28 @@ steps:
      
    workingDirectory: $(Build.SourcesDirectory)
 
- - bash: |
-     pip install fastapi
-     pip install uvicorn
-     pip install onnxruntime-genai-cuda
 
-   displayName: install fastapi packages
+ - task: AzureCLI@2
+   displayName: 'upload model to AzureML registry'
+   inputs:
+     azureSubscription: AIInfraBuild
+     scriptLocation: inlineScript
+     scriptType: bash
+     inlineScript: |
+       cd $(Build.BinariesDirectory)
+       az ml data create --name llama32-3b-instruct-for-test-only --version 1 --path './models/${{ parameters.model_name }}/output_model/model' --registry-name Genai-model-registry --description "llama3.2-3b-instruct-test-only from pipeline"
 
- - script: | 
+#- bash: |
+ #    pip install fastapi
+ #    pip install uvicorn
+ #    pip install onnxruntime-genai-cuda
 
-     uvicorn main:app --reload
+ #  displayName: install fastapi packages
 
-   displayName: "Start model endpoint"
+ #- script: | 
+
+ #    uvicorn main:app --reload
+
+ #  displayName: "Start model endpoint"
      
-   workingDirectory: $(Build.SourcesDirectory)
-
-# - task: AzureCLI@2
-#   displayName: 'upload model to AzureML registry'
-#   inputs:
-#     azureSubscription: AIInfraBuild
-#     scriptLocation: inlineScript
-#     scriptType: bash
-#     inlineScript: |
-#       cd $(Build.BinariesDirectory)
-#       az ml data create --name llama32-3b-instruct-for-test-only --version 1 --path './models/${{ parameters.model_name }}/output_model/model' --registry-name Genai-model-registry --description "llama3.2-3b-instruct-test-only from pipeline"
-   
+ #  workingDirectory: $(Build.SourcesDirectory)
