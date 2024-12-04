@@ -1,5 +1,5 @@
 
-olive-ai[gpu]==0.7.0
+olive-ai[gpu]
 onnxruntime-gpu==1.19.2
 onnxruntime-genai-cuda==0.4.0
 datasets>=2.8.0
