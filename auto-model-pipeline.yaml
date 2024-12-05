@@ -50,6 +50,19 @@ steps:
        az --version
        az extension list
 
+ - task: AzureCLI@2
+   inputs:
+     azureSubscription: AIInfraBuild
+     scriptLocation: inlineScript
+     scriptType: bash
+     inlineScript: |
+       cd $(Build.BinariesDirectory)
+       wget https://aka.ms/downloadazcopy-v10-linux
+       tar -xvf downloadazcopy-v10-linux
+       sudo cp /azcopy_linux_amd64_10.27.1/azcopy /usr/bin/
+       azcopy
+   displayName: "az install azcopy"
+
 
  - script: |
      az extension add -n ml -y
@@ -66,17 +79,17 @@ steps:
     pip list 
    displayName: "dump pip list"
 
- - task: AzureCLI@2
-   displayName: 'upload file to AzureML registry'
-   inputs:
-     azureSubscription: AIInfraBuild
-     scriptLocation: inlineScript
-     scriptType: bash
-     inlineScript: |
-       cd $(Build.BinariesDirectory)
-       az extension add -n ml -y
-       python -c "with open('hello.txt', 'w') as f:f.write('hello world')"
-       az ml data create --name testfile --version 1 --path './hello.txt' --registry-name model-publish-test --description "test file"
+# - task: AzureCLI@2
+#   displayName: 'upload file to AzureML registry'
+#   inputs:
+#     azureSubscription: AIInfraBuild
+#     scriptLocation: inlineScript
+#     scriptType: bash
+#     inlineScript: |
+#       cd $(Build.BinariesDirectory)
+#       az extension add -n ml -y
+#       python -c "with open('hello.txt', 'w') as f:f.write('hello world')"
+#       az ml data create --name testfile --version 1 --path './hello.txt' --registry-name model-publish-test --description "test file"
 
  #- bash: |
  #   nvidia-smi
