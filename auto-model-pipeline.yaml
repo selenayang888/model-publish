@@ -79,17 +79,17 @@ steps:
     pip list 
    displayName: "dump pip list"
 
-# - task: AzureCLI@2
-#   displayName: 'upload file to AzureML registry'
-#   inputs:
-#     azureSubscription: AIInfraBuild
-#     scriptLocation: inlineScript
-#     scriptType: bash
-#     inlineScript: |
-#       cd $(Build.BinariesDirectory)
-#       az extension add -n ml -y
-#       python -c "with open('hello.txt', 'w') as f:f.write('hello world')"
-#       az ml data create --name testfile --version 1 --path './hello.txt' --registry-name model-publish-test --description "test file"
+ - task: AzureCLI@2
+   displayName: 'upload file to AzureML registry'
+   inputs:
+     azureSubscription: AIInfraBuild
+     scriptLocation: inlineScript
+     scriptType: bash
+     inlineScript: |
+       cd $(Build.BinariesDirectory)
+       az extension add -n ml -y
+       python -c "with open('hello.txt', 'w') as f:f.write('hello world')"
+       az ml data create --name testfile --version 1 --path './hello.txt' --registry-name model-publish-test --description "test file"
 
  #- bash: |
  #   nvidia-smi
@@ -124,6 +124,16 @@ steps:
        cd $(Build.BinariesDirectory)
        az extension add -n ml -y
        az ml data create --name llama32-3b-instruct-for-test-only --version 1 --path './models/${{ parameters.model_name }}/output_model/model' --registry-name model-publish-test --description "llama3.2-3b-instruct-test-only from pipeline"
+
+ - task: AzureCLI@2
+   displayName: 'upload model to Blob Storage'
+   inputs:
+     azureSubscription: AIInfraBuild
+     scriptLocation: inlineScript
+     scriptType: bash
+     inlineScript: |
+       cd $(Build.BinariesDirectory)
+       sudo azcopy copy './models/${{ parameters.model_name }}/output_model/model' 'https://sunghchostorageaccount.blob.core.windows.net/test' --recursive=true
 
 #- bash: |
  #    pip install fastapi
