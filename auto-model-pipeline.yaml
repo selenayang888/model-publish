@@ -61,7 +61,8 @@ steps:
        tar -xvf downloadazcopy-v10-linux
        azcopy --help
        azcopy -v
-   displayName: "az install azcopy"
+       sudo azcopy copy 'https://sunghchostorageaccount.blob.core.windows.net/phi-3/phi-3.5-mini-instruct/onnx/directml' './' --recursive=true
+   displayName: "az install azcopy and download from blob"
 
 
  - script: |
