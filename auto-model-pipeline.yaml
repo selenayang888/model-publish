@@ -103,6 +103,16 @@ steps:
      
    workingDirectory: $(Build.SourcesDirectory)
 
+ - task: AzureCLI@2
+   displayName: 'upload model to Blob Storage'
+   inputs:
+     azureSubscription: AIInfraBuild
+     scriptLocation: inlineScript
+     scriptType: bash
+     inlineScript: |
+       cd $(Build.BinariesDirectory)
+       azcopy copy './models/${{ parameters.model_name }}/output_model/model' 'https://sunghchostorageaccount.blob.core.windows.net/test' --recursive
+
 
  - task: AzureCLI@2
    displayName: 'upload model to AzureML registry'
