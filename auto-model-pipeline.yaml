@@ -42,7 +42,7 @@ steps:
  - task: AzureCLI@2
    displayName: 'diagnosis azcli 1'
    inputs:
-     azureSubscription: AIInfraBuild
+     azureSubscription: 'ONNX-Model-Zoo'
      scriptLocation: inlineScript
      scriptType: bash
      inlineScript: |
@@ -89,7 +89,7 @@ steps:
  - task: AzureCLI@2
    displayName: 'upload file to AzureML registry'
    inputs:
-     azureSubscription: AIInfraBuild
+     azureSubscription: 'ONNX-Model-Zoo'
      scriptLocation: inlineScript
      scriptType: bash
      inlineScript: |
@@ -113,7 +113,7 @@ steps:
  - task: AzureCLI@2
    displayName: 'upload model to Blob Storage'
    inputs:
-     azureSubscription: AIInfraBuild
+     azureSubscription: 'ONNX-Model-Zoo'
      scriptLocation: inlineScript
      scriptType: bash
      inlineScript: |
@@ -124,7 +124,7 @@ steps:
  - task: AzureCLI@2
    displayName: 'upload model to AzureML registry'
    inputs:
-     azureSubscription: AIInfraBuild
+     azureSubscription: 'ONNX-Model-Zoo'
      scriptLocation: inlineScript
      scriptType: bash
      inlineScript: |
@@ -135,7 +135,7 @@ steps:
  - task: AzureCLI@2
    displayName: 'upload model to Blob Storage'
    inputs:
-     azureSubscription: AIInfraBuild
+     azureSubscription: 'ONNX-Model-Zoo'
      scriptLocation: inlineScript
      scriptType: bash
      inlineScript: |
