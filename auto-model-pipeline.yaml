@@ -33,11 +33,11 @@ steps:
    displayName: install the necessary packages
    workingDirectory: $(Build.SourcesDirectory)
 
- - script: pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge
-   displayName: 'upgrade azure cli'
+#  - script: pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge
+#    displayName: 'upgrade azure cli'
 
- - script: az --version
-   displayName: 'Show Azure CLI version'
+#  - script: az --version
+#    displayName: 'Show Azure CLI version'
 
  - task: AzureCLI@2
    displayName: 'diagnosis azcli 1'
