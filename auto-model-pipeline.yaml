@@ -64,7 +64,7 @@ steps:
      inlineScript: |
        az account list
        cd $(Build.BinariesDirectory)
-       python -c "with open('hello.txt', 'w') as f:f.write('hello world')"s
+       python -c "with open('hello.txt', 'w') as f:f.write('hello world')"
        export AZCOPY_AUTO_LOGIN_TYPE="AZCLI"
        azcopy copy './hello.txt' 'https://onnxmodelzoo.blob.core.windows.net/dev' --recursive=true
    displayName: "az install azcopy and upload test file blob"
