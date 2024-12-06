@@ -53,6 +53,7 @@ steps:
        tar -xvf downloadazcopy-v10-linux
        azcopy --help
        azcopy -v
+       az account list
 
 
  - task: AzureCLI@2
@@ -61,6 +62,7 @@ steps:
      scriptLocation: inlineScript
      scriptType: bash
      inlineScript: |
+       az account list
        cd $(Build.BinariesDirectory)
        python -c "with open('hello.txt', 'w') as f:f.write('hello world')"s
        export AZCOPY_AUTO_LOGIN_TYPE="AZCLI"
