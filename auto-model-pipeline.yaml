@@ -20,7 +20,8 @@ parameters:
    type: string
    default: meta-llama/Llama-3.2-3B-Instruct
 
-pool: onnxruntime-Linux-GPU-T4
+#pool: onnxruntime-Linux-GPU-T4
+pool: Onnxruntime-Linux-A10-24G
 steps:
  - task: UsePythonVersion@0
    inputs:
@@ -39,6 +40,11 @@ steps:
 #  - script: az --version
 #    displayName: 'Show Azure CLI version'
 
+ - script: |
+      azcopy cp --recursive "https://lotusscus.blob.core.windows.net/models/ffmpeg/runtimes/linux-x64/native" './'
+      lss
+   displayName: 'try azcopy big model example in scripts'
+    
  - task: AzureCLI@2
    displayName: 'diagnosis azcli 1'
    inputs:
