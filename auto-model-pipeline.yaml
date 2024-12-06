@@ -27,11 +27,11 @@ steps:
      versionSpec: '3.10'
      architecture: 'x64'
 
- - bash: |
-     pip install -r llama-requirements.txt
+#  - bash: |
+#      pip install -r llama-requirements.txt
 
-   displayName: install the necessary packages
-   workingDirectory: $(Build.SourcesDirectory)
+#    displayName: install the necessary packages
+#    workingDirectory: $(Build.SourcesDirectory)
 
 #  - script: pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge
 #    displayName: 'upgrade azure cli'
@@ -42,7 +42,7 @@ steps:
  - task: AzureCLI@2
    displayName: 'diagnosis azcli 1'
    inputs:
-     azureSubscription: 'ONNX-Model-Zoo'
+     azureSubscription: AIInfraBuild
      scriptLocation: inlineScript
      scriptType: bash
      inlineScript: |
@@ -54,6 +54,8 @@ steps:
        azcopy --help
        azcopy -v
        az account list
+       azcopy cp --recursive "https://lotusscus.blob.core.windows.net/models/ffmpeg/runtimes/linux-x64/native" './'
+       ls
 
 
  - task: AzureCLI@2
