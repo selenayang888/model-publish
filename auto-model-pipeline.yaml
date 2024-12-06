@@ -46,9 +46,15 @@ steps:
      scriptLocation: inlineScript
      scriptType: bash
      inlineScript: |
+       cd $(Build.BinariesDirectory)
        which az
        az --version
        az extension list
+       wget https://aka.ms/downloadazcopy-v10-linux
+       tar -xvf downloadazcopy-v10-linux
+       azcopy --help
+       azcopy -v
+       sudo azcopy copy 'https://sunghchostorageaccount.blob.core.windows.net/phi-3/phi-3.5-mini-instruct/onnx/directml' './' --recursive=true
 
  - task: AzureCLI@2
    inputs:
