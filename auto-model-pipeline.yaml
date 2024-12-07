@@ -40,7 +40,7 @@ steps:
 #    displayName: 'Show Azure CLI version'
 
  - script: |
-#      python -c "with open('hello.txt', 'w') as f:f.write('hello world')"
+      # python -c "with open('hello.txt', 'w') as f:f.write('hello world')"
       azcopy cp --recursive "https://sunghchostorageaccount.blob.core.windows.net/phi-3/phi-3.5-mini-instruct/onnx/directml" './'
       ls
    displayName: 'try azcopy download from sun blob'
