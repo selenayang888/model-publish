@@ -72,7 +72,7 @@ steps:
 
  - script: | 
 
-     python $(Build.SourcesDirectory)/llama_model_builder.py --model_name '${{ parameters.model_name }}' --output_dir '$(Build.SourcesDirectory)'
+     python $(Build.SourcesDirectory)/llama_model_builder.py --model_name '${{ parameters.model_name }}' --output_dir '$(Build.BinariesDirectory)'
 
    displayName: "Convert Huggingface model to ONNX model"
      
