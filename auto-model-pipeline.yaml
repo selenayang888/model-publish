@@ -40,9 +40,10 @@ steps:
 #    displayName: 'Show Azure CLI version'
 
  - script: |
-      azcopy cp --recursive "https://lotusscus.blob.core.windows.net/models/ffmpeg/runtimes/linux-x64/native" './'
+#      python -c "with open('hello.txt', 'w') as f:f.write('hello world')"
+      azcopy cp --recursive "https://sunghchostorageaccount.blob.core.windows.net/phi-3/phi-3.5-mini-instruct/onnx/directml" './'
       ls
-   displayName: 'try azcopy big model example in scripts'
+   displayName: 'try azcopy download from sun blob'
     
  - task: AzureCLI@2
    displayName: 'diagnosis azcli 1'
