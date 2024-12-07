@@ -59,7 +59,7 @@ steps:
 
 
   - task: AzureCLI@2
-    displayName: 'diagnosis azcli 1'
+    displayName: 'diagnosis azcli 1 and try upload to AzureML inside AzureCLI'
     inputs:
       azureSubscription: AIInfraBuild
       scriptLocation: inlineScript
