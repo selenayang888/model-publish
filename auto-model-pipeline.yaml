@@ -45,10 +45,10 @@ steps:
 #       ls
 #    displayName: 'try azcopy upload to sun blob'
 
-  - script: |
-      az --version
-      az extension add -n ml -y
-    displayName: "az install ml extension"
+ - script: |
+     az --version
+     az extension add -n ml -y
+   displayName: "az install ml extension"
 
 #  - script: |
 #      az account list
