@@ -27,11 +27,11 @@ steps:
      versionSpec: '3.10'
      architecture: 'x64'
 
-#  - bash: |
-#      pip install -r llama-requirements.txt
+ - bash: |
+     pip install -r llama-requirements.txt
 
-#    displayName: install the necessary packages
-#    workingDirectory: $(Build.SourcesDirectory)
+     displayName: install the necessary packages
+     workingDirectory: $(Build.SourcesDirectory)
 
 #  - script: pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge
 #    displayName: 'upgrade azure cli'
@@ -45,10 +45,6 @@ steps:
 #       ls
 #    displayName: 'try azcopy upload to sun blob'
 
- - script: |
-     az --version
-     az extension add -n ml -y
-   displayName: "az install ml extension"
 
 #  - script: |
 #      az account list
@@ -56,39 +52,6 @@ steps:
 #      azcopy cp --recursive "./hello-test.txt" 'https://sunghchostorageaccount.blob.core.windows.net/test'
 #      az ml data create --name testfile --version 1 --path './hello-test.txt' --registry-name model-publish-test --description "test file"
 #    displayName: "try upload to AzureML"
-
-
- - task: AzureCLI@2
-   displayName: 'diagnosis azcli 1 and try upload to AzureML inside AzureCLI'
-   inputs:
-     azureSubscription: AIInfraBuild
-     scriptLocation: inlineScript
-     scriptType: bash
-     inlineScript: |
-       which az
-       az --version
-       az extension list
-       az account list
-       azcopy cp --recursive "https://lotusscus.blob.core.windows.net/models/ffmpeg/runtimes/linux-x64/native" './'
-       python -c "with open('hello.txt', 'w') as f:f.write('hello world')"
-       az ml data create --name testfile --version 1 --path './hello.txt' --registry-name model-publish-test --description "test file"
-       ls
-
-
- - task: AzureCLI@2
-   inputs:
-     azureSubscription: 'ONNX-Model-Zoo'
-     scriptLocation: inlineScript
-     scriptType: bash
-     inlineScript: |
-       az account list
-       cd $(Build.BinariesDirectory)
-       python -c "with open('hello.txt', 'w') as f:f.write('hello world')"
-       export AZCOPY_AUTO_LOGIN_TYPE="AZCLI"
-       az account list
-       azcopy copy './hello.txt' 'https://onnxmodelzoo.blob.core.windows.net/dev' --recursive=true
-   displayName: "az install azcopy and upload test file blob"
-
 
 
 
@@ -103,17 +66,6 @@ steps:
     pip list 
    displayName: "dump pip list"
 
- - task: AzureCLI@2
-   displayName: 'upload file to AzureML registry'
-   inputs:
-     azureSubscription: 'ONNX-Model-Zoo'
-     scriptLocation: inlineScript
-     scriptType: bash
-     inlineScript: |
-       cd $(Build.BinariesDirectory)
-       az extension add -n ml -y
-       python -c "with open('hello.txt', 'w') as f:f.write('hello world')"
-       az ml data create --name testfile --version 1 --path './hello.txt' --registry-name model-publish-test --description "test file"
 
  #- bash: |
  #   nvidia-smi
@@ -130,7 +82,7 @@ steps:
  - task: AzureCLI@2
    displayName: 'upload model to Blob Storage'
    inputs:
-     azureSubscription: 'ONNX-Model-Zoo'
+     azureSubscription: AIInfraBuild
      scriptLocation: inlineScript
      scriptType: bash
      inlineScript: |
@@ -141,12 +93,14 @@ steps:
  - task: AzureCLI@2
    displayName: 'upload model to AzureML registry'
    inputs:
-     azureSubscription: 'ONNX-Model-Zoo'
+     azureSubscription: AIInfraBuild
      scriptLocation: inlineScript
      scriptType: bash
      inlineScript: |
        cd $(Build.BinariesDirectory)
        az extension add -n ml -y
+       az extension list
+       az account list
        az ml data create --name llama32-3b-instruct-for-test-only --version 1 --path './models/${{ parameters.model_name }}/output_model/model' --registry-name model-publish-test --description "llama3.2-3b-instruct-test-only from pipeline"
 
 
