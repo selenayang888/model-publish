@@ -45,36 +45,35 @@ steps:
 #       ls
 #    displayName: 'try azcopy upload to sun blob'
 
- - script: |
-     az --version
-     az extension add -n ml -y
-   displayName: "az install ml extension"
+#  - script: |
+#      az --version
+#      az extension add -n ml -y
+#    displayName: "az install ml extension"
 
- - script: |
-     az account list
-     python -c "with open('hello-test.txt', 'w') as f:f.write('hello world')"
-     azcopy cp --recursive "./hello-test.txt" 'https://sunghchostorageaccount.blob.core.windows.net/test'
-     az ml data create --name testfile --version 1 --path './hello.txt' --registry-name model-publish-test --description "test file"
-   displayName: "try upload to AzureML"
+#  - script: |
+#      az account list
+#      python -c "with open('hello-test.txt', 'w') as f:f.write('hello world')"
+#      azcopy cp --recursive "./hello-test.txt" 'https://sunghchostorageaccount.blob.core.windows.net/test'
+#      az ml data create --name testfile --version 1 --path './hello-test.txt' --registry-name model-publish-test --description "test file"
+#    displayName: "try upload to AzureML"
 
 
-#  - task: AzureCLI@2
-#    displayName: 'diagnosis azcli 1'
-#    inputs:
-#      azureSubscription: AIInfraBuild
-#      scriptLocation: inlineScript
-#      scriptType: bash
-#      inlineScript: |
-#        which az
-#        az --version
-#        az extension list
-#        wget https://aka.ms/downloadazcopy-v10-linux
-#        tar -xvf downloadazcopy-v10-linux
-#        azcopy --help
-#        azcopy -v
-#        az account list
-#        azcopy cp --recursive "https://lotusscus.blob.core.windows.net/models/ffmpeg/runtimes/linux-x64/native" './'
-#        ls
+  - task: AzureCLI@2
+    displayName: 'diagnosis azcli 1'
+    inputs:
+      azureSubscription: AIInfraBuild
+      scriptLocation: inlineScript
+      scriptType: bash
+      inlineScript: |
+        which az
+        az --version
+        az extension add -n ml -y
+        az extension list
+        az account list
+        azcopy cp --recursive "https://lotusscus.blob.core.windows.net/models/ffmpeg/runtimes/linux-x64/native" './'
+        python -c "with open('hello.txt', 'w') as f:f.write('hello world')"
+        az ml data create --name testfile --version 1 --path './hello.txt' --registry-name model-publish-test --description "test file"
+        ls
 
 
  - task: AzureCLI@2
