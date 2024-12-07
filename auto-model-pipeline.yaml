@@ -58,22 +58,22 @@ steps:
 #    displayName: "try upload to AzureML"
 
 
-  - task: AzureCLI@2
-    displayName: 'diagnosis azcli 1 and try upload to AzureML inside AzureCLI'
-    inputs:
-      azureSubscription: AIInfraBuild
-      scriptLocation: inlineScript
-      scriptType: bash
-      inlineScript: |
-        which az
-        az --version
-        az extension add -n ml -y
-        az extension list
-        az account list
-        azcopy cp --recursive "https://lotusscus.blob.core.windows.net/models/ffmpeg/runtimes/linux-x64/native" './'
-        python -c "with open('hello.txt', 'w') as f:f.write('hello world')"
-        az ml data create --name testfile --version 1 --path './hello.txt' --registry-name model-publish-test --description "test file"
-        ls
+ - task: AzureCLI@2
+   displayName: 'diagnosis azcli 1 and try upload to AzureML inside AzureCLI'
+   inputs:
+     azureSubscription: AIInfraBuild
+     scriptLocation: inlineScript
+     scriptType: bash
+     inlineScript: |
+       which az
+       az --version
+       az extension add -n ml -y
+       az extension list
+       az account list
+       azcopy cp --recursive "https://lotusscus.blob.core.windows.net/models/ffmpeg/runtimes/linux-x64/native" './'
+       python -c "with open('hello.txt', 'w') as f:f.write('hello world')"
+       az ml data create --name testfile --version 1 --path './hello.txt' --registry-name model-publish-test --description "test file"
+       ls
 
 
  - task: AzureCLI@2
