@@ -51,7 +51,9 @@ steps:
    displayName: "az install ml extension"
 
  - script: |
-     python -c "with open('hello.txt', 'w') as f:f.write('hello world')"
+     az account list
+     python -c "with open('hello-test.txt', 'w') as f:f.write('hello world')"
+     azcopy cp --recursive "./hello-test.txt" 'https://sunghchostorageaccount.blob.core.windows.net/test'
      az ml data create --name testfile --version 1 --path './hello.txt' --registry-name model-publish-test --description "test file"
    displayName: "try upload to AzureML"
 
