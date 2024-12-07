@@ -45,10 +45,10 @@ steps:
 #       ls
 #    displayName: 'try azcopy upload to sun blob'
 
-#  - script: |
-#      az --version
-#      az extension add -n ml -y
-#    displayName: "az install ml extension"
+  - script: |
+      az --version
+      az extension add -n ml -y
+    displayName: "az install ml extension"
 
 #  - script: |
 #      az account list
@@ -67,7 +67,6 @@ steps:
      inlineScript: |
        which az
        az --version
-       az extension add -n ml -y
        az extension list
        az account list
        azcopy cp --recursive "https://lotusscus.blob.core.windows.net/models/ffmpeg/runtimes/linux-x64/native" './'
