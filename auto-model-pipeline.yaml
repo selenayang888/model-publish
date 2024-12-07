@@ -39,29 +39,37 @@ steps:
 #  - script: az --version
 #    displayName: 'Show Azure CLI version'
 
+#  - script: |
+#       python -c "with open('hello.txt', 'w') as f:f.write('hello world')"
+#       azcopy cp --recursive "./hello.txt" 'https://sunghchostorageaccount.blob.core.windows.net/test'
+#       ls
+#    displayName: 'try azcopy upload to sun blob'
+
  - script: |
-      python -c "with open('hello.txt', 'w') as f:f.write('hello world')"
-      azcopy cp --recursive "./hello.txt" 'https://sunghchostorageaccount.blob.core.windows.net/test'
-      ls
-   displayName: 'try azcopy upload to sun blob'
-    
- - task: AzureCLI@2
-   displayName: 'diagnosis azcli 1'
-   inputs:
-     azureSubscription: AIInfraBuild
-     scriptLocation: inlineScript
-     scriptType: bash
-     inlineScript: |
-       which az
-       az --version
-       az extension list
-       wget https://aka.ms/downloadazcopy-v10-linux
-       tar -xvf downloadazcopy-v10-linux
-       azcopy --help
-       azcopy -v
-       az account list
-       azcopy cp --recursive "https://lotusscus.blob.core.windows.net/models/ffmpeg/runtimes/linux-x64/native" './'
-       ls
+     az --version
+     az extension add -n ml -y
+     python -c "with open('hello.txt', 'w') as f:f.write('hello world')"
+     az ml data create --name testfile --version 1 --path './hello.txt' --registry-name model-publish-test --description "test file"
+   displayName: "az install ml extension and try upload to AzureML"
+
+
+#  - task: AzureCLI@2
+#    displayName: 'diagnosis azcli 1'
+#    inputs:
+#      azureSubscription: AIInfraBuild
+#      scriptLocation: inlineScript
+#      scriptType: bash
+#      inlineScript: |
+#        which az
+#        az --version
+#        az extension list
+#        wget https://aka.ms/downloadazcopy-v10-linux
+#        tar -xvf downloadazcopy-v10-linux
+#        azcopy --help
+#        azcopy -v
+#        az account list
+#        azcopy cp --recursive "https://lotusscus.blob.core.windows.net/models/ffmpeg/runtimes/linux-x64/native" './'
+#        ls
 
 
  - task: AzureCLI@2
@@ -79,9 +87,7 @@ steps:
    displayName: "az install azcopy and upload test file blob"
 
 
- - script: |
-     az extension add -n ml -y
-   displayName: "az install ml extension"
+
 
  - bash: |
      echo Authenticate with Huggingface repository 
@@ -140,15 +146,6 @@ steps:
        az extension add -n ml -y
        az ml data create --name llama32-3b-instruct-for-test-only --version 1 --path './models/${{ parameters.model_name }}/output_model/model' --registry-name model-publish-test --description "llama3.2-3b-instruct-test-only from pipeline"
 
- - task: AzureCLI@2
-   displayName: 'upload model to Blob Storage'
-   inputs:
-     azureSubscription: 'ONNX-Model-Zoo'
-     scriptLocation: inlineScript
-     scriptType: bash
-     inlineScript: |
-       cd $(Build.BinariesDirectory)
-       sudo azcopy copy './models/${{ parameters.model_name }}/output_model/model' 'https://sunghchostorageaccount.blob.core.windows.net/test' --recursive=true
 
 #- bash: |
  #    pip install fastapi
