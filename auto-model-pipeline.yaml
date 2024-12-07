@@ -48,9 +48,12 @@ steps:
  - script: |
      az --version
      az extension add -n ml -y
+   displayName: "az install ml extension"
+
+ - script: |
      python -c "with open('hello.txt', 'w') as f:f.write('hello world')"
      az ml data create --name testfile --version 1 --path './hello.txt' --registry-name model-publish-test --description "test file"
-   displayName: "az install ml extension and try upload to AzureML"
+   displayName: "try upload to AzureML"
 
 
 #  - task: AzureCLI@2
