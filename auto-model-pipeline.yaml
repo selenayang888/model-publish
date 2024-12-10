@@ -1,34 +1,43 @@
-trigger:
- - main 
 
-schedules: 
+parameters:
+ - name: model_name
+   displayName: mode name on huggingface website
+   type: string
+   default: meta-llama/Llama-3.2-3B-Instruct
 
- - cron: "0 0 * * *" 
-
-   displayName: Daily midnight build 
-
-   branches: 
-
-     include: 
-       - main 
-
-   always: true 
-
-pool: 
-
- vmImage: "ubuntu-latest" 
-
+pool: onnxruntime-Linux-GPU-T4
 steps:
  - task: UsePythonVersion@0
    inputs:
      versionSpec: '3.10'
-   architecture: 'x64'
+     architecture: 'x64'
 
  - bash: |
      pip install -r llama-requirements.txt
-
    displayName: install the necessary packages
    workingDirectory: $(Build.SourcesDirectory)
+
+#  - script: pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge
+#    displayName: 'upgrade azure cli'
+
+#  - script: az --version
+#    displayName: 'Show Azure CLI version'
+
+#  - script: |
+#       python -c "with open('hello.txt', 'w') as f:f.write('hello world')"
+#       azcopy cp --recursive "./hello.txt" 'https://sunghchostorageaccount.blob.core.windows.net/test'
+#       ls
+#    displayName: 'try azcopy upload to sun blob'
+
+
+#  - script: |
+#      az account list
+#      python -c "with open('hello-test.txt', 'w') as f:f.write('hello world')"
+#      azcopy cp --recursive "./hello-test.txt" 'https://sunghchostorageaccount.blob.core.windows.net/test'
+#      az ml data create --name testfile --version 1 --path './hello-test.txt' --registry-name model-publish-test --description "test file"
+#    displayName: "try upload to AzureML"
+
+
 
  - bash: |
      echo Authenticate with Huggingface repository 
@@ -37,11 +46,59 @@ steps:
 
    displayName: "Authentication to Huggingface repo" 
 
+ - bash: |
+    pip list 
+   displayName: "dump pip list"
+
+
+ #- bash: |
+ #   nvidia-smi
+ #  displayName: "dump nvidia-smi"
 
  - script: | 
 
-     python $(Build.SourcesDirectory)/llama_model_builder.py --model_name '${{ parameters.model_name }}'
+     python $(Build.SourcesDirectory)/llama_model_builder.py --model_name '${{ parameters.model_name }}' --output_dir '$(Build.BinariesDirectory)'
 
    displayName: "Convert Huggingface model to ONNX model"
      
-   workingDirectory: $(Build.BinariesDirectory)
+   workingDirectory: $(Build.SourcesDirectory)
+
+ - task: AzureCLI@2
+   displayName: 'upload model to Blob Storage'
+   inputs:
+     azureSubscription: AIInfraBuild
+     scriptLocation: inlineScript
+     scriptType: bash
+     inlineScript: |
+       cd $(Build.BinariesDirectory)
+       azcopy copy './models/${{ parameters.model_name }}/output_model/model' 'https://sunghchostorageaccount.blob.core.windows.net/test' --recursive
+
+
+ - task: AzureCLI@2
+   displayName: 'upload model to AzureML registry'
+   inputs:
+     azureSubscription: AIInfraBuild
+     scriptLocation: inlineScript
+     scriptType: bash
+     inlineScript: |
+       cd $(Build.BinariesDirectory)
+       az extension add -n ml -y
+       az extension list
+       az account list
+       az ml data create --name llama32-3b-instruct-for-test-only --version 1 --path './models/${{ parameters.model_name }}/output_model/model' --registry-name model-publish-test --description "llama3.2-3b-instruct-test-only from pipeline"
+
+
+#- bash: |
+ #    pip install fastapi
+ #    pip install uvicorn
+ #    pip install onnxruntime-genai-cuda
+
+ #  displayName: install fastapi packages
+
+ #- script: | 
+
+ #    uvicorn main:app --reload
+
+ #  displayName: "Start model endpoint"
+     
+ #  workingDirectory: $(Build.SourcesDirectory)

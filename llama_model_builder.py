@@ -21,7 +21,7 @@ def get_args(raw_args):
         "--metadata-only", action="store_true", required=False, help="Whether to use gpu for optimization."
     )
     parser.add_argument("--tempdir", type=str, help="Root directory for tempfile directories and files", required=False)
-
+    parser.add_argument("--output_dir", type=str, help="TODOs", required=True)
     return parser.parse_args(raw_args)
 
 
@@ -42,7 +42,8 @@ def main(raw_args=None):
         template_json["pass_flows"] = [["conversion", "metadata"]]
     else:
         template_json["pass_flows"] = [["builder", "session_params_tuning"]]
-    template_json["output_dir"] = f"models/{model_name}"
+    #template_json["output_dir"] = f"models/{model_name}"
+    template_json["output_dir"] = f"{args.output_dir}/models/{model_name}"
 
     # dump config
     output_template = "llama_model_builder.json"
