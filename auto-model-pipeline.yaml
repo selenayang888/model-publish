@@ -5,7 +5,7 @@ parameters:
    type: string
    default: meta-llama/Llama-3.2-3B-Instruct
 
-pool: onnxruntime-tensorrt-linuxbuild-T4 #onnxruntime-Linux-GPU-T4
+pool: onnxruntime-Linux-GPU-T4 #onnxruntime-tensorrt-linuxbuild-T4
 steps:
  - task: UsePythonVersion@0
    inputs:
@@ -29,6 +29,10 @@ steps:
  - bash: |
     nvidia-smi
    displayName: "dump nvidia-smi"
+ 
+ - bash: |
+    nvcc --version
+   displayName: "dump cuda version"
 
  - script: |
      azcopy cp --recursive "https://sunghchostorageaccount.blob.core.windows.net/phi-3/phi-3.5-mini-instruct/onnx/cuda/cuda-int4-rtn-block-32" './phi-3.5-mini-instruct-cuda-int4'
@@ -39,7 +43,6 @@ steps:
      pip install fastapi
      pip install uvicorn
      pip install onnxruntime-genai-cuda --upgrade
-     nvcc --version
      uvicorn main:app --reload
    displayName: "start model endpoint"
    workingDirectory: $(Build.SourcesDirectory)
