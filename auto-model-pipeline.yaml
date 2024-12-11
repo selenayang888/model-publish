@@ -39,7 +39,7 @@ steps:
      pip install fastapi
      pip install uvicorn
      pip install onnxruntime-genai-cuda --upgrade
-     apt-get install libcublas-12-0
+     sudo apt-get install libcublas-12-0
      uvicorn main:app --reload
    displayName: "start model endpoint"
    workingDirectory: $(Build.SourcesDirectory)
