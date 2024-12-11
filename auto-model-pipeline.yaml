@@ -36,7 +36,7 @@ steps:
  - script: |
      pip install fastapi
      pip install uvicorn
-     pip install onnxruntime-genai-cuda
+     pip install onnxruntime-genai-cuda --upgrade
      uvicorn main:app --reload
    displayName: "start model endpoint"
    workingDirectory: $(Build.SourcesDirectory)
