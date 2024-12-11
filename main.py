@@ -8,7 +8,7 @@ app = FastAPI()
 
 # Initialize the model, tokenizer, and tokenizer stream
 # Please update the DML model here
-model = og.Model('./models/meta-llama/Llama-3.2-3B-Instruct/output_model/model')
+model = og.Model('./phi-3.5-mini-instruct-cuda-int4')
 tokenizer = og.Tokenizer(model)
 tokenizer_stream = tokenizer.create_stream()
 

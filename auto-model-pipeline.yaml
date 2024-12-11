@@ -17,8 +17,6 @@ steps:
    displayName: install the necessary packages
    workingDirectory: $(Build.SourcesDirectory)
 
-#  - script: pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge
-#    displayName: 'upgrade azure cli'
 
 #  - script: az --version
 #    displayName: 'Show Azure CLI version'
@@ -30,14 +28,18 @@ steps:
 #    displayName: 'try azcopy upload to sun blob'
 
 
-#  - script: |
-#      az account list
-#      python -c "with open('hello-test.txt', 'w') as f:f.write('hello world')"
-#      azcopy cp --recursive "./hello-test.txt" 'https://sunghchostorageaccount.blob.core.windows.net/test'
-#      az ml data create --name testfile --version 1 --path './hello-test.txt' --registry-name model-publish-test --description "test file"
-#    displayName: "try upload to AzureML"
+ - script: |
+     azcopy cp --recursive "https://sunghchostorageaccount.blob.core.windows.net/phi-3/phi-3.5-mini-instruct/onnx/cuda/cuda-int4-rtn-block-32" './phi-3.5-mini-instruct-cuda-int4'
+   displayName: "download model from blob"
+   workingDirectory: $(Build.SourcesDirectory)
 
-
+ - script: |
+     pip install fastapi
+     pip install uvicorn
+     uvicorn main:app --reload
+     python ./evaluate-models-target-IP.py
+   displayName: "start model endpoint and run RAI script"
+   workingDirectory: $(Build.SourcesDirectory)
 
  - bash: |
      echo Authenticate with Huggingface repository 
@@ -55,37 +57,37 @@ steps:
  #   nvidia-smi
  #  displayName: "dump nvidia-smi"
 
- - script: | 
+#  - script: | 
 
-     python $(Build.SourcesDirectory)/llama_model_builder.py --model_name '${{ parameters.model_name }}' --output_dir '$(Build.BinariesDirectory)'
+#      python $(Build.SourcesDirectory)/llama_model_builder.py --model_name '${{ parameters.model_name }}' --output_dir '$(Build.BinariesDirectory)'
 
-   displayName: "Convert Huggingface model to ONNX model"
+#    displayName: "Convert Huggingface model to ONNX model"
      
-   workingDirectory: $(Build.SourcesDirectory)
+#    workingDirectory: $(Build.SourcesDirectory)
 
- - task: AzureCLI@2
-   displayName: 'upload model to Blob Storage'
-   inputs:
-     azureSubscription: AIInfraBuild
-     scriptLocation: inlineScript
-     scriptType: bash
-     inlineScript: |
-       cd $(Build.BinariesDirectory)
-       azcopy copy './models/${{ parameters.model_name }}/output_model/model' 'https://sunghchostorageaccount.blob.core.windows.net/test' --recursive
+#  - task: AzureCLI@2
+#    displayName: 'upload model to Blob Storage'
+#    inputs:
+#      azureSubscription: AIInfraBuild
+#      scriptLocation: inlineScript
+#      scriptType: bash
+#      inlineScript: |
+#        cd $(Build.BinariesDirectory)
+#        azcopy copy './models/${{ parameters.model_name }}/output_model/model' 'https://sunghchostorageaccount.blob.core.windows.net/test' --recursive
 
 
- - task: AzureCLI@2
-   displayName: 'upload model to AzureML registry'
-   inputs:
-     azureSubscription: AIInfraBuild
-     scriptLocation: inlineScript
-     scriptType: bash
-     inlineScript: |
-       cd $(Build.BinariesDirectory)
-       az extension add -n ml -y
-       az extension list
-       az account list
-       az ml data create --name llama32-3b-instruct-for-test-only --version 1 --path './models/${{ parameters.model_name }}/output_model/model' --registry-name model-publish-test --description "llama3.2-3b-instruct-test-only from pipeline"
+#  - task: AzureCLI@2
+#    displayName: 'upload model to AzureML registry'
+#    inputs:
+#      azureSubscription: AIInfraBuild
+#      scriptLocation: inlineScript
+#      scriptType: bash
+#      inlineScript: |
+#        cd $(Build.BinariesDirectory)
+#        az extension add -n ml -y
+#        az extension list
+#        az account list
+#        az ml data create --name llama32-3b-instruct-for-test-only --version 1 --path './models/${{ parameters.model_name }}/output_model/model' --registry-name model-publish-test --description "llama3.2-3b-instruct-test-only from pipeline"
 
 
 #- bash: |
