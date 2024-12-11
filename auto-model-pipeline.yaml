@@ -34,12 +34,12 @@ steps:
      azcopy cp --recursive "https://sunghchostorageaccount.blob.core.windows.net/phi-3/phi-3.5-mini-instruct/onnx/cuda/cuda-int4-rtn-block-32" './phi-3.5-mini-instruct-cuda-int4'
    displayName: "download model from blob"
    workingDirectory: $(Build.SourcesDirectory)
-
+#sudo apt-get install libcublas-12-0
  - script: |
      pip install fastapi
      pip install uvicorn
      pip install onnxruntime-genai-cuda --upgrade
-     sudo apt-get install libcublas-12-0
+     nvcc --version
      uvicorn main:app --reload
    displayName: "start model endpoint"
    workingDirectory: $(Build.SourcesDirectory)
