@@ -38,7 +38,14 @@ steps:
      pip install uvicorn
      uvicorn main:app --reload
      python ./evaluate-models-target-IP.py
-   displayName: "start model endpoint and run RAI script"
+   displayName: "start model endpoint"
+   workingDirectory: $(Build.SourcesDirectory)
+
+ - script: |
+     pip install azure-ai-evaluation --upgrade
+     pip install promptflow-azure --upgrade
+     python ./evaluate-models-target-IP.py
+   displayName: "run RAI script"
    workingDirectory: $(Build.SourcesDirectory)
 
  - bash: |
