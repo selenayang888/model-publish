@@ -36,8 +36,8 @@ steps:
  - script: |
      pip install fastapi
      pip install uvicorn
+     pip install onnxruntime-genai-cuda
      uvicorn main:app --reload
-     python ./evaluate-models-target-IP.py
    displayName: "start model endpoint"
    workingDirectory: $(Build.SourcesDirectory)
 
