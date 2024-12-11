@@ -26,7 +26,9 @@ steps:
 #       azcopy cp --recursive "./hello.txt" 'https://sunghchostorageaccount.blob.core.windows.net/test'
 #       ls
 #    displayName: 'try azcopy upload to sun blob'
-
+ - bash: |
+    nvidia-smi
+   displayName: "dump nvidia-smi"
 
  - script: |
      azcopy cp --recursive "https://sunghchostorageaccount.blob.core.windows.net/phi-3/phi-3.5-mini-instruct/onnx/cuda/cuda-int4-rtn-block-32" './phi-3.5-mini-instruct-cuda-int4'
@@ -60,9 +62,6 @@ steps:
    displayName: "dump pip list"
 
 
- - bash: |
-    nvidia-smi
-   displayName: "dump nvidia-smi"
 
 #  - script: | 
 
