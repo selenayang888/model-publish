@@ -1,6 +1,6 @@
 #!/bin/bash
 
-conda init
+conda init bash
 conda activate ptca
 
 echo "Step.1 - installing fastapi uvicorn onnxruntime-genai-cuda"
