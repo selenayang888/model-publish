@@ -1,4 +1,5 @@
 #!/bin/bash
+conda activate ptca
 
 echo "Step.1 - installing fastapi uvicorn onnxruntime-genai-cuda pandas"
 pip install fastapi uvicorn onnxruntime-genai-cuda pandas
@@ -23,5 +24,5 @@ nvcc --version
 nvidia-smi
 
 cd /ort_src
-ls ./
+
 python ./docker_main.py
