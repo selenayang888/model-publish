@@ -10,4 +10,5 @@ pip install azure-ai-evaluation --upgrade
 pip install promptflow-azure --upgrade
 
 cd /ort_src
+ls ./
 python ./docker_main.py
