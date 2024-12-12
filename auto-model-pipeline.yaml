@@ -31,7 +31,7 @@ steps:
    displayName: "dump nvidia-smi"
  
  - bash: |
-    ls -l /usr/local/cuda/lib64/libcublas.so*
+    ls -l /usr/local
     nvcc --version
    displayName: "dump cuda version"
 
