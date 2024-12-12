@@ -40,7 +40,7 @@ steps:
         --ipc=host \
         --volume $(Build.SourcesDirectory):/ort_src \
         --volume $(Build.BinariesDirectory):/build \
-        -i -t -p 8000:8000 \
+        -p 8000:8000 \
         -e CCACHE_DIR=/cache -w /ort_src \
         ptebic.azurecr.io/public/aifx/acpt/stable-ubuntu2004-cu121-py310-torch222:latest /bin/bash 
    workingDirectory: $(Build.SourcesDirectory)
