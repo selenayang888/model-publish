@@ -42,7 +42,7 @@ steps:
         --volume $(Build.BinariesDirectory):/build \
         -p 8000:8000 \
         -e CCACHE_DIR=/cache -w /ort_src \
-        ptebic.azurecr.io/public/aifx/acpt/stable-ubuntu2004-cu121-py310-torch222:latest /bin/bash 
+        ptebic.azurecr.io/public/aifx/acpt/stable-ubuntu2004-cu121-py310-torch222:latest /ort_src/docker_script.sh
    workingDirectory: $(Build.SourcesDirectory)
 
 
@@ -51,13 +51,13 @@ steps:
    displayName: "download model from blob"
    workingDirectory: $(Build.SourcesDirectory)
 #sudo apt-get install libcublas-12-0
- - script: |
-     pip install fastapi
-     pip install uvicorn
-     pip install onnxruntime-genai-cuda --upgrade
-     uvicorn main:app --reload
-   displayName: "start model endpoint"
-   workingDirectory: $(Build.SourcesDirectory)
+#  - script: |
+#      pip install fastapi
+#      pip install uvicorn
+#      pip install onnxruntime-genai-cuda --upgrade
+#      uvicorn main:app --reload
+#    displayName: "start model endpoint"
+#    workingDirectory: $(Build.SourcesDirectory)
 
  - script: |
      pip install azure-ai-evaluation --upgrade

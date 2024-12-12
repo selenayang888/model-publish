@@ -145,9 +145,3 @@ async def async_main():
 
     # %%
     pprint(results["metrics"])
-
-
-
-import asyncio
-loop = asyncio.get_event_loop()
-loop.run_until_complete(async_main())
