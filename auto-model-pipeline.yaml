@@ -31,7 +31,16 @@ steps:
    displayName: "dump nvidia-smi"
  
  - bash: |
-    ls -l /usr/local/src
+    ls -l /usr/local/bin
+    ls -l /usr/local/doc
+    ls -l /usr/local/etc
+    ls -l /usr/local/include
+    ls -l /usr/local/man
+    ls -l /usr/local/qualys
+    ls -l /usr/local/sbin
+    ls -l /usr/local/share
+    ls -l /usr/local/vsatlsscan
+    ls -l /usr/local/vss-agent
     nvcc --version
    displayName: "dump cuda version"
 
