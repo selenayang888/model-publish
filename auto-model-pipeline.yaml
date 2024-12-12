@@ -37,7 +37,7 @@ steps:
 
  - script: |
      azcopy cp --recursive "https://sunghchostorageaccount.blob.core.windows.net/phi-3/phi-3.5-mini-instruct/onnx/cuda/cuda-int4-rtn-block-32" '$(Build.SourcesDirectory)/phi-3.5-mini-instruct-cuda-int4'
-     ls $(Build.SourcesDirectory)/phi-3.5-mini-instruct-cuda-int4
+     ls -l $(Build.SourcesDirectory)/phi-3.5-mini-instruct-cuda-int4
    displayName: "download model from blob"
    workingDirectory: $(Build.SourcesDirectory)
 
