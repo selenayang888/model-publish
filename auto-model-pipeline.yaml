@@ -42,7 +42,7 @@ steps:
         --volume $(Build.BinariesDirectory):/build \
         -p 8000:8000 \
         -e CCACHE_DIR=/cache -w /ort_src \
-        ptebic.azurecr.io/public/aifx/acpt/stable-ubuntu2004-cu121-py310-torch222:latest /ort_src/docker_script.sh
+        ptebic.azurecr.io/public/aifx/acpt/stable-ubuntu2004-cu121-py310-torch222:latest /bin/bash /ort_src/docker_script.sh
    workingDirectory: $(Build.SourcesDirectory)
 
 
