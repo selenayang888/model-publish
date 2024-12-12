@@ -36,6 +36,11 @@ steps:
 #    displayName: "dump cuda version"
 
  - script: |
+     azcopy cp --recursive "https://sunghchostorageaccount.blob.core.windows.net/phi-3/phi-3.5-mini-instruct/onnx/cuda/cuda-int4-rtn-block-32" './phi-3.5-mini-instruct-cuda-int4'
+   displayName: "download model from blob"
+   workingDirectory: $(Build.SourcesDirectory)
+
+ - script: |
      docker run --gpus all --rm \
         --ipc=host \
         --volume $(Build.SourcesDirectory):/ort_src \
@@ -44,12 +49,8 @@ steps:
         -e CCACHE_DIR=/cache -w /ort_src \
         ptebic.azurecr.io/public/aifx/acpt/stable-ubuntu2004-cu121-py310-torch222:latest /bin/bash /ort_src/docker_script.sh
    workingDirectory: $(Build.SourcesDirectory)
+   displayName: "start model endpoint and RAI eval in container"
 
-
- - script: |
-     azcopy cp --recursive "https://sunghchostorageaccount.blob.core.windows.net/phi-3/phi-3.5-mini-instruct/onnx/cuda/cuda-int4-rtn-block-32" './phi-3.5-mini-instruct-cuda-int4'
-   displayName: "download model from blob"
-   workingDirectory: $(Build.SourcesDirectory)
 #sudo apt-get install libcublas-12-0
 #  - script: |
 #      pip install fastapi
