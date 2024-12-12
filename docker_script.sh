@@ -6,14 +6,14 @@ conda activate ptca
 echo "Step.1 - installing fastapi uvicorn onnxruntime-genai-cuda"
 pip install fastapi uvicorn onnxruntime-genai-cuda
 
-echo "Step.2 - azure-cli"
-pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge
+# echo "Step.2 - azure-cli"
+# pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge
 
-echo "Step.3 - azure-ai"
-pip install azure-ai-evaluation --upgrade
+# echo "Step.3 - azure-ai"
+# pip install azure-ai-evaluation --upgrade
 
-echo "Step.4 - promptflow-azure"
-pip install promptflow-azure --upgrade
+# echo "Step.4 - promptflow-azure"
+# pip install promptflow-azure --upgrade
 
 echo "Diagosis:"
 
@@ -24,6 +24,8 @@ pip list
 
 nvcc --version
 nvidia-smi
+
+#az login --identity
 
 cd /ort_src
 
