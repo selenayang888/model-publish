@@ -30,10 +30,21 @@ steps:
     nvidia-smi
    displayName: "dump nvidia-smi"
  
- - bash: |
-    ls -l /usr
-    nvcc --version
-   displayName: "dump cuda version"
+#  - bash: |
+#     ls -l /usr
+#     nvcc --version
+#    displayName: "dump cuda version"
+
+ - script: |
+     docker run --gpus all --rm \
+        --ipc=host \
+        --volume $(Build.SourcesDirectory):/ort_src \
+        --volume $(Build.BinariesDirectory):/build \
+        -it -p 8000:8000 \
+        -e CCACHE_DIR=/cache -w /ort_src \
+        ptebic.azurecr.io/public/aifx/acpt/stable-ubuntu2004-cu121-py310-torch222:latest /bin/bash 
+   workingDirectory: $(Build.SourcesDirectory)
+
 
  - script: |
      azcopy cp --recursive "https://sunghchostorageaccount.blob.core.windows.net/phi-3/phi-3.5-mini-instruct/onnx/cuda/cuda-int4-rtn-block-32" './phi-3.5-mini-instruct-cuda-int4'
