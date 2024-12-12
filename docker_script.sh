@@ -1,8 +1,8 @@
 #!/bin/bash
 conda activate ptca
 
-echo "Step.1 - installing fastapi uvicorn onnxruntime-genai-cuda pandas"
-pip install fastapi uvicorn onnxruntime-genai-cuda pandas
+echo "Step.1 - installing fastapi uvicorn onnxruntime-genai-cuda"
+pip install fastapi uvicorn onnxruntime-genai-cuda
 
 echo "Step.2 - azure-cli"
 pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge
