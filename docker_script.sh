@@ -1,7 +1,7 @@
 #!/bin/bash
 
-source activate base
-conda activate ptca
+#source activate base
+#conda activate ptca
 
 #apt-get -y install cudnn9-cuda-12
 
@@ -34,5 +34,8 @@ find / -name libcudnn.so.*
 #az login --identity
 
 cd /ort_src
+
+echo "### ENV in docker_script.sh"
+python -c "import os;print(os.environ)"
 
 python ./docker_main.py

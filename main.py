@@ -6,6 +6,11 @@ import argparse
 
 app = FastAPI()
 
+import os
+print("### ENV in main.py (server)")
+print(os.environ)
+
+
 # Initialize the model, tokenizer, and tokenizer stream
 # Please update the DML model here
 model = og.Model('./phi-3.5-mini-instruct-cuda-int4/cuda-int4-rtn-block-32')

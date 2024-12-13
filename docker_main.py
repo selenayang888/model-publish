@@ -3,6 +3,10 @@ import time
 import sys
 #from evaluate_models_target_ip import async_main
 
+import os
+print("### ENV in docker_main.py")
+print(os.environ)
+
 # step.1 - launch "uvicorn main:app --reload" in shell
 uvicorn_proc = subprocess.Popen(["uvicorn main:app --reload"], shell=True)
 
