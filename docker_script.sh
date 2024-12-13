@@ -25,6 +25,8 @@ pip list
 nvcc --version
 nvidia-smi
 
+echo "find libcudnn"
+find / -name libcudnn.so.*
 #az login --identity
 
 cd /ort_src
