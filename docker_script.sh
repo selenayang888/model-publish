@@ -38,4 +38,6 @@ cd /ort_src
 echo "### ENV in docker_script.sh"
 python -c "import os;print(os.environ)"
 
-python ./docker_main.py
+#python ./docker_main.py
+
+uvicorn main:app --reload
