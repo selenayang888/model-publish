@@ -4,6 +4,10 @@
 #conda activate ptca
 
 apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub
+
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.1-1_all.deb
+dpkg -i cuda-keyring_1.1-1_all.deb
+
 apt-get update
 apt-get install -y
 apt-get -y install cudnn9-cuda-12
