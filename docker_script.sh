@@ -3,9 +3,10 @@
 #source activate base
 #conda activate ptca
 
-#apt-get -y install cudnn9-cuda-12
+apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub
+apt-get update
+apt-get -y install cudnn9-cuda-12
 
-export PATH=/opt/conda/lib/python3.11/site-packages/nvidia/cudnn/lib:$PATH
 
 echo "Step.1 - installing fastapi uvicorn onnxruntime-genai-cuda"
 pip install fastapi uvicorn onnxruntime-genai-cuda

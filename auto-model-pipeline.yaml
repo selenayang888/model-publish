@@ -52,7 +52,7 @@ steps:
    workingDirectory: $(Build.SourcesDirectory)
    displayName: "start model endpoint and RAI eval in container"
 
-#sudo apt-get install libcublas-12-0
+
 #  - script: |
 #      pip install fastapi
 #      pip install uvicorn
