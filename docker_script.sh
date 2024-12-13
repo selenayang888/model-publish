@@ -19,7 +19,8 @@ pip install azure-ai-evaluation --upgrade
 echo "Step.4 - promptflow-azure"
 pip install promptflow-azure --upgrade
 
-#az login --identity
+az login --identity
+az account show
 
 cd /ort_src
 python ./docker_main.py
