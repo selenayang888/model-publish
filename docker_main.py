@@ -2,6 +2,7 @@ import subprocess
 import time
 import sys
 from evaluate_models_target_ip import async_main
+from evaluate_models_target_eci import async_main_eci
 
 import os
 print("### ENV in docker_main.py")
@@ -19,6 +20,7 @@ print(" ### Start model endpoint :)")
 import asyncio
 loop = asyncio.get_event_loop()
 loop.run_until_complete(async_main())
+loop.run_until_complete(async_main_eci())
 
 
 # step.last - send SIGTERM to server and wait for it to exit
