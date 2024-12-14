@@ -3,6 +3,7 @@ import time
 import sys
 from evaluate_models_target_ip import async_main
 from evaluate_models_target_eci import async_main_eci
+from evaluate_models_target_jailbreak import async_main_jailbreak
 
 import os
 print("### ENV in docker_main.py")
@@ -21,6 +22,7 @@ import asyncio
 loop = asyncio.get_event_loop()
 loop.run_until_complete(async_main())
 loop.run_until_complete(async_main_eci())
+loop.run_until_complete(async_main_jailbreak())
 
 
 # step.last - send SIGTERM to server and wait for it to exit
