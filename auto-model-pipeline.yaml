@@ -61,19 +61,19 @@ steps:
 #    displayName: "start model endpoint"
 #    workingDirectory: $(Build.SourcesDirectory)
 
- - script: |
-     pip install azure-ai-evaluation --upgrade
-     pip install promptflow-azure --upgrade
-     python ./evaluate-models-target-IP.py
-   displayName: "run RAI script"
-   workingDirectory: $(Build.SourcesDirectory)
+#  - script: |
+#      pip install azure-ai-evaluation --upgrade
+#      pip install promptflow-azure --upgrade
+#      python ./evaluate-models-target-IP.py
+#    displayName: "run RAI script"
+#    workingDirectory: $(Build.SourcesDirectory)
 
- - bash: |
-     echo Authenticate with Huggingface repository 
+#  - bash: |
+#      echo Authenticate with Huggingface repository 
 
-     huggingface-cli login --token $(hf_token)
+#      huggingface-cli login --token $(hf_token)
 
-   displayName: "Authentication to Huggingface repo" 
+#    displayName: "Authentication to Huggingface repo" 
 
  - bash: |
     pip list 

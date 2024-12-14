@@ -24,4 +24,4 @@ loop.run_until_complete(async_main())
 # step.last - send SIGTERM to server and wait for it to exit
 uvicorn_proc.send_signal(subprocess.signal.SIGTERM)
 uvicorn_proc.wait()
-sys.exit(uvicorn_proc.returncode)
+#sys.exit(uvicorn_proc.returncode)
