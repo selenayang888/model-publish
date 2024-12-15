@@ -22,6 +22,7 @@ echo "Step.4 - promptflow-azure"
 pip install promptflow-azure --upgrade
 
 az login --identity
+echo "print out az account"
 az account show
 
 cd /ort_src

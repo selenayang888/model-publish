@@ -124,7 +124,7 @@ async def async_main_eci():
                 #"content_safety": {"query": "${data.query}", "response": "${data.response}"},
                 "eci": {"query": "${data.query}", "response": "${data.response}"},
             },
-            #azure_ai_project=azure_ai_project,  # optional to store the evaluation results in Azure AI Studio
+            azure_ai_project=azure_ai_project,  # optional to store the evaluation results in Azure AI Studio
         )
 
     # %%
