@@ -23,6 +23,8 @@ loop = asyncio.get_event_loop()
 loop.run_until_complete(async_main())
 loop.run_until_complete(async_main_eci())
 loop.run_until_complete(async_main_jailbreak())
+loop.run_until_complete(async_main_ground())
+
 
 
 # step.last - send SIGTERM to server and wait for it to exit
