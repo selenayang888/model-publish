@@ -38,7 +38,7 @@ steps:
  - script: |
      mkdir output_model
      azcopy cp --recursive "https://sunghchostorageaccount.blob.core.windows.net/phi-3/phi-3.5-mini-instruct/onnx/cuda/cuda-int4-rtn-block-32" 'output_model/phi-3.5-mini-instruct-cuda-int4'
-     ls -l ./phi-3.5-mini-instruct-cuda-int4/cuda-int4-rtn-block-32
+     ls -l output_model/phi-3.5-mini-instruct-cuda-int4/cuda-int4-rtn-block-32
    displayName: "download model from blob"
    workingDirectory: $(Build.BinariesDirectory)
 
