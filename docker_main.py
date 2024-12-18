@@ -32,25 +32,24 @@ loop.run_until_complete(async_main_ground())
 uvicorn_proc.send_signal(subprocess.signal.SIGTERM)
 uvicorn_proc.wait()
 
-
-uvicorn_proc = subprocess.Popen(["uvicorn main_pytorch:app --reload"], shell=True)
-
-# repaet step.2 - wait for the baseline server ready
-time.sleep(25)
-
-# repaet step.3 - call the baseline endpoint and do validation
-print(" ### Start baseline-model endpoint :)")
-
-import asyncio
-loop = asyncio.get_event_loop()
-loop.run_until_complete(async_main())
-loop.run_until_complete(async_main_eci())
-loop.run_until_complete(async_main_jailbreak())
-loop.run_until_complete(async_main_ground())
+# run baseline model with RAI evaluation
+# uvicorn_proc = subprocess.Popen(["uvicorn main_pytorch:app --reload"], shell=True)
 
 
+# time.sleep(25)
 
-# step.last - send SIGTERM to server and wait for it to exit
-uvicorn_proc.send_signal(subprocess.signal.SIGTERM)
-uvicorn_proc.wait()
+
+# print(" ### Start baseline-model endpoint :)")
+
+# import asyncio
+# loop = asyncio.get_event_loop()
+# loop.run_until_complete(async_main())
+# loop.run_until_complete(async_main_eci())
+# loop.run_until_complete(async_main_jailbreak())
+# loop.run_until_complete(async_main_ground())
+
+
+
+# uvicorn_proc.send_signal(subprocess.signal.SIGTERM)
+# uvicorn_proc.wait()
 
