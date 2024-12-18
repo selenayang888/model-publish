@@ -40,13 +40,14 @@ steps:
      azcopy cp --recursive "https://sunghchostorageaccount.blob.core.windows.net/phi-3/phi-3.5-mini-instruct/onnx/cuda/cuda-int4-rtn-block-32" 'output_model/phi-3.5-mini-instruct-cuda-int4'
      ls -l output_model/phi-3.5-mini-instruct-cuda-int4/cuda-int4-rtn-block-32
      azcopy cp --recursive "https://sunghchostorageaccount.blob.core.windows.net/phi-3/phi-3.5-mini-instruct/hf_version" 'output_model/hf_version'
+     ls -l output_model/hf_version
    displayName: "download model from blob"
    workingDirectory: $(Build.BinariesDirectory)
 
  - script: |
      # search for "genai_config.json" under folder "$(Build.BinariesDirectory)/output_model/"
      model_config_folder=`find $(Build.BinariesDirectory)/output_model/ -name genai_config.json -printf "%h\n"`
-     baseline_model_folder =`find $(Build.BinariesDirectory)/output_model/ -name config.json -printf "%h\n"`
+     baseline_model_folder=`find $(Build.BinariesDirectory)/output_model/ -name config.json -printf "%h\n"`
 
      # verify only one config is found
      num_models=`echo -n "$model_config_folder" | grep -c '^'`
@@ -56,7 +57,7 @@ steps:
      fi
 
      echo "model folder: $model_config_folder"
-     echo "baseline_model folder: $baselina_model_folder"
+     echo "baseline_model folder: $baseline_model_folder"
 
      docker run --gpus all --rm \
         --ipc=host \
