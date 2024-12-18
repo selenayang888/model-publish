@@ -32,14 +32,13 @@ loop.run_until_complete(async_main_ground())
 uvicorn_proc.send_signal(subprocess.signal.SIGTERM)
 uvicorn_proc.wait()
 
-time.sleep(15)
 
 uvicorn_proc = subprocess.Popen(["uvicorn main_pytorch:app --reload"], shell=True)
 
-# step.2 - wait for the server ready
+# repaet step.2 - wait for the baseline server ready
 time.sleep(25)
 
-# step.3 - call the endpoint and do validation
+# repaet step.3 - call the baseline endpoint and do validation
 print(" ### Start baseline-model endpoint :)")
 
 import asyncio
@@ -54,4 +53,4 @@ loop.run_until_complete(async_main_ground())
 # step.last - send SIGTERM to server and wait for it to exit
 uvicorn_proc.send_signal(subprocess.signal.SIGTERM)
 uvicorn_proc.wait()
-#sys.exit(uvicorn_proc.returncode)
+
