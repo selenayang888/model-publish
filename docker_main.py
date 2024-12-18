@@ -14,7 +14,7 @@ print(os.environ)
 uvicorn_proc = subprocess.Popen(["uvicorn main:app --reload"], shell=True)
 
 # step.2 - wait for the server ready
-time.sleep(10)
+time.sleep(30)
 
 # step.3 - call the endpoint and do validation
 print(" ### Start model endpoint :)")
@@ -35,7 +35,7 @@ uvicorn_proc.wait()
 uvicorn_proc = subprocess.Popen(["uvicorn main_pytorch:app --reload"], shell=True)
 
 # step.2 - wait for the server ready
-time.sleep(10)
+time.sleep(30)
 
 # step.3 - call the endpoint and do validation
 print(" ### Start baseline-model endpoint :)")
