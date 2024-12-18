@@ -46,7 +46,7 @@ steps:
  - script: |
      # search for "genai_config.json" under folder "$(Build.BinariesDirectory)/output_model/"
      model_config_folder=`find $(Build.BinariesDirectory)/output_model/ -name genai_config.json -printf "%h\n"`
-     baseline_model_folder = `find $(Build.BinariesDirectory)/output_model/ -name config.json -printf "%h\n"`
+     baseline_model_folder =`find $(Build.BinariesDirectory)/output_model/ -name config.json -printf "%h\n"`
 
      # verify only one config is found
      num_models=`echo -n "$model_config_folder" | grep -c '^'`
