@@ -14,7 +14,7 @@ print(os.environ)
 # Initialize the model, tokenizer, and tokenizer stream
 # Please update the DML model here
 #model = og.Model('/model')
-model = og.Model('/build/oga_models/microsoft_phi-3-mini-4k-instruct/cuda-int4')
+model = og.Model('/model')
 tokenizer = og.Tokenizer(model)
 tokenizer_stream = tokenizer.create_stream()
 
