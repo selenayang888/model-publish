@@ -38,10 +38,10 @@ pip install -e .[llm-oga-cuda]
 echo "Installed turnkeyllm"
 
 echo "Running lemonade command"
-lemonade -i microsoft/Phi-3-mini-4k-instruct --cache-dir "/build" oga-load --device cuda --dtype int4 llm-prompt -p "Hello, my thoughts are"
+lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --device cuda --dtype int4 accuracy-mmlu --tests management
 
 # echo "Copying the model to ort_src"
-ls -la "/build/oga_models/microsoft_phi-3-mini-4k-instruct/cuda-int4"
+ls -la "/build/oga_models/"
 
 echo "lemonade exported onnx model successfully!"
 
