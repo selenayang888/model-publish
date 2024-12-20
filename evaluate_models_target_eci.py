@@ -135,3 +135,8 @@ async def async_main_eci():
 
     # %%
     pprint(results["metrics"])
+
+    json_result = json.dumps(results, indent=4)
+
+    with Path.open("/model/rai_eci_result.json", "w") as f:
+        f.write(json_result)

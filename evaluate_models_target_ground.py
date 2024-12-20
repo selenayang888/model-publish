@@ -129,3 +129,8 @@ async def async_main_ground():
 
     # %%
     print(eval_output["metrics"])
+
+    json_result = json.dumps(eval_output, indent=4)
+
+    with Path.open("/model/rai_ground_result.json", "w") as f:
+        f.write(json_result)
