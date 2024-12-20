@@ -80,16 +80,19 @@ steps:
 
 #    displayName: "Authentication to Huggingface repo" 
 
+
+# Replace "/" with "_" and convert to lowercase
+# Set the formatted checkpoint as an environment variable
  - bash: |
      echo "Processing checkpoint"
 
      checkpoint="${{ parameters.model_name }}"
 
-    # Replace "/" with "_" and convert to lowercase
+    
      formatted_checkpoint=$(echo "$checkpoint" | tr '/' '_' | tr '[:upper:]' '[:lower:]')
      formatted_name=$(echo "$formatted_checkpoint" | tr '.' '_' | tr '[:upper:]' '[:lower:]')
 
-    # Set the formatted checkpoint as an environment variable
+
      echo "##vso[task.setvariable variable=formatted_checkpoint]$formatted_checkpoint"
      echo "##vso[task.setvariable variable=formatted_name]$formatted_name"
      echo "Formatted checkpoint: $formatted_checkpoint"
