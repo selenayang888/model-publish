@@ -1,6 +1,6 @@
 #!/bin/bash
 
-conda install python=3.13
+conda install python=3.12
 
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.1-1_all.deb
 dpkg -i cuda-keyring_1.1-1_all.deb
@@ -20,7 +20,7 @@ echo "Step.2 - azure-cli"
 pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge
 
 echo "Step.3 - azure-ai and promptflow"
-pip install azure-ai-evaluation==1.1.0 promptflow-azure
+pip install azure-ai-evaluation --upgrade promptflow-azure marshmallow==3.23.2
 
 #echo "Step.4 - promptflow-azure"
 #pip install promptflow-azure==1.16.2
