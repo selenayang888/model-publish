@@ -23,7 +23,7 @@ echo "Step.3 - azure-ai"
 pip install azure-ai-evaluation==1.1.0
 
 echo "Step.4 - promptflow-azure"
-pip install promptflow-azure
+pip install promptflow-azure==1.16.2
 
 az login --identity
 echo "print out az account"
