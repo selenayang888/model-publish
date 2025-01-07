@@ -37,6 +37,9 @@ echo "Installing turnkeyllm"
 pip install -e .[llm-oga-cuda]
 echo "Installed turnkeyllm"
 
+echo "Download baseline model"
+huggingface-cli download $MODEL_NAME --local-dir /build/oga_models/hf_version/
+
 echo "Running lemonade command"
 lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --device cuda --dtype int4 accuracy-mmlu --tests management
 

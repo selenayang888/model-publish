@@ -33,23 +33,23 @@ uvicorn_proc.send_signal(subprocess.signal.SIGTERM)
 uvicorn_proc.wait()
 
 # run baseline model with RAI evaluation
-# uvicorn_proc = subprocess.Popen(["uvicorn main_pytorch:app --reload"], shell=True)
+uvicorn_proc = subprocess.Popen(["uvicorn main_pytorch:app --reload"], shell=True)
 
 
-# time.sleep(25)
+time.sleep(20)
 
 
-# print(" ### Start baseline-model endpoint :)")
+print(" ### Start baseline-model endpoint :)")
 
-# import asyncio
-# loop = asyncio.get_event_loop()
-# loop.run_until_complete(async_main())
-# loop.run_until_complete(async_main_eci())
-# loop.run_until_complete(async_main_jailbreak())
-# loop.run_until_complete(async_main_ground())
+import asyncio
+loop = asyncio.get_event_loop()
+loop.run_until_complete(async_main())
+loop.run_until_complete(async_main_eci())
+loop.run_until_complete(async_main_jailbreak())
+loop.run_until_complete(async_main_ground())
 
 
 
-# uvicorn_proc.send_signal(subprocess.signal.SIGTERM)
-# uvicorn_proc.wait()
+uvicorn_proc.send_signal(subprocess.signal.SIGTERM)
+uvicorn_proc.wait()
 
