@@ -20,7 +20,7 @@ echo "Step.2 - azure-cli"
 pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge
 
 echo "Step.3 - azure-ai"
-pip install azure-ai-evaluation == 1.0.1
+pip install azure-ai-evaluation==1.1.0
 
 echo "Step.4 - promptflow-azure"
 pip install promptflow-azure
