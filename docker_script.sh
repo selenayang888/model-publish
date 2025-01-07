@@ -19,11 +19,11 @@ pip install flash_attn accelerate==0.31.0 transformers==4.43.0
 echo "Step.2 - azure-cli"
 pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge
 
-echo "Step.3 - azure-ai"
-pip install azure-ai-evaluation==1.1.0
+echo "Step.3 - azure-ai and promptflow"
+pip install azure-ai-evaluation==1.1.0 promptflow-azure==1.16.2
 
-echo "Step.4 - promptflow-azure"
-pip install promptflow-azure==1.16.2
+#echo "Step.4 - promptflow-azure"
+#pip install promptflow-azure==1.16.2
 
 az login --identity
 echo "print out az account"
