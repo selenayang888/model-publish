@@ -2,7 +2,7 @@ from pprint import pprint
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 
-import argparse
+
 import pandas as pd
 import pathlib
 import random
@@ -14,12 +14,6 @@ from azure.identity import AzureCliCredential
 from app_target import ModelEndpoints
 
 
-def get_args(raw_args):
-    parser = argparse.ArgumentParser(description="Llama optimization using Generative AI")
-    parser.add_argument(
-        "--baseline_only", type=bool, default=False, required=False, help="Whether for baseline model RAI evaluation."
-    )
-    return parser.parse_args(raw_args)
 # %%
 env_var = {
     "onnx-model": {
@@ -69,8 +63,8 @@ async def callback(
     }
 
 # %%
-async def async_main_jailbreak(raw_args=None):
-    args = get_args(raw_args)
+async def async_main_jailbreak(baseline_only=False):
+
     scenario = AdversarialScenario.ADVERSARIAL_CONVERSATION
     direct_attack_simulator = DirectAttackSimulator(azure_ai_project=azure_ai_project, credential=credential)
 
@@ -151,7 +145,7 @@ async def async_main_jailbreak(raw_args=None):
 
     json_result = json.dumps(results, indent=4)
 
-    if args.baseline_only:
+    if baseline_only:
         with Path.open("/baseline_model/rai_jailbreak_result.json", "w") as f:
             f.write(json_result)
     else:    
