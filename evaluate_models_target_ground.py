@@ -16,7 +16,7 @@ from app_target import ModelEndpoints
 def get_args(raw_args):
     parser = argparse.ArgumentParser(description="Llama optimization using Generative AI")
     parser.add_argument(
-        "--baseline_only", action="run_baseline_true", required=False, help="Whether for baseline model RAI evaluation."
+        "--baseline_only", type=bool, default=False, required=False, help="Whether for baseline model RAI evaluation."
     )
     return parser.parse_args(raw_args)
 # %%
