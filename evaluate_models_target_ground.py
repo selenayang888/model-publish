@@ -8,10 +8,17 @@ from azure.ai.evaluation import evaluate
 from azure.ai.evaluation import GroundednessEvaluator
 from azure.ai.evaluation.simulator import Simulator
 
+import argparse
 import importlib.resources as pkg_resources
 
 from app_target import ModelEndpoints
 
+def get_args(raw_args):
+    parser = argparse.ArgumentParser(description="Llama optimization using Generative AI")
+    parser.add_argument(
+        "--baseline_only", action="run_baseline_true", required=False, help="Whether for baseline model RAI evaluation."
+    )
+    return parser.parse_args(raw_args)
 # %%
 env_var = {
     "onnx-model": {
@@ -86,7 +93,8 @@ async def custom_simulator_callback(
     messages["messages"].append(message)
     return {"messages": messages["messages"], "stream": stream, "session_state": session_state, "context": context}
 
-async def async_main_ground():
+async def async_main_ground(raw_args=None):
+    args = get_args(raw_args)
     # %%
     custom_simulator = Simulator(model_config=model_config)
     outputs = await custom_simulator(
@@ -131,6 +139,9 @@ async def async_main_ground():
     print(eval_output["metrics"])
 
     json_result = json.dumps(eval_output, indent=4)
-
-    with Path.open("/model/rai_ground_result.json", "w") as f:
-        f.write(json_result)
+    if args.baseline_only:
+        with Path.open("/baseline_model/rai_ground_result.json", "w") as f:
+            f.write(json_result)
+    else:    
+        with Path.open("/model/rai_ground_result.json", "w") as f:
+            f.write(json_result)

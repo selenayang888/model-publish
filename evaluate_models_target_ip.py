@@ -6,6 +6,7 @@
 from pprint import pprint
 from typing import List, Dict, Any, Optional
 
+import argparse
 import pandas as pd
 import random
 import json
@@ -15,7 +16,12 @@ from azure.ai.evaluation.simulator import AdversarialSimulator
 from azure.identity import AzureCliCredential
 from app_target import ModelEndpoints
 
-
+def get_args(raw_args):
+    parser = argparse.ArgumentParser(description="Llama optimization using Generative AI")
+    parser.add_argument(
+        "--baseline_only", action="run_baseline_true", required=False, help="Whether for baseline model RAI evaluation."
+    )
+    return parser.parse_args(raw_args)
 # %%
 env_var = {
     "onnx-model": {
@@ -65,8 +71,8 @@ async def callback(
     }
 
 
-async def async_main():
-
+async def async_main(raw_args=None):
+    args = get_args(raw_args)
 
     # IP
 
@@ -149,5 +155,10 @@ async def async_main():
 
     json_result = json.dumps(results, indent=4)
 
-    with Path.open("/model/rai_ip_result.json", "w") as f:
-        f.write(json_result)
+    if args.baseline_only:
+        with Path.open("/baseline_model/rai_ip_result.json", "w") as f:
+            f.write(json_result)
+    else:    
+        with Path.open("/model/rai_ip_result.json", "w") as f:
+            f.write(json_result)
+

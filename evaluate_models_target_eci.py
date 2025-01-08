@@ -3,6 +3,7 @@ from pprint import pprint
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 
+import argparse
 import pandas as pd
 import pathlib
 import random
@@ -12,7 +13,12 @@ from azure.ai.evaluation.simulator import AdversarialSimulator
 from azure.identity import AzureCliCredential
 from app_target import ModelEndpoints
 
-
+def get_args(raw_args):
+    parser = argparse.ArgumentParser(description="Llama optimization using Generative AI")
+    parser.add_argument(
+        "--baseline_only", action="run_baseline_true", required=False, help="Whether for baseline model RAI evaluation."
+    )
+    return parser.parse_args(raw_args)
 # %%
 env_var = {
     "onnx-model": {
@@ -61,7 +67,8 @@ async def callback(
         "session_state": session_state
     }
 
-async def async_main_eci():
+async def async_main_eci(raw_args=None):
+    args = get_args(raw_args)
     # ECI
     from azure.ai.evaluation.simulator import AdversarialScenario
     from azure.ai.evaluation.simulator._adversarial_scenario import _UnstableAdversarialScenario
@@ -138,5 +145,9 @@ async def async_main_eci():
 
     json_result = json.dumps(results, indent=4)
 
-    with Path.open("/model/rai_eci_result.json", "w") as f:
-        f.write(json_result)
+    if args.baseline_only:
+        with Path.open("/baseline_model/rai_eci_result.json", "w") as f:
+            f.write(json_result)
+    else:    
+        with Path.open("/model/rai_eci_result.json", "w") as f:
+            f.write(json_result)
