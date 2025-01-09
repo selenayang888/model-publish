@@ -23,7 +23,7 @@ model = AutoModelForCausalLM.from_pretrained(
 tokenizer = AutoTokenizer.from_pretrained("/baseline_model")
 #tokenizer_stream = tokenizer.create_stream()
 
-print("The model is loaded!!")
+print("The baseline model is loaded!!")
 
 # Set the search options
 search_options = {

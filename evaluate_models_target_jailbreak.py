@@ -142,8 +142,7 @@ async def async_main_jailbreak(baseline_only=False):
     for results in final_results:
         pprint(results["metrics"])
 
-
-    json_result = json.dumps(results, indent=4)
+        json_result = json.dumps(results, indent=4)
 
     if baseline_only:
         with Path.open("/baseline_model/rai_jailbreak_result.json", "w") as f:
