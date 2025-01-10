@@ -3,7 +3,7 @@ parameters:
  - name: model_name
    displayName: mode name on huggingface website
    type: string
-   default: meta-llama/Llama-3.2-3B-Instruct
+   default: microsoft/phi-4-mini
 
 pool: onnxruntime-Linux-GPU-T4 #onnxruntime-tensorrt-linuxbuild-T4
 steps:
@@ -98,6 +98,11 @@ steps:
      echo "Formatted checkpoint: $formatted_checkpoint"
      echo "Formatted name: $formatted_name"
    displayName: "Process checkpoint"
+
+ - script: |
+    azcopy copy "https://sunghchostorageaccount.blob.core.windows.net/phi-3/phi-4-mini-instruct-01072025" --recursive "./build"
+  workingDirectory: $(Build.SourcesDirectory)
+  displayName: "Download model from azure blob"
 
  - script: |
      docker run --gpus all --rm \
