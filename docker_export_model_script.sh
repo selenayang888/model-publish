@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eox
+
 apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub
 
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.1-1_all.deb
@@ -38,7 +40,7 @@ pip install -e .[llm-oga-cuda]
 echo "Installed turnkeyllm"
 
 echo "Download baseline model"
-huggingface-cli download $MODEL_NAME --local-dir /build/oga_models/hf_version/
+# huggingface-cli download $MODEL_NAME --local-dir /build/oga_models/hf_version/
 
 echo "Running lemonade command"
 lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --input_path "/build/phi-4-mini-instruct-01072025" --device cuda --dtype int4 accuracy-mmlu --tests management oga-bench
