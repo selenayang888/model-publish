@@ -34,6 +34,8 @@ async def score(input_data: InputData):
     text = input_data.text
     if not text:
         raise HTTPException(status_code=400, detail="Input cannot be empty")
+    
+    print("### main.py: start run")
 
     # The chat template needs to update later.
     # I will give you the OpenAIChatCompletion template.
@@ -60,6 +62,7 @@ async def score(input_data: InputData):
     finally:
         del generator
 
+    print("### main.py: end run")
     return {"response": output_text}
 
 #uvicorn main:app --reload 

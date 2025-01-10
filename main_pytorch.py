@@ -40,6 +40,8 @@ async def score(input_data: InputData):
     if not text:
         raise HTTPException(status_code=400, detail="Input cannot be empty")
 
+    print("### main_pytorch.py: start run")
+
     # The chat template needs to update later.
     # I will give you the OpenAIChatCompletion template.
     chat_template = '<|user|>\n{input} <|end|>\n<|assistant|>'
@@ -89,6 +91,8 @@ async def score(input_data: InputData):
 
     output_text = pipe(messages, **generation_args)[0]['generated_text']
 
+    print("### main_pytorch.py: end run")
+    
     return {"response": output_text}
 
 #uvicorn main:app --reload 
