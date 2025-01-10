@@ -14,7 +14,7 @@ pip install fastapi uvicorn onnxruntime-genai-cuda
 
 echo "step.1b - installing baselina model requirement"
 pip install torch==2.3.1
-pip install flash_attn accelerate==0.31.0 transformers
+pip install flash_attn accelerate==0.31.0 transformers==4.43.0
 
 echo "Step.2 - azure-cli"
 pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge
