@@ -39,7 +39,7 @@ async def score(input_data: InputData):
     text = input_data.text
     if not text:
         raise HTTPException(status_code=400, detail="Input cannot be empty")
-
+    print("### main_baseline.py: start run")
     # The chat template needs to update later.
     # I will give you the OpenAIChatCompletion template.
     chat_template = '<|user|>\n{input} <|end|>\n<|assistant|>'

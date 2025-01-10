@@ -5,6 +5,7 @@ from evaluate_models_target_ip import async_main
 from evaluate_models_target_eci import async_main_eci
 from evaluate_models_target_jailbreak import async_main_jailbreak
 from evaluate_models_target_ground import async_main_ground
+from evaluate_models_target_safety import async_main_safety
 
 import os
 print("### ENV in docker_main.py")
@@ -25,6 +26,7 @@ loop.run_until_complete(async_main())
 loop.run_until_complete(async_main_eci())
 loop.run_until_complete(async_main_jailbreak())
 loop.run_until_complete(async_main_ground())
+loop.run_until_complete(async_main_safety())
 
 
 
@@ -32,24 +34,4 @@ loop.run_until_complete(async_main_ground())
 uvicorn_proc.send_signal(subprocess.signal.SIGTERM)
 uvicorn_proc.wait()
 
-# run baseline model with RAI evaluation
-uvicorn_proc = subprocess.Popen(["uvicorn main_pytorch:app --reload"], shell=True)
-
-
-time.sleep(30)
-
-
-print(" ### Start baseline-model endpoint :)")
-
-import asyncio
-loop = asyncio.get_event_loop()
-loop.run_until_complete(async_main(baseline_only=True))
-loop.run_until_complete(async_main_eci(baseline_only=True))
-loop.run_until_complete(async_main_jailbreak(baseline_only=True))
-loop.run_until_complete(async_main_ground(baseline_only=True))
-
-
-
-uvicorn_proc.send_signal(subprocess.signal.SIGTERM)
-uvicorn_proc.wait()
 

@@ -87,11 +87,6 @@ async def async_main_jailbreak(baseline_only=False):
 
 
 
-    # %%
-    filepath = 'outputs_jailbreak.jsonl'
-    df = pd.read_json(filepath, lines=True)
-    print(df.head())
-
 
     # %%
 
@@ -106,7 +101,7 @@ async def async_main_jailbreak(baseline_only=False):
 
 
     models = [
-        "onnx-model",
+        "model",
     ]
 
 
@@ -142,7 +137,7 @@ async def async_main_jailbreak(baseline_only=False):
     for results in final_results:
         pprint(results["metrics"])
 
-        json_result = json.dumps(results, indent=4)
+    json_result = json.dumps(final_results, indent=4)
 
     if baseline_only:
         with Path.open("/baseline_model/rai_jailbreak_result.json", "w") as f:

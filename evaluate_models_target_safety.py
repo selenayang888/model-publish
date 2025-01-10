@@ -1,20 +1,15 @@
 # %%
-#%pip install azure-ai-evaluation --upgrade
-#%pip install promptflow-azure --upgrade
-
-# %%
 from pprint import pprint
 from typing import List, Dict, Any, Optional
-
 
 import pandas as pd
 import random
 import json
 
-from azure.ai.evaluation.simulator import AdversarialScenario
 from azure.ai.evaluation.simulator import AdversarialSimulator
-from azure.identity import AzureCliCredential
+from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 from app_target import ModelEndpoints
+
 
 # %%
 env_var = {
@@ -30,7 +25,7 @@ azure_ai_project = {
     "resource_group_name": "yangselenaai",
     "project_name": "azure_ai_studio_sdk",
 }
-credential = AzureCliCredential()
+credential = DefaultAzureCredential()
 
 # %%
 async def callback(
@@ -64,13 +59,12 @@ async def callback(
         "session_state": session_state
     }
 
+# %%
+async def async_main_safety(baseline_only=False):
+    from azure.ai.evaluation.simulator import AdversarialScenario
 
-async def async_main(baseline_only=False):
-    # IP
-
-    scenario = AdversarialScenario.ADVERSARIAL_CONTENT_PROTECTED_MATERIAL
+    scenario = AdversarialScenario.ADVERSARIAL_QA
     adversarial_simulator = AdversarialSimulator(azure_ai_project=azure_ai_project, credential=credential)
-    #indirect_attack_simulator=IndirectAttackSimulator(azure_ai_project=azure_ai_project)
 
     outputs = await adversarial_simulator(
             scenario=scenario, # required adversarial scenario to simulate
@@ -80,19 +74,19 @@ async def async_main(baseline_only=False):
         )
 
     # By default simulator outputs json, use the following helper function to convert to QA pairs in jsonl format
-
-    print(outputs.to_eval_qr_json_lines())
+    #outputs.to_eval_qa_json_lines()
+    #print(outputs.to_eval_qa_json_lines())
 
     # %%
     from pathlib import Path
 
-    with Path.open("outputs_ip.jsonl", "w") as f:
+    with Path.open("outputs_safety.jsonl", "w") as f:
         f.write(outputs.to_eval_qr_json_lines())
 
 
 
     # %%
-    filepath = 'outputs_ip.jsonl'
+    filepath = 'outputs_safety.jsonl'
     df = pd.read_json(filepath, lines=True)
     print(df.head())
 
@@ -105,19 +99,18 @@ async def async_main(baseline_only=False):
 
     from azure.ai.evaluation import evaluate
     from azure.ai.evaluation import (
-        ProtectedMaterialEvaluator,
+        ContentSafetyEvaluator,
+
     )
 
 
-    #content_safety_evaluator = ContentSafetyEvaluator(azure_ai_project=azure_ai_project, credential=credential)
-    ip_evaluator = ProtectedMaterialEvaluator(azure_ai_project=azure_ai_project, credential=credential)
-
+    content_safety_evaluator = ContentSafetyEvaluator(azure_ai_project=azure_ai_project, credential=credential)
 
     models = [
         "model",
     ]
 
-    path = str(pathlib.Path(pathlib.Path.cwd())) + "/outputs_ip.jsonl"
+    path = str(pathlib.Path(pathlib.Path.cwd())) + "/outputs_safety.jsonl"
 
     for model in models:
         randomNum = random.randint(1111, 9999)
@@ -125,12 +118,12 @@ async def async_main(baseline_only=False):
             evaluation_name="Eval-Run-" + str(randomNum) + "-" + model.title(),
             data=path,
             evaluators={
-                #"content_safety": content_safety_evaluator,
-                "ip": ip_evaluator,
+                "content_safety": content_safety_evaluator,
+
             },
             evaluator_config={
-                #"content_safety": {"query": "${data.query}", "response": "${data.response}"},
-                "ip": {"query": "${data.query}", "response": "${data.response}"},
+                "content_safety": {"query": "${data.query}", "response": "${data.response}"},
+
             },
             #azure_ai_project=azure_ai_project,  # optional to store the evaluation results in Azure AI Studio
         )
@@ -143,14 +136,12 @@ async def async_main(baseline_only=False):
 
     # %%
     pprint(results["metrics"])
-
-
+    
     json_result = json.dumps(results, indent=4)
 
     if baseline_only:
-        with Path.open("/baseline_model/rai_ip_result.json", "w") as f:
+        with Path.open("/baseline_model/rai_safety_result.json", "w") as f:
             f.write(json_result)
     else:    
-        with Path.open("/model/rai_ip_result.json", "w") as f:
+        with Path.open("/model/rai_safety_result.json", "w") as f:
             f.write(json_result)
-

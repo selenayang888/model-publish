@@ -106,7 +106,7 @@ async def async_main_eci(baseline_only=False):
 
 
     models = [
-        "onnx-model",
+        "model",
     ]
 
     path = str(pathlib.Path(pathlib.Path.cwd())) + "/outputs_eci.jsonl"
