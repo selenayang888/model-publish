@@ -83,6 +83,11 @@ steps:
 
 # Replace "/" with "_" and convert to lowercase
 # Set the formatted checkpoint as an environment variable
+ - script: |
+    azcopy copy "https://sunghchostorageaccount.blob.core.windows.net/phi-3/phi-4-mini-instruct-01072025" --recursive "./build"
+   workingDirectory: $(Build.SourcesDirectory)
+   displayName: "Download model from azure blob"
+
  - bash: |
      echo "Processing checkpoint"
 
