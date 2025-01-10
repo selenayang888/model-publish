@@ -33,11 +33,13 @@ loop.run_until_complete(async_main_ground())
 
 
 # step.last - send SIGTERM to server and wait for it to exit
-print('### before sigterm sent .')
-uvicorn_proc.send_signal(subprocess.signal.SIGTERM)
-print('### sigterm sent .')
+print('### before oskill.')
+os.kill(-uvicorn_proc.pid)
+print('### after oskill')
 exit_code = uvicorn_proc.wait()
 print(f'### process exit for onnx model server: {exit_code}')
+
+time.sleep(10)
 
 # run baseline model with RAI evaluation
 uvicorn_proc = subprocess.Popen(["uvicorn main_pytorch:app --reload"], shell=True)
@@ -57,9 +59,9 @@ loop.run_until_complete(async_main_ground(baseline_only=True))
 
 
 
-print('### before sigterm sent (pytorch).')
-uvicorn_proc.send_signal(subprocess.signal.SIGTERM)
-print('### sigterm sent (pytorch).')
+print('### before oskill.')
+os.kill(-uvicorn_proc.pid)
+print('### after oskill')
 exit_code = uvicorn_proc.wait()
 print(f'### process exit for pytorch server: {exit_code}')
 
