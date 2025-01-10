@@ -18,7 +18,7 @@ uvicorn_proc = subprocess.Popen(["uvicorn main_pytorch:app --reload"], shell=Tru
 print(" ### Start baseline-model endpoint :)")
 
 
-time.sleep(30)
+time.sleep(70)
 
 
 import asyncio

@@ -41,7 +41,7 @@ echo "Download baseline model"
 huggingface-cli download $MODEL_NAME --local-dir /build/oga_models/hf_version/
 
 echo "Running lemonade command"
-lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --device cuda --dtype int4 accuracy-mmlu --tests management
+lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --device cuda --dtype int4 accuracy-mmlu --tests management oga-bench
 
 # echo "Copying the model to ort_src"
 ls -la "/build/oga_models/"
