@@ -10,8 +10,13 @@ import os
 print("### ENV in docker_main.py")
 print(os.environ)
 
+import asyncio
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
+
 # step.1 - launch "uvicorn main:app --reload" in shell
 uvicorn_proc = subprocess.Popen(["uvicorn main:app --reload"], shell=True)
+print(f'### onnx model server started')
 
 # step.2 - wait for the server ready
 time.sleep(20)
@@ -19,7 +24,6 @@ time.sleep(20)
 # step.3 - call the endpoint and do validation
 print(" ### Start model endpoint :)")
 
-import asyncio
 loop = asyncio.get_event_loop()
 loop.run_until_complete(async_main())
 loop.run_until_complete(async_main_eci())
@@ -29,19 +33,22 @@ loop.run_until_complete(async_main_ground())
 
 
 # step.last - send SIGTERM to server and wait for it to exit
+print('### before sigterm sent .')
 uvicorn_proc.send_signal(subprocess.signal.SIGTERM)
-uvicorn_proc.wait()
+print('### sigterm sent .')
+exit_code = uvicorn_proc.wait()
+print(f'### process exit for onnx model server: {exit_code}')
 
 # run baseline model with RAI evaluation
 uvicorn_proc = subprocess.Popen(["uvicorn main_pytorch:app --reload"], shell=True)
 
+print(f'### pytorch server started')
 
 time.sleep(30)
 
 
 print(" ### Start baseline-model endpoint :)")
 
-import asyncio
 loop = asyncio.get_event_loop()
 loop.run_until_complete(async_main(baseline_only=True))
 loop.run_until_complete(async_main_eci(baseline_only=True))
@@ -50,6 +57,9 @@ loop.run_until_complete(async_main_ground(baseline_only=True))
 
 
 
+print('### before sigterm sent (pytorch).')
 uvicorn_proc.send_signal(subprocess.signal.SIGTERM)
-uvicorn_proc.wait()
+print('### sigterm sent (pytorch).')
+exit_code = uvicorn_proc.wait()
+print(f'### process exit for pytorch server: {exit_code}')
 

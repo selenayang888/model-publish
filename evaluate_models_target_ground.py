@@ -129,6 +129,7 @@ async def async_main_ground(baseline_only=False):
     pd.DataFrame(eval_output["rows"])
 
     # %%
+    print(f'baseline_only = {baseline_only}, metrics =')
     print(eval_output["metrics"])
 
     json_result = json.dumps(eval_output, indent=4)
@@ -138,3 +139,5 @@ async def async_main_ground(baseline_only=False):
     else:    
         with Path.open("/model/rai_ground_result.json", "w") as f:
             f.write(json_result)
+
+    print('### Finished async_main_ground()')
