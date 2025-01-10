@@ -34,7 +34,8 @@ loop.run_until_complete(async_main_ground())
 
 # step.last - send SIGTERM to server and wait for it to exit
 print('### before oskill.')
-os.kill(-uvicorn_proc.pid)
+import signal
+os.kill(-uvicorn_proc.pid, signal.SIGKILL)
 print('### after oskill')
 exit_code = uvicorn_proc.wait()
 print(f'### process exit for onnx model server: {exit_code}')
@@ -60,7 +61,7 @@ loop.run_until_complete(async_main_ground(baseline_only=True))
 
 
 print('### before oskill.')
-os.kill(-uvicorn_proc.pid)
+os.kill(-uvicorn_proc.pid, signal.SIGKILL)
 print('### after oskill')
 exit_code = uvicorn_proc.wait()
 print(f'### process exit for pytorch server: {exit_code}')
