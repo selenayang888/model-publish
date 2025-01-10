@@ -16,7 +16,7 @@ apt-get -y install cudnn9-cuda-12
 # pip install onnxruntime-genai-cuda
 
 
-pip install -y huggingface_hub
+pip install huggingface_hub
 
 echo "Diagnosis:"
 
