@@ -112,32 +112,32 @@ steps:
    displayName: "Export Onnx model by turnkey"
 
 
-#  - script: |
-#      # search for "genai_config.json" under folder "$(Build.BinariesDirectory)/oga_models/"
-#      model_config_folder=`find $(Build.BinariesDirectory)/oga_models/ -name genai_config.json -printf "%h\n"`
+ - script: |
+     # search for "genai_config.json" under folder "$(Build.BinariesDirectory)/oga_models/"
+     model_config_folder=`find $(Build.BinariesDirectory)/oga_models/ -name genai_config.json -printf "%h\n"`
      
 
-#      # verify only one config is found
-#      num_models=`echo -n "$model_config_folder" | grep -c '^'`
-#      if [[ $num_models -ne 1 ]]; then
-#        echo "The output model folder should contains exactly one genai_config.json file, but found $num_models"
-#        exit 1
-#      fi
+     # verify only one config is found
+     num_models=`echo -n "$model_config_folder" | grep -c '^'`
+     if [[ $num_models -ne 1 ]]; then
+       echo "The output model folder should contains exactly one genai_config.json file, but found $num_models"
+       exit 1
+     fi
 
-#      echo "model folder: $model_config_folder"
+     echo "model folder: $model_config_folder"
      
      
 
-#      docker run --gpus all --rm \
-#         --ipc=host \
-#         --volume $(Build.SourcesDirectory):/ort_src \
-#         --volume $(Build.BinariesDirectory):/build \
-#         --volume $model_config_folder:/model \
-#         -p 8000:8000 \
-#         -e CCACHE_DIR=/cache -w /ort_src \
-#         ptebic.azurecr.io/public/aifx/acpt/stable-ubuntu2004-cu121-py310-torch222:biweekly.202410.2 /bin/bash /ort_src/docker_script.sh
-#    workingDirectory: $(Build.SourcesDirectory)
-#    displayName: "start onnx model endpoint and RAI eval in container"
+     docker run --gpus all --rm \
+        --ipc=host \
+        --volume $(Build.SourcesDirectory):/ort_src \
+        --volume $(Build.BinariesDirectory):/build \
+        --volume $model_config_folder:/model \
+        -p 8000:8000 \
+        -e CCACHE_DIR=/cache -w /ort_src \
+        ptebic.azurecr.io/public/aifx/acpt/stable-ubuntu2004-cu121-py310-torch222:biweekly.202410.2 /bin/bash /ort_src/docker_script.sh
+   workingDirectory: $(Build.SourcesDirectory)
+   displayName: "start onnx model endpoint and RAI eval in container"
 
  - script: |
      baseline_model_folder=`find $(Build.BinariesDirectory)/oga_models/ -name config.json -printf "%h\n"`
