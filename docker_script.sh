@@ -8,6 +8,10 @@ dpkg -i cuda-keyring_1.1-1_all.deb
 apt-get update
 apt-get -y install cudnn9-cuda-12
 
+echo "check CUDA version"
+nvcc --version
+nvidia-smi
+
 
 echo "Step.1 - installing fastapi uvicorn onnxruntime-genai-cuda"
 pip install fastapi uvicorn onnxruntime-genai-cuda
