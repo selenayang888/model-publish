@@ -4,7 +4,7 @@
 # git clone https://github.com/apsonawane/turnkeyml-cuda.git
 # cd turnkeyml-cuda
 # git reset --hard f15fac9638fc03a3a83fff1d14d00e2246edeb63
-conda create -n tk-llm python=3.12
+conda create -n tk-llm python=3.10
 # source /opt/conda/etc/profile.d/conda.sh
 echo "Activating conda environment"
 conda activate tk-llm
