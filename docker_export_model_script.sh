@@ -43,7 +43,7 @@ echo "Download baseline model"
 # huggingface-cli download $MODEL_NAME --local-dir /build/oga_models/hf_version/
 
 # uninstall onnxruntime cpu version
-pip uninstall onnxruntime==1.20.1 -y
+echo "y" | pip uninstall onnxruntime==1.20.1
 
 echo "Running lemonade command"
 lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --input_path "/build/phi-4-mini-instruct-01072025/hf_version" --device cuda --dtype int4 accuracy-mmlu --tests management oga-bench
