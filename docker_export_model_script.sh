@@ -49,7 +49,7 @@ lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --input_path "/build/phi-4
 
 ls -la "/build/oga_models/"
 
-mkdir baseline_model/
+mkdir /build/oga_models/baseline_model/
 
 cp -r /build/phi-4-mini-instruct-01072025/hf_version/* /build/oga_models/baseline_model/
 
