@@ -44,10 +44,10 @@ echo "Download baseline model"
 
 # uninstall onnxruntime cpu version
 echo "y" | pip uninstall onnxruntime==1.20.1
-echo "y" | pip uninstall onnxruntime-genai-gpu
+echo "y" | pip uninstall onnxruntime-genai-cuda
 
 echo "y" | pip install onnxruntime-gpu
-echo "y" | pip install onnxruntime-genai-gpu
+echo "y" | pip install onnxruntime-genai-cuda
 
 echo "Running lemonade command"
 lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --input_path "/build/phi-4-mini-instruct-01072025/hf_version" --device cuda --dtype int4 accuracy-mmlu --tests management oga-bench
