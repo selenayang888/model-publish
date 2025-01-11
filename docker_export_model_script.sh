@@ -27,7 +27,7 @@ nvidia-smi
 echo "find libcudnn"
 find / -name libcudnn.so.*
 
-git clone https://github.com/apsonawane/turnkeyml-cuda.git
+git reset --hard ddcc8b1579c49d0c1b096db36d51fe60d4d55ebd
 cd turnkeyml-cuda
 conda create -n tk-llm python=3.10
 source /opt/conda/etc/profile.d/conda.sh
