@@ -1,23 +1,16 @@
 #!/bin/bash
 
-
-git clone https://github.com/apsonawane/turnkeyml-cuda.git
-cd turnkeyml-cuda
-git reset --hard f15fac9638fc03a3a83fff1d14d00e2246edeb63
-conda create -n tk-llm python=3.11
-source /opt/conda/etc/profile.d/conda.sh
+conda create -n tk-llm python=3.10
 echo "Activating conda environment"
 conda activate tk-llm
-echo "Installing turnkeyllm"
-pip install -e .[llm-oga-cuda]
-echo "Installed turnkeyllm"
+
 
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.1-1_all.deb
 dpkg -i cuda-keyring_1.1-1_all.deb
 
 apt-get update
-
 apt-get -y install cudnn9-cuda-12
+
 
 
 pip install -y huggingface_hub
@@ -32,6 +25,42 @@ nvidia-smi
 
 echo "find libcudnn"
 find / -name libcudnn.so.*
+
+git clone https://github.com/apsonawane/turnkeyml-cuda.git
+cd turnkeyml-cuda
+git reset --hard f15fac9638fc03a3a83fff1d14d00e2246edeb63
+#conda create -n tk-llm python=3.11
+source /opt/conda/etc/profile.d/conda.sh
+echo "###2"
+nvidia-smi
+#echo "Activating conda environment"
+#conda activate tk-llm
+echo "Installing turnkeyllm"
+pip install -e .[llm-oga-cuda]
+echo "###3"
+nvidia-smi
+echo "Installed turnkeyllm"
+
+# wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.1-1_all.deb
+# dpkg -i cuda-keyring_1.1-1_all.deb
+
+# apt-get update
+
+# apt-get -y install cudnn9-cuda-12
+
+
+# pip install -y huggingface_hub
+
+# echo "Diagnosis:"
+
+# conda env list
+
+
+# nvcc --version
+# nvidia-smi
+
+# echo "find libcudnn"
+# find / -name libcudnn.so.*
 
 echo "Download baseline model"
 huggingface-cli download $MODEL_NAME --local-dir /build/oga_models/hf_version/
