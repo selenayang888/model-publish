@@ -1,6 +1,5 @@
 #!/bin/bash
 
-set -eox
 
 apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub
 
@@ -42,12 +41,6 @@ echo "Installed turnkeyllm"
 echo "Download baseline model"
 # huggingface-cli download $MODEL_NAME --local-dir /build/oga_models/hf_version/
 
-# uninstall onnxruntime cpu version
-echo "y" | pip uninstall onnxruntime==1.20.1
-echo "y" | pip uninstall onnxruntime-genai-cuda
-
-echo "y" | pip install onnxruntime-gpu
-echo "y" | pip install onnxruntime-genai-cuda
 
 echo "Running lemonade command"
 lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --input_path "/build/phi-4-mini-instruct-01072025/hf_version" --device cuda --dtype int4 accuracy-mmlu --tests management oga-bench
