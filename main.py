@@ -22,7 +22,7 @@ print("The model is loaded!!")
 
 # Set the search options
 search_options = {
-    'max_length': 4096
+    'max_length': 8192
 }
 
 # Define the input schema
