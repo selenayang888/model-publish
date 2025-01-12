@@ -53,6 +53,7 @@ mkdir /build/oga_models/baseline_model/
 
 cp -r /build/phi-4-mini-instruct-01072025/hf_version/* /build/oga_models/baseline_model/
 
+ls -la "/build/oga_models/"
 
 echo "lemonade exported onnx model successfully!"
 
