@@ -21,9 +21,9 @@ tokenizer_stream = tokenizer.create_stream()
 print("The model is loaded!!")
 
 # Set the search options
-search_options = {
-    'max_length': 2048
-}
+# search_options = {
+#     'max_length': 2048
+# }
 
 # Define the input schema
 class InputData(BaseModel):
