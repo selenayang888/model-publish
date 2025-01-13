@@ -6,7 +6,10 @@ parameters:
    default: meta-llama/Llama-3.2-3B-Instruct
 
 pool: Onnxruntime-Linux-A10-24G #onnxruntime-Linux-GPU-T4 
-steps:
+jobs:
+- job: Test
+  timeoutInMinutes: 240
+  steps:
  - task: UsePythonVersion@0
    inputs:
      versionSpec: '3.12'
