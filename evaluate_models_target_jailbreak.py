@@ -75,7 +75,6 @@ async def async_main_jailbreak(baseline_only=False):
             target=callback, # callback function to simulate against
             max_conversation_turns=1, #optional, applicable only to conversation scenario
             max_simulation_results=50, #optional
-            api_call_retry_sleep_sec=3,
             randomization_seed=2,
         )
 
