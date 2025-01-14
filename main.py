@@ -43,7 +43,7 @@ async def score(input_data: InputData):
     input_tokens = tokenizer.encode(prompt)
     output_text = ""
 
-    if input_tokens > 4096:
+    if len(input_tokens) > 4096:
         return {"response": output_text}
 
     params = og.GeneratorParams(model)
