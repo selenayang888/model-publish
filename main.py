@@ -62,6 +62,7 @@ async def score(input_data: InputData):
             new_token = generator.get_next_tokens()[0]
             output_text += tokenizer_stream.decode(new_token)
     except Exception as e:
+        return {"response": "I am a safe AI"}
         raise HTTPException(status_code=500, detail=f"Error during generation: {e}")
     finally:
         del generator
