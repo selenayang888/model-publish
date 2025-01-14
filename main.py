@@ -32,6 +32,8 @@ class InputData(BaseModel):
 @app.post("/score")
 async def score(input_data: InputData):
     text = input_data.text
+    return {"response": text }
+
     if not text:
         # raise HTTPException(status_code=400, detail="Input cannot be empty")
         print(f"my bad, I got a problem!! my bad, {text} \n")
