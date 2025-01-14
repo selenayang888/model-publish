@@ -27,7 +27,7 @@ print("The baseline model is loaded!!")
 
 # Set the search options
 search_options = {
-    'max_length': 2048
+    'max_length': 4096
 }
 
 # Define the input schema
