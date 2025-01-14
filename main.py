@@ -43,7 +43,7 @@ async def score(input_data: InputData):
     input_tokens = tokenizer.encode(prompt)
     output_text = ""
 
-    if len(input_tokens) > 4096:
+    if len(input_tokens) >= 4096:
         return {"response": "I am a safe AI"}
 
     params = og.GeneratorParams(model)
@@ -63,9 +63,8 @@ async def score(input_data: InputData):
     finally:
         del generator
     
-    if not output_text:
+    if output_text == None or output_text == "":
         return {"response": "I am a safe AI"}
-        
 
     return {"response": output_text}
 
