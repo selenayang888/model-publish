@@ -62,6 +62,10 @@ async def score(input_data: InputData):
         raise HTTPException(status_code=500, detail=f"Error during generation: {e}")
     finally:
         del generator
+    
+    if not output_text:
+        return {"response": "I am a safe AI"}
+        
 
     return {"response": output_text}
 
