@@ -22,7 +22,7 @@ print("The model is loaded!!")
 
 # Set the search options
 search_options = {
-    'max_length': 4096
+    'max_length': 10240
 }
 
 # Define the input schema
@@ -46,7 +46,7 @@ async def score(input_data: InputData):
     input_tokens = tokenizer.encode(prompt)
     output_text = ""
 
-    if len(input_tokens) >= 4096:
+    if len(input_tokens) >= 10240:
         return {"response": "I am a safe AI"}
 
     params = og.GeneratorParams(model)
