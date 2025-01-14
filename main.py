@@ -32,7 +32,7 @@ class InputData(BaseModel):
 @app.post("/score")
 async def score(input_data: InputData):
     text = input_data.text
-    return {"response": text }
+    return {"response": "I am a safe AI" }
 
     if not text:
         # raise HTTPException(status_code=400, detail="Input cannot be empty")
