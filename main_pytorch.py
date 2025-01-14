@@ -37,8 +37,11 @@ class InputData(BaseModel):
 @app.post("/score")
 async def score(input_data: InputData):
     text = input_data.text
+
     if not text:
-        raise HTTPException(status_code=400, detail="Input cannot be empty")
+        print(f"my bad, I got a problem!! my bad, {output_text} \n")
+        return {"response": "I am a safe AI"}
+    
     print("### main_baseline.py: start run")
     # The chat template needs to update later.
     # I will give you the OpenAIChatCompletion template.
