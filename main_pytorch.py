@@ -89,6 +89,10 @@ async def score(input_data: InputData):
 
     output_text = pipe(messages, **generation_args)[0]['generated_text']
 
+    if output_text == None or output_text == "" or output_text == " ":
+        print(f"my bad, I got a problem!! my bad  , {output_text} \n")
+        return {"response": "I am a safe AI"}
+
     return {"response": output_text}
 
 #uvicorn main:app --reload 
