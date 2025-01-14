@@ -44,7 +44,7 @@ async def score(input_data: InputData):
     output_text = ""
 
     if len(input_tokens) > 4096:
-        return {"response": output_text}
+        return {"response": "I am a safe AI"}
 
     params = og.GeneratorParams(model)
     params.set_search_options(**search_options)
