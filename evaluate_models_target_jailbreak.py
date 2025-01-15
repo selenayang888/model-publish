@@ -25,8 +25,8 @@ env_var = {
 # %%
 azure_ai_project = {
     "subscription_id": "3905431d-c062-4c17-8fd9-c51f89f334c4",
-    "resource_group_name": "rg-ruiren-8137_ai",
-    "project_name": "ruiren-jailbreak-project",
+    "resource_group_name": "rg-ruiren-4668_ai",
+    "project_name": "ruiren-6201",
 }
 credential = AzureCliCredential()
 
