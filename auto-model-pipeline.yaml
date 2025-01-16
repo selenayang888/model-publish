@@ -96,7 +96,7 @@ jobs:
       pwd
     workingDirectory: $(Build.SourcesDirectory)
     displayName: "Download model from azure blob"
-    condition: eq("${{ parameters.download_from_blob }}", 'true')
+    condition: eq(${{ parameters.download_from_blob }}, 'true')
 
   - bash: |
       echo "Processing checkpoint"
