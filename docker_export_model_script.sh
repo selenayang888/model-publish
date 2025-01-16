@@ -26,7 +26,7 @@ echo "find libcudnn"
 find / -name libcudnn.so.*
 
 git clone https://github.com/rui-ren/turnkeyml.git
-cd turnkeyml-cuda
+cd turnkeyml
 conda create -n tk-llm python=3.10
 source /opt/conda/etc/profile.d/conda.sh
 echo "Activating conda environment"
