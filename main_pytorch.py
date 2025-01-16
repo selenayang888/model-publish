@@ -23,6 +23,12 @@ model = AutoModelForCausalLM.from_pretrained(
 tokenizer = AutoTokenizer.from_pretrained("/baseline_model")
 #tokenizer_stream = tokenizer.create_stream()
 
+pipe = pipeline(
+    "text-generation",
+    model=model,
+    tokenizer=tokenizer,
+)
+
 print("The baseline model is loaded!!")
 
 # Set the search options
@@ -73,11 +79,7 @@ async def score(input_data: InputData):
         #{"role": "user", "content": "What about solving an 2x + 3 = 7 equation?"},
     ]
 
-    pipe = pipeline(
-        "text-generation",
-        model=model,
-        tokenizer=tokenizer,
-    )
+
 
     generation_args = {
         "max_new_tokens": 2048, 
