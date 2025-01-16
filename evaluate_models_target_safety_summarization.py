@@ -80,13 +80,13 @@ async def async_main_summarization(baseline_only=False):
     # %%
     from pathlib import Path
 
-    with Path.open("outputs_safety.jsonl", "w") as f:
+    with Path.open("outputs_summarization.jsonl", "w") as f:
         f.write(outputs.to_eval_qr_json_lines())
 
 
 
     # %%
-    filepath = 'outputs_safety.jsonl'
+    filepath = 'outputs_summarization.jsonl'
     df = pd.read_json(filepath, lines=True)
     print(df.head())
 
@@ -110,7 +110,7 @@ async def async_main_summarization(baseline_only=False):
         "model",
     ]
 
-    path = str(pathlib.Path(pathlib.Path.cwd())) + "/outputs_safety.jsonl"
+    path = str(pathlib.Path(pathlib.Path.cwd())) + "/outputs_summarization.jsonl"
 
     for model in models:
         randomNum = random.randint(1111, 9999)
