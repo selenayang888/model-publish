@@ -4,6 +4,10 @@ parameters:
    displayName: mode name on huggingface website
    type: string
    default: meta-llama/Llama-3.2-3B-Instruct
+ - name: download_from_blob
+   displayName: download model from azure blob
+   type: string
+   default: false
 
 pool: Onnxruntime-Linux-A10-24G #onnxruntime-Linux-GPU-T4
 jobs:
@@ -92,6 +96,7 @@ jobs:
       pwd
     workingDirectory: $(Build.SourcesDirectory)
     displayName: "Download model from azure blob"
+    condition: eq("${{ parameters.download_from_blob }}", 'true')
 
   - bash: |
       echo "Processing checkpoint"
