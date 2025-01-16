@@ -44,15 +44,15 @@ async def score(input_data: InputData):
 
     params = og.GeneratorParams(model)
     params.set_search_options(**search_options)
-    params.input_ids = input_tokens
     generator = og.Generator(model, params)
 
     try:
+        generator.append_tokens(input_tokens)
         while not generator.is_done():
-            # generator.compute_logits() 
+            
             generator.generate_next_token()
-
             new_token = generator.get_next_tokens()[0]
+            
             output_text += tokenizer_stream.decode(new_token)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error during generation: {e}")
