@@ -37,10 +37,6 @@ class InputData(BaseModel):
 @app.post("/score")
 async def score(input_data: InputData):
     text = input_data.text
-
-    if not text:
-        print(f"my bad, I got a problem!! my bad, {output_text} \n")
-        return {"response": "I am a safe AI"}
     
     print("### main_baseline.py: start run")
     # The chat template needs to update later.
@@ -91,11 +87,6 @@ async def score(input_data: InputData):
     }
 
     output_text = pipe(messages, **generation_args)[0]['generated_text']
-
-    if output_text == None or not output_text or output_text == "{ }" or output_text == "{}":
-    
-        print(f"my bad, I got a problem!! my bad  , {output_text} \n")
-        return {"response": "I am a safe AI"}
 
     return {"response": output_text}
 

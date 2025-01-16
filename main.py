@@ -32,12 +32,6 @@ class InputData(BaseModel):
 @app.post("/score")
 async def score(input_data: InputData):
     text = input_data.text
-    return {"response": "I am a safe AI" }
-
-    if not text:
-        # raise HTTPException(status_code=400, detail="Input cannot be empty")
-        print(f"my bad, I got a problem!! my bad, {text} \n")
-        return {"response": "I am a safe AI"}
 
     print("### main.py: start run")
     # The chat template needs to update later.
@@ -47,9 +41,6 @@ async def score(input_data: InputData):
 
     input_tokens = tokenizer.encode(prompt)
     output_text = ""
-
-    if len(input_tokens) >= 10240:
-        return {"response": "I am a safe AI"}
 
     params = og.GeneratorParams(model)
     params.set_search_options(**search_options)
@@ -64,14 +55,10 @@ async def score(input_data: InputData):
             new_token = generator.get_next_tokens()[0]
             output_text += tokenizer_stream.decode(new_token)
     except Exception as e:
-        return {"response": "I am a safe AI"}
         raise HTTPException(status_code=500, detail=f"Error during generation: {e}")
     finally:
         del generator
-    
-    if output_text == None or not output_text or output_text == "{ }" or output_text == "{}":
-        print(f"my bad, I got a problem!! my bad  , {output_text} \n")
-        return {"response": "I am a safe AI"}
+
 
     return {"response": output_text}
 

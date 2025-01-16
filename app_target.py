@@ -32,8 +32,6 @@ class ModelEndpoints:
 
         #payload = {"messages": [{"role": "user", "content": question}], "max_tokens": 500}
 
-        payload = {"text": "I am a safe AI"}
-
         output = self.query(endpoint=endpoint, headers=headers, payload=payload)
         #answer = output["choices"][0]["message"]["content"]
         answer = output["response"]

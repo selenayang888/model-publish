@@ -25,7 +25,7 @@ nvidia-smi
 echo "find libcudnn"
 find / -name libcudnn.so.*
 
-git clone https://github.com/rui-ren/turnkeyml-cuda.git
+git clone https://github.com/rui-ren/turnkeyml.git
 cd turnkeyml-cuda
 conda create -n tk-llm python=3.10
 source /opt/conda/etc/profile.d/conda.sh
@@ -40,7 +40,7 @@ echo "Download baseline model"
 
 
 echo "Running lemonade command"
-lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --input_path "/build/phi-4-mini-instruct-01072025/hf_version" --device cuda --dtype int4 accuracy-mmlu --tests management oga-bench
+lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --input_path "/build/phi-4-mini-instruct-01072025/hf_version" --device cuda --dtype int4 accuracy-mmlu --tests management
 
 # echo "Copying the model to ort_src"
 
