@@ -59,7 +59,7 @@ with pkg_resources.path(package, resource_name) as grounding_file, Path.open(gro
 
 for item in data:
     conversation_turns.append([item])
-    if len(conversation_turns) == 2:
+    if len(conversation_turns) == 100:
         break
 
 # %%
