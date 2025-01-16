@@ -43,7 +43,7 @@ echo "Download baseline model"
 
 
 echo "Running lemonade command"
-lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --input_path "/build/phi-4-mini-instruct-01072025/hf_version" --device cuda --dtype int4 accuracy-mmlu --tests management oga-bench
+lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --input_path "/build/phi-4-mini-instruct-01072025/hf_version" --device cuda --dtype int4 accuracy-mmlu --tests management
 
 # echo "Copying the model to ort_src"
 
