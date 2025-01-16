@@ -48,8 +48,6 @@ async def callback(
     target=ModelEndpoints(env_var, model)
     response = target(query)["response"]
 
-    print(response, '....... omg')
-    
     # Format responses in OpenAI message protocol
     formatted_response = {
         "content": response,
