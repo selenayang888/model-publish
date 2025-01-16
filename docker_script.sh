@@ -10,7 +10,7 @@ apt-get -y install cudnn9-cuda-12
 
 
 echo "Step.1 - installing fastapi uvicorn onnxruntime-genai-cuda"
-pip install fastapi uvicorn onnxruntime-genai-cuda
+pip install fastapi uvicorn onnxruntime-genai-cuda==0.6.0rc1
 
 echo "step.1b - installing baselina model requirement"
 pip install torch==2.3.1
