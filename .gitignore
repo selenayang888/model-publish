@@ -6,6 +6,11 @@ __pycache__/
 # C extensions
 *.so
 
+rai_result
+
+*.json
+*.xlsx
+*.zip
 # Distribution / packaging
 .Python
 build/
