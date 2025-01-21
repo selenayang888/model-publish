@@ -8,6 +8,10 @@ parameters:
    displayName: download model from azure blob
    type: string
    default: false
+ - name: run_baseline_model
+   displayName: run baseline model or not
+   type: string
+   default: true
 
 pool: Onnxruntime-Linux-A10-24G #onnxruntime-Linux-GPU-T4
 jobs:
