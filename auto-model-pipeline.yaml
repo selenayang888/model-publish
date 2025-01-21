@@ -21,7 +21,7 @@ parameters:
    type: string
    default: true
 
-pool: ${{ parameters.pool}}
+pool: ${{ parameters.pool }}
 jobs:
 - job: Test
   timeoutInMinutes: 480
