@@ -6,7 +6,7 @@ from evaluate_models_target_eci import async_main_eci
 from evaluate_models_target_jailbreak import async_main_jailbreak
 from evaluate_models_target_ground import async_main_ground
 from evaluate_models_target_safety import async_main_safety
-from evaluate_models_target_summarization import async_main_summarization
+from evaluate_models_target_safety_summarization import async_main_summarization
 
 import os
 print("### ENV in docker_main_baseline.py")
