@@ -2,18 +2,8 @@
 
 conda install python=3.12
 
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.1-1_all.deb
-dpkg -i cuda-keyring_1.1-1_all.deb
-
-apt-get update
-apt-get -y install cudnn9-cuda-12
-
-
-echo "Step.1 - installing fastapi uvicorn onnxruntime-genai-cuda"
-# pip install fastapi uvicorn onnxruntime-genai-cuda==0.6.0rc1
-# TODO: rui-ren adapt for cpu
+echo "Step.1 - installing fastapi uvicorn onnxruntime-genai"
 pip install fastapi uvicorn onnxruntime-genai==0.6.0rc1
-
 
 echo "step.1b - installing baselina model requirement"
 pip install torch==2.3.1
