@@ -10,21 +10,14 @@ app = FastAPI()
 
 torch.random.manual_seed(0)
 
-# check the folder path
-baseline_model_folder = Path("/baseline_model")
-
-# TODO: hard-code for now.
-if not baseline_model_folder.exists():
-    baseline_model_folder = "microsoft/phi-4"
-
 model = AutoModelForCausalLM.from_pretrained(
-    baseline_model_folder, 
+    "/baseline_model", 
     device_map="cuda", 
     torch_dtype="auto", 
     trust_remote_code=True, 
 )
 
-tokenizer = AutoTokenizer.from_pretrained(baseline_model_folder)
+tokenizer = AutoTokenizer.from_pretrained("/baseline_model")
 #tokenizer_stream = tokenizer.create_stream()
 
 pipe = pipeline(
