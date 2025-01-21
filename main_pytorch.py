@@ -11,13 +11,13 @@ app = FastAPI()
 torch.random.manual_seed(0)
 
 model = AutoModelForCausalLM.from_pretrained(
-    "/baseline_model", 
+    "microsoft/phi-4", 
     device_map="cuda", 
     torch_dtype="auto", 
     trust_remote_code=True, 
 )
 
-tokenizer = AutoTokenizer.from_pretrained("/baseline_model")
+tokenizer = AutoTokenizer.from_pretrained("microsoft/phi-4")
 #tokenizer_stream = tokenizer.create_stream()
 
 pipe = pipeline(

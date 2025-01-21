@@ -2,18 +2,15 @@
 
 conda install python=3.12
 
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.1-1_all.deb
-dpkg -i cuda-keyring_1.1-1_all.deb
-
-apt-get update
-apt-get -y install cudnn9-cuda-12
-
 
 echo "Step.1 - installing fastapi uvicorn onnxruntime-genai-cuda"
 pip install fastapi uvicorn onnxruntime-genai-cuda
 
 echo "step.1b - installing baselina model requirement"
 pip install torch==2.5.1
+
+# ACPT will cover it.
+
 pip install flash_attn==2.7.3 accelerate==0.31.0 transformers==4.48.1
 
 echo "Step.2 - azure-cli"
