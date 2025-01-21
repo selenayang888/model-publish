@@ -87,8 +87,6 @@ jobs:
 
       echo "model folder: $model_config_folder"
       
-      
-
       docker run --gpus all --rm \
           --ipc=host \
           --volume $(Build.SourcesDirectory):/ort_src \

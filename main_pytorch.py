@@ -3,24 +3,28 @@ from pydantic import BaseModel
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 import argparse
+from pathlib import Path
 
 
 app = FastAPI()
 
 torch.random.manual_seed(0)
 
-# Initialize the model, tokenizer, and tokenizer stream
-# Please update the DML model here
-# model = og.Model('/home/RAI-SDK/hf_version')
-# tokenizer = og.Tokenizer(model)
+# check the folder path
+baseline_model_folder = Path("/baseline_model")
+
+# TODO: hard-code for now.
+if not baseline_model_folder.exists():
+    baseline_model_folder = "microsoft/phi-4"
+
 model = AutoModelForCausalLM.from_pretrained(
-    "/baseline_model", 
+    baseline_model_folder, 
     device_map="cuda", 
     torch_dtype="auto", 
     trust_remote_code=True, 
 )
 
-tokenizer = AutoTokenizer.from_pretrained("/baseline_model")
+tokenizer = AutoTokenizer.from_pretrained(baseline_model_folder)
 #tokenizer_stream = tokenizer.create_stream()
 
 pipe = pipeline(
