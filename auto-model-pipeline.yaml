@@ -12,9 +12,12 @@ parameters:
    displayName: run baseline model or not
    type: string
    default: true
+ - name: run_onnx_model
+   displayName: run onnx model or not
+   type: string
+   default: true
 
-
-pool: Onnxruntime-Linux-A10-24G #onnxruntime-Linux-GPU-T4 
+pool: acpt-ubuntu2004-gpu-1es-pool-cu11x #onnxruntime-Linux-GPU-T4
 jobs:
 - job: Test
   timeoutInMinutes: 480
@@ -160,6 +163,8 @@ jobs:
           ptebic.azurecr.io/public/aifx/acpt/stable-ubuntu2004-cu121-py310-torch222:biweekly.202410.2 /bin/bash /ort_src/docker_script.sh
     workingDirectory: $(Build.SourcesDirectory)
     displayName: "start onnx model endpoint and RAI eval in container"
+    condition: eq(${{ parameters.run_onnx_model }}, 'true')
+
 
   - script: |
       baseline_model_folder=`find $(Build.BinariesDirectory)/oga_models/ -name config.json -printf "%h\n"`
