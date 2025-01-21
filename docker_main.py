@@ -25,8 +25,8 @@ import asyncio
 loop = asyncio.get_event_loop()
 loop.run_until_complete(async_main())
 loop.run_until_complete(async_main_eci())
-loop.run_until_complete(async_main_jailbreak())
-# loop.run_until_complete(async_main_ground())
+# loop.run_until_complete(async_main_jailbreak())
+loop.run_until_complete(async_main_ground())
 loop.run_until_complete(async_main_safety())
 loop.run_until_complete(async_main_summarization())
 
