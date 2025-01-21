@@ -17,7 +17,7 @@ parameters:
    type: string
    default: true
 
-pool: acpt-ubuntu2004-gpu-1es-pool-cu11x #onnxruntime-Linux-GPU-T4
+pool: Onnxruntime-Linux-A10-24G #onnxruntime-Linux-GPU-T4
 jobs:
 - job: Test
   timeoutInMinutes: 480
