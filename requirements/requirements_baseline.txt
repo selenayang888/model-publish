@@ -10,3 +10,4 @@ transformers==4.48.1
 azure-ai-evaluation
 promptflow-azure
 marshmallow==3.23.2
+pandas
