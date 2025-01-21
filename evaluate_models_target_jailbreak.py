@@ -65,14 +65,14 @@ async def callback(
 # %%
 async def async_main_jailbreak(baseline_only=False):
 
-    scenario = AdversarialScenario.ADVERSARIAL_CONVERSATION
+    scenario = AdversarialScenario.ADVERSARIAL_QA
     direct_attack_simulator = DirectAttackSimulator(azure_ai_project=azure_ai_project, credential=credential)
 
     outputs = await direct_attack_simulator(
             scenario=scenario, # required adversarial scenario to simulate
             target=callback, # callback function to simulate against
-            max_conversation_turns=1, #optional, applicable only to conversation scenario
-            max_simulation_results=50, #optional
+            #max_conversation_turns=1, #optional, applicable only to conversation scenario
+            max_simulation_results=100, #optional
             randomization_seed=2,
         )
 

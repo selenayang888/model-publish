@@ -13,11 +13,11 @@ parameters:
    type: string
    default: true
 
-pool: Onnxruntime-Linux-A10-24G #onnxruntime-Linux-GPU-T4
+
+pool: Onnxruntime-Linux-A10-24G #onnxruntime-Linux-GPU-T4 
 jobs:
 - job: Test
-  timeoutInMinutes: 180
-  cancelTimeoutInMinutes: 20
+  timeoutInMinutes: 480
   steps:
   - task: UsePythonVersion@0
     inputs:
@@ -46,6 +46,7 @@ jobs:
   #     ls -l /usr
   #     nvcc --version
   #    displayName: "dump cuda version"
+
 
   #  - script: |
   #      mkdir output_model
@@ -93,15 +94,17 @@ jobs:
   #    displayName: "Authentication to Huggingface repo" 
 
 
+
   # Replace "/" with "_" and convert to lowercase
   # Set the formatted checkpoint as an environment variable
+
   - script: |
       azcopy copy "https://sunghchostorageaccount.blob.core.windows.net/phi-3/phi-4-mini-instruct-01072025" --recursive $(Build.BinariesDirectory)
       pwd
     workingDirectory: $(Build.SourcesDirectory)
     displayName: "Download model from azure blob"
-    condition: eq(${{ parameters.download_from_blob }}, 'true')
 
+    condition: eq(${{ parameters.download_from_blob }}, 'true')
   - bash: |
       echo "Processing checkpoint"
 
@@ -120,10 +123,6 @@ jobs:
 
   - script: |
       docker run --gpus all --rm \
-          --device /dev/nvidia0:/dev/nvidia0 \
-          --device /dev/nvidiactl:/dev/nvidiactl \
-          --device /dev/nvidia-uvm:/dev/nvidia-uvm \
-          --device /dev/nvidia-uvm-tools:/dev/nvidia-uvm-tools \
           --ipc=host \
           --volume $(Build.SourcesDirectory):/ort_src \
           --volume $(Build.BinariesDirectory):/build \
@@ -180,6 +179,7 @@ jobs:
     workingDirectory: $(Build.SourcesDirectory)
     displayName: "start baseline model endpoint and RAI eval in container"
     condition: eq(${{ parameters.run_baseline_model }}, 'true')
+
 
 
   #baseline_model_folder=`find $(Build.BinariesDirectory)/output_model/ -name config.json -printf "%h\n"`

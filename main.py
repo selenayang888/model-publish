@@ -20,7 +20,7 @@ tokenizer_stream = tokenizer.create_stream()
 
 print("The model is loaded!!")
 
-# Set the search options
+#Set the search options
 search_options = {
     'max_length': 2048
 }
