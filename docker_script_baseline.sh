@@ -2,7 +2,7 @@
 
 conda install python=3.12
 
-
+echo "y" | pip uninstall torch
 
 echo "step.1 - installing baseline model requirement"
 pip install -r ./requirements/requirements_baseline.txt
