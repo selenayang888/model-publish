@@ -1,5 +1,9 @@
 
 parameters:
+ - name: pool
+   displayName: run compute pool
+   type: string
+   default: Onnxruntime-Linux-A10-24G 
  - name: model_name
    displayName: mode name on huggingface website
    type: string
@@ -17,7 +21,7 @@ parameters:
    type: string
    default: true
 
-pool: Onnxruntime-Linux-A10-24G #onnxruntime-Linux-GPU-T4
+pool: ${{ parameters.pool}}
 jobs:
 - job: Test
   timeoutInMinutes: 480
