@@ -10,24 +10,13 @@ app = FastAPI()
 
 torch.random.manual_seed(0)
 
-model = AutoModelForCausalLM.from_pretrained(
-    "phi-4",
-    device_map="cuda",
-    torch_dtype="auto",
-    trust_remote_code=True,
-)
-
-tokenizer = AutoTokenizer.from_pretrained("phi-4")
-
+# TODO : update for local model
 pipe = pipeline(
     "text-generation",
-    model=model,
-    tokenizer=tokenizer,
+    model="microsoft/phi-4",
 )
 
 print("The baseline model is loaded!!")
-
-search_options = {"max_length": 4096}
 
 
 class InputData(BaseModel):
