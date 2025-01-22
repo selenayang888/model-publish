@@ -15,19 +15,21 @@ torch.random.manual_seed(0)
 """
 Debug issue
 """
-import glob
+import os
 
-print(glob.glob("/baseline_model/*"))
+print("Display the path in side!!!")
+for path in os.listdir("/baseline_model"):
+    print(path)
 
 
 model = AutoModelForCausalLM.from_pretrained(
-    "/baseline_model",
+    "/baseline_model/",
     device_map="cuda",
     torch_dtype="auto",
     trust_remote_code=True,
 )
 
-tokenizer = AutoTokenizer.from_pretrained("/baseline_model")
+tokenizer = AutoTokenizer.from_pretrained("/baseline_model/")
 
 # Initialize the pipeline
 pipe = pipeline(
