@@ -25,12 +25,12 @@ time.sleep(70)
 import asyncio
 loop = asyncio.get_event_loop()
 
-#loop.run_until_complete(async_main(baseline_only=True))
-#loop.run_until_complete(async_main_eci(baseline_only=True))
-#loop.run_until_complete(async_main_jailbreak(baseline_only=True))
-#loop.run_until_complete(async_main_ground(baseline_only=True))
-#loop.run_until_complete(async_main_safety(baseline_only=True))
-loop.run_until_complete(async_main_summarization(baseline_only=True))
+loop.run_until_complete(async_main(baseline_only=True))
+loop.run_until_complete(async_main_eci(baseline_only=True))
+loop.run_until_complete(async_main_jailbreak(baseline_only=True))
+loop.run_until_complete(async_main_ground(baseline_only=True))
+loop.run_until_complete(async_main_safety(baseline_only=True))
+#loop.run_until_complete(async_main_summarization(baseline_only=True))
 
 
 
