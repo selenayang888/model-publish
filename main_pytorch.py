@@ -10,13 +10,22 @@ app = FastAPI()
 
 torch.random.manual_seed(0)
 
-# TODO : update for local model
-pipe = pipeline(
-    "text-generation",
-    model="microsoft/phi-4",
+
+model = AutoModelForCausalLM.from_pretrained(
+    "/baseline_model",
+    device_map="cuda",
+    torch_dtype="auto",
+    trust_remote_code=True,
 )
 
-print("The baseline model is loaded!!")
+tokenizer = AutoTokenizer.from_pretrained("/baseline_model")
+
+# Initialize the pipeline
+pipe = pipeline(
+    "text-generation",
+    model=model,
+    tokenizer=tokenizer,
+)
 
 
 class InputData(BaseModel):

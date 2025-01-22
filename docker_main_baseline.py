@@ -17,13 +17,12 @@ print(os.environ)
 # run baseline model with RAI evaluation
 try:
     uvicorn_proc = subprocess.Popen(["uvicorn main_pytorch:app --reload"], shell=True)
-    uvicorn_proc.wait()
 except Exception as e:
     raise ValueError("PyTorch model endpoint launch issue!")
 
 print(" ### Start baseline-model endpoint :)")
 
-time.sleep(360)
+time.sleep(60)
 
 
 loop = asyncio.get_event_loop()
