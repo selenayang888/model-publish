@@ -15,28 +15,6 @@ torch.random.manual_seed(0)
 """
 Debug issue
 """
-import os
-
-print("Display the path in side!!!")
-for path in os.listdir("/baseline_model"):
-    print(path)
-
-
-model = AutoModelForCausalLM.from_pretrained(
-    "/baseline_model/",
-    device_map="cuda",
-    torch_dtype="auto",
-    trust_remote_code=True,
-)
-
-tokenizer = AutoTokenizer.from_pretrained("/baseline_model/")
-
-# Initialize the pipeline
-pipe = pipeline(
-    "text-generation",
-    model=model,
-    tokenizer=tokenizer,
-)
 
 
 class InputData(BaseModel):
@@ -48,6 +26,22 @@ async def score(input_data: InputData):
     text = input_data.text
 
     print("### main_baseline.py: start run")
+
+    model = AutoModelForCausalLM.from_pretrained(
+        "/baseline_model/",
+        device_map="cuda",
+        torch_dtype="auto",
+        trust_remote_code=True,
+    )
+
+    tokenizer = AutoTokenizer.from_pretrained("/baseline_model/")
+
+    # Initialize the pipeline
+    pipe = pipeline(
+        "text-generation",
+        model=model,
+        tokenizer=tokenizer,
+    )
 
     chat_template = "<|user|>\n{input} <|end|>\n<|assistant|>"
     prompt = chat_template.format(input=text)
