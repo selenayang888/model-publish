@@ -13,6 +13,8 @@ ls -la /baseline_model
 echo "step.1 - installing baseline model requirement"
 pip install -r ./requirements/requirements_baseline.txt
 
+pip list
+
 echo "Step.2 - azure-cli"
 pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge
 
