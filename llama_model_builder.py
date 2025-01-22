@@ -10,7 +10,9 @@ from olive.workflows import run as olive_run
 
 
 def get_args(raw_args):
-    parser = argparse.ArgumentParser(description="Llama optimization using Generative AI")
+    parser = argparse.ArgumentParser(
+        description="Llama optimization using Generative AI"
+    )
     parser.add_argument(
         "--model_name",
         type=str,
@@ -18,9 +20,17 @@ def get_args(raw_args):
         help="Model name",
     )
     parser.add_argument(
-        "--metadata-only", action="store_true", required=False, help="Whether to use gpu for optimization."
+        "--metadata-only",
+        action="store_true",
+        required=False,
+        help="Whether to use gpu for optimization.",
     )
-    parser.add_argument("--tempdir", type=str, help="Root directory for tempfile directories and files", required=False)
+    parser.add_argument(
+        "--tempdir",
+        type=str,
+        help="Root directory for tempfile directories and files",
+        required=False,
+    )
     parser.add_argument("--output_dir", type=str, help="TODOs", required=True)
     return parser.parse_args(raw_args)
 
@@ -34,7 +44,9 @@ def main(raw_args=None):
         template_json_str = f.read()
 
     # update model name
-    template_json_str = template_json_str.replace("<model_name_placeholder>", model_name)
+    template_json_str = template_json_str.replace(
+        "<model_name_placeholder>", model_name
+    )
     template_json = json.loads(template_json_str)
 
     # add pass flows
@@ -42,7 +54,7 @@ def main(raw_args=None):
         template_json["pass_flows"] = [["conversion", "metadata"]]
     else:
         template_json["pass_flows"] = [["builder", "session_params_tuning"]]
-    #template_json["output_dir"] = f"models/{model_name}"
+    # template_json["output_dir"] = f"models/{model_name}"
     template_json["output_dir"] = f"{args.output_dir}/models/{model_name}"
 
     # dump config

@@ -15,7 +15,7 @@ class ModelEndpoints:
 
     @trace
     def __call__(self: Self, question: str) -> Response:
-        #self.model_type == "onnx-model":
+        # self.model_type == "onnx-model":
         output = self.call_onnx_endpoint(question)
         return output
 
@@ -28,12 +28,12 @@ class ModelEndpoints:
         key = self.env["onnx-model"]["key"]
 
         headers = {"Content-Type": "application/json", "api-key": key}
-        #headers = {"Content-Type": "application/json"}
+        # headers = {"Content-Type": "application/json"}
 
-        #payload = {"messages": [{"role": "user", "content": question}], "max_tokens": 500}
+        # payload = {"messages": [{"role": "user", "content": question}], "max_tokens": 500}
         payload = {"text": question}
-        
+
         output = self.query(endpoint=endpoint, headers=headers, payload=payload)
-        #answer = output["choices"][0]["message"]["content"]
+        # answer = output["choices"][0]["message"]["content"]
         answer = output["response"]
         return {"query": question, "response": answer}
