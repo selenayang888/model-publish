@@ -46,9 +46,7 @@ echo "Running lemonade command"
 
 # echo "Copying the model to ort_src"
 
-ls -la "/mnt/oga_models/"
-
-mkdir /mnt/oga_models/baseline_model/
+ls -la "/mnt/oga_models/hf_version"
 
 # Here need to update
 ## cp -r /build/phi-4-mini-instruct-01072025/hf_version/* /build/oga_models/baseline_model/
