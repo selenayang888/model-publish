@@ -100,7 +100,7 @@ jobs:
 
   # TODO: rui-ren baseline model from azure blob.
   - script: |
-      baseline_model_folder="/mnt/oga_models/hf_version/"
+      baseline_model_folder=`find $(Build.BinariesDirectory)/oga_models/ -name config.json -printf "%h\n"`
 
       echo "baseline_model folder: $baseline_model_folder"
   
