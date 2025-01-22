@@ -48,8 +48,10 @@ jobs:
 
       checkpoint="${{ parameters.model_name }}"
 
+      
       formatted_checkpoint=$(echo "$checkpoint" | tr '/' '_' | tr '[:upper:]' '[:lower:]')
       formatted_name=$(echo "$formatted_checkpoint" | tr '.' '_' | tr '[:upper:]' '[:lower:]')
+
       echo "##vso[task.setvariable variable=formatted_checkpoint]$formatted_checkpoint"
       echo "##vso[task.setvariable variable=formatted_name]$formatted_name"
       echo "Formatted checkpoint: $formatted_checkpoint"

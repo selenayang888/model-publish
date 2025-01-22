@@ -7,6 +7,9 @@ echo "y" | pip uninstall torch
 # Get into working directory
 cd /ort_src
 
+echo "Display baseline model folder"
+ls -la /baseline_model
+
 echo "step.1 - installing baseline model requirement"
 pip install -r ./requirements/requirements_baseline.txt
 
