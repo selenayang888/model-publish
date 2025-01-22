@@ -11,6 +11,15 @@ app = FastAPI()
 torch.random.manual_seed(0)
 
 
+# TODO: debug here, baseline_model folder
+"""
+Debug issue
+"""
+import glob
+
+print(glob.glob("/baseline_model/*"))
+
+
 model = AutoModelForCausalLM.from_pretrained(
     "/baseline_model",
     device_map="cuda",
