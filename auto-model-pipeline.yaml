@@ -107,7 +107,7 @@ jobs:
       docker run --gpus all --rm \
           --ipc=host \
           --volume $(Build.SourcesDirectory):/ort_src \
-          --volume $baseline_model_folder:/baseline_model \
+          --volume $baseline_model_folder:$baseline_model_folder \
           -p 8000:8000 \
           ptebic.azurecr.io/public/aifx/acpt/stable-ubuntu2004-cu121-py310-torch222:biweekly.202410.2 /bin/bash /ort_src/docker_script_baseline.sh
     workingDirectory: $(Build.SourcesDirectory)

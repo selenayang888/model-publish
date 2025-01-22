@@ -28,13 +28,13 @@ async def score(input_data: InputData):
     print("### main_baseline.py: start run")
 
     model = AutoModelForCausalLM.from_pretrained(
-        "/baseline_model/",
+        "/mnt/oga_models/hf_version/",
         device_map="cuda",
         torch_dtype="auto",
         trust_remote_code=True,
     )
 
-    tokenizer = AutoTokenizer.from_pretrained("/baseline_model/")
+    tokenizer = AutoTokenizer.from_pretrained("/mnt/oga_models/hf_version/")
 
     # Initialize the pipeline
     pipe = pipeline(
