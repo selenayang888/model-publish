@@ -127,4 +127,3 @@ jobs:
         cd $(Build.BinariesDirectory)
         azcopy copy './oga_models' 'https://sunghchostorageaccount.blob.core.windows.net/test/${{ parameters.model_name }}' --recursive
 
-
