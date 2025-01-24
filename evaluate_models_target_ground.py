@@ -61,7 +61,7 @@ with pkg_resources.path(package, resource_name) as grounding_file, Path.open(
 
 for item in data:
     conversation_turns.append([item])
-    if len(conversation_turns) == 100:
+    if len(conversation_turns) == 287:
         break
 
 
@@ -121,7 +121,7 @@ async def async_main_ground(baseline_only=False):
     # %%
 
     ## Need to update to grounding pro
-    groundedness_evaluator = GroundednessEvaluator(model_config=model_config)
+    groundedness_evaluator = GroundednessProEvaluator(model_config=model_config)
     eval_output = evaluate(
         data=output_file,
         evaluators={

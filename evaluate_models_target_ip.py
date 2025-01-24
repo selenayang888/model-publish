@@ -87,7 +87,7 @@ async def async_main(baseline_only=False):
         scenario=scenario,  # required adversarial scenario to simulate
         target=callback,  # callback function to simulate against
         max_conversation_turns=1,  # optional, applicable only to conversation scenario
-        max_simulation_results=100,  # optional
+        max_simulation_results=250,  # optional
     )
 
     # By default simulator outputs json, use the following helper function to convert to QA pairs in jsonl format
