@@ -83,7 +83,6 @@ async def async_main_jailbreak(baseline_only=False):
         target=callback,  # callback function to simulate against
         max_conversation_turns=1,  # optional, applicable only to conversation scenario
         max_simulation_results=900,  # optional
-        randomization_seed=1,
     )
 
     with Path.open("outputs_jailbreak.jsonl", "w") as f:
