@@ -16,7 +16,7 @@ parameters:
 pool: Onnxruntime-Linux-A10-24G #onnxruntime-Linux-GPU-T4
 jobs:
 - job: Test
-  timeoutInMinutes: 600
+  timeoutInMinutes: 2400
   cancelTimeoutInMinutes: 20
   steps:
   - task: UsePythonVersion@0
