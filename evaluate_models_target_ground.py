@@ -29,7 +29,6 @@ azure_ai_project = {
 }
 
 
-
 # %%
 import os
 
@@ -37,14 +36,16 @@ import os
 os.environ["AZURE_OPENAI_API_KEY"] = "0152bce79cdf40adab70375917f4b8ec"
 os.environ["AZURE_OPENAI_API_VERSION"] = "2024-06-01"
 os.environ["AZURE_OPENAI_DEPLOYMENT"] = "gpt-4o-mini"
-os.environ["AZURE_OPENAI_ENDPOINT"] = "https://ai-yangselenaai3739831789912690.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-08-01-preview"
+os.environ["AZURE_OPENAI_ENDPOINT"] = (
+    "https://ai-yangselenaai3739831789912690.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-08-01-preview"
+)
 
 
 # %%
 
 model_config = {
     "azure_endpoint": os.environ.get("AZURE_OPENAI_ENDPOINT"),
-    #"api_key": os.environ.get("AZURE_OPENAI_KEY"),
+    # "api_key": os.environ.get("AZURE_OPENAI_KEY"),
     "azure_deployment": os.environ.get("AZURE_OPENAI_DEPLOYMENT"),
 }
 
@@ -54,13 +55,16 @@ resource_name = "grounding.json"
 package = "azure.ai.evaluation.simulator._data_sources"
 conversation_turns = []
 
-with pkg_resources.path(package, resource_name) as grounding_file, Path.open(grounding_file, "r") as file:
+with pkg_resources.path(package, resource_name) as grounding_file, Path.open(
+    grounding_file, "r"
+) as file:
     data = json.load(file)
 
 for item in data:
     conversation_turns.append([item])
     if len(conversation_turns) == 100:
         break
+
 
 # %%
 async def custom_simulator_callback(
@@ -76,7 +80,7 @@ async def custom_simulator_callback(
     context = latest_message.get("context", None)
     # call your endpoint or ai application here
     model = "onnx-model"
-    target=ModelEndpoints(env_var, model)
+    target = ModelEndpoints(env_var, model)
     response = target(query)["response"]
     # we are formatting the response to follow the openAI chat protocol format
     message = {
@@ -85,7 +89,13 @@ async def custom_simulator_callback(
         "context": context,
     }
     messages["messages"].append(message)
-    return {"messages": messages["messages"], "stream": stream, "session_state": session_state, "context": context}
+    return {
+        "messages": messages["messages"],
+        "stream": stream,
+        "session_state": session_state,
+        "context": context,
+    }
+
 
 async def async_main_ground(baseline_only=False):
     # %%
@@ -99,9 +109,7 @@ async def async_main_ground(baseline_only=False):
 
     print(outputs)
 
-
     # %%
-
 
     output_file = "outputs_ground.jsonl"
     with Path.open(output_file, "w") as file:
@@ -109,21 +117,22 @@ async def async_main_ground(baseline_only=False):
             file.write(output.to_eval_qr_json_lines())
 
     # %%
-    filepath = 'outputs_ground.jsonl'
+    filepath = "outputs_ground.jsonl"
     df = pd.read_json(filepath, lines=True)
     print(df.head())
 
     # %%
+
+    ## Need to update to grounding pro
     groundedness_evaluator = GroundednessEvaluator(model_config=model_config)
     eval_output = evaluate(
         data=output_file,
         evaluators={
             "groundedness": groundedness_evaluator,
         },
-        #azure_ai_project=project_scope,
+        # azure_ai_project=project_scope,
     )
     print(eval_output)
-
 
     # %%
     pd.DataFrame(eval_output["rows"])
@@ -135,6 +144,6 @@ async def async_main_ground(baseline_only=False):
     if baseline_only:
         with Path.open("/baseline_model/rai_ground_result.json", "w") as f:
             f.write(json_result)
-    else:    
+    else:
         with Path.open("/model/rai_ground_result.json", "w") as f:
             f.write(json_result)
