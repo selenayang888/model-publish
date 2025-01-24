@@ -40,10 +40,10 @@ except Exception as e:
 #     pass
 
 # # Test the jailbreaking
-try:
-    loop.run_until_complete(async_main_jailbreak())
-except Exception as e:
-    pass
+# try:
+#     loop.run_until_complete(async_main_jailbreak())
+# except Exception as e:
+#     pass
 
 # # Test the groundness
 # try:
