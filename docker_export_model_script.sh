@@ -32,7 +32,7 @@ source /opt/conda/etc/profile.d/conda.sh
 echo "Activating conda environment"
 conda activate tk-llm
 echo "Installing turnkeyllm"
-pip install -e .[llm-oga]
+pip install -e .[llm-oga-cpu]
 echo "Installed turnkeyllm"
 
 # echo list the variants
