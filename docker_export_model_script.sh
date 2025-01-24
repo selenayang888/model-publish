@@ -35,9 +35,6 @@ echo "Installing turnkeyllm"
 pip install -e .[llm-oga-cpu]
 echo "Installed turnkeyllm"
 
-# echo list the variants
-pip install onnxruntime onnxruntime-genai==0.6.0rc1
-
 pip list
 
 echo "Download baseline model"
