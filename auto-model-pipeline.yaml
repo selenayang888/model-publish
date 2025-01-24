@@ -16,7 +16,7 @@ parameters:
 pool: Onnxruntime-Linux-A10-24G #onnxruntime-Linux-GPU-T4
 jobs:
 - job: Test
-  timeoutInMinutes: 180
+  timeoutInMinutes: 600
   cancelTimeoutInMinutes: 20
   steps:
   - task: UsePythonVersion@0
@@ -24,20 +24,6 @@ jobs:
       versionSpec: '3.12'
       architecture: 'x64'
 
-  #  - bash: |
-  #      pip install -r llama-requirements.txt
-  #    displayName: install the necessary packages
-  #    workingDirectory: $(Build.SourcesDirectory)
-
-
-  #  - script: az --version
-  #    displayName: 'Show Azure CLI version'
-
-  #  - script: |
-  #       python -c "with open('hello.txt', 'w') as f:f.write('hello world')"
-  #       azcopy cp --recursive "./hello.txt" 'https://sunghchostorageaccount.blob.core.windows.net/test'
-  #       ls
-  #    displayName: 'try azcopy upload to sun blob'
   - bash: |
       nvidia-smi
     displayName: "dump nvidia-smi"
@@ -84,7 +70,6 @@ jobs:
       # search for "genai_config.json" under folder "$(Build.BinariesDirectory)/oga_models/"
       model_config_folder=`find $(Build.BinariesDirectory)/oga_models/ -name genai_config.json -printf "%h\n"`
       
-
       # verify only one config is found
       num_models=`echo -n "$model_config_folder" | grep -c '^'`
       if [[ $num_models -ne 1 ]]; then
@@ -124,21 +109,6 @@ jobs:
     displayName: "start baseline model endpoint and RAI eval in container"
     condition: eq(${{ parameters.run_baseline_model }}, 'true')
 
-
-  #baseline_model_folder=`find $(Build.BinariesDirectory)/output_model/ -name config.json -printf "%h\n"`
-  #echo "baseline_model folder: $baseline_model_folder"
-  #--volume $baseline_model_folder:/baseline_model \
-
-
-
-  #  - script: | 
-
-  #      python $(Build.SourcesDirectory)/llama_model_builder.py --model_name '${{ parameters.model_name }}' --output_dir '$(Build.BinariesDirectory)'
-
-  #    displayName: "Convert Huggingface model to ONNX model"
-      
-  #    workingDirectory: $(Build.SourcesDirectory)
-
   - task: AzureCLI@2
     displayName: 'upload model to Blob Storage'
     inputs:
@@ -148,33 +118,3 @@ jobs:
       inlineScript: |
         cd $(Build.BinariesDirectory)
         azcopy copy './oga_models' 'https://sunghchostorageaccount.blob.core.windows.net/test/${{ parameters.model_name }}' --recursive
-
-
-  #  - task: AzureCLI@2
-  #    displayName: 'upload model to AzureML registry'
-  #    inputs:
-  #      azureSubscription: AIInfraBuild
-  #      scriptLocation: inlineScript
-  #      scriptType: bash
-  #      inlineScript: |
-  #        cd $(Build.BinariesDirectory)
-  #        az extension add -n ml -y
-  #        az extension list
-  #        az account list
-  #        az ml data create --name llama32-3b-instruct-for-test-only --version 1 --path './models/${{ parameters.model_name }}/output_model/model' --registry-name model-publish-test --description "llama3.2-3b-instruct-test-only from pipeline"
-
-
-  #- bash: |
-  #    pip install fastapi
-  #    pip install uvicorn
-  #    pip install onnxruntime-genai-cuda
-
-  #  displayName: install fastapi packages
-
-  #- script: | 
-
-  #    uvicorn main:app --reload
-
-  #  displayName: "Start model endpoint"
-      
-  #  workingDirectory: $(Build.SourcesDirectory)

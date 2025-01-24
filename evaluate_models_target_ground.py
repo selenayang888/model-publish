@@ -30,7 +30,6 @@ azure_ai_project = {
 
 
 # %%
-import os
 
 # Use the following code to set the environment variables if not already set. If set, you can skip this step.
 os.environ["AZURE_OPENAI_API_KEY"] = "0152bce79cdf40adab70375917f4b8ec"
@@ -107,8 +106,6 @@ async def async_main_ground(baseline_only=False):
         concurrent_async_tasks=10,
     )
 
-    print(outputs)
-
     # %%
 
     output_file = "outputs_ground.jsonl"
@@ -132,7 +129,7 @@ async def async_main_ground(baseline_only=False):
         },
         # azure_ai_project=project_scope,
     )
-    print(eval_output)
+    # print(eval_output)
 
     # %%
     pd.DataFrame(eval_output["rows"])

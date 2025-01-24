@@ -13,6 +13,12 @@ from azure.ai.evaluation.simulator import DirectAttackSimulator
 from azure.identity import AzureCliCredential
 from app_target import ModelEndpoints
 
+# %%
+
+from azure.ai.evaluation import evaluate
+from azure.ai.evaluation import (
+    ContentSafetyEvaluator,
+)
 
 # %%
 env_var = {
@@ -30,6 +36,7 @@ azure_ai_project = {
 }
 credential = AzureCliCredential()
 
+
 # %%
 async def callback(
     messages: List[Dict],
@@ -40,12 +47,12 @@ async def callback(
     context = None
 
     # Add file contents for summarization or re-write
-    if 'file_content' in messages["template_parameters"]:
-        query += messages["template_parameters"]['file_content']
-    
+    if "file_content" in messages["template_parameters"]:
+        query += messages["template_parameters"]["file_content"]
+
     # Call your own endpoint and pass your query as input. Make sure to handle your function_call_to_your_endpoint's error responses.
     model = "onnx-model"
-    target=ModelEndpoints(env_var, model)
+    target = ModelEndpoints(env_var, model)
     response = target(query)["response"]
 
     # Format responses in OpenAI message protocol
@@ -59,76 +66,73 @@ async def callback(
     return {
         "messages": messages["messages"],
         "stream": stream,
-        "session_state": session_state
+        "session_state": session_state,
     }
+
 
 # %%
 async def async_main_jailbreak(baseline_only=False):
 
     scenario = AdversarialScenario.ADVERSARIAL_CONVERSATION
-    direct_attack_simulator = DirectAttackSimulator(azure_ai_project=azure_ai_project, credential=credential)
-
-    outputs = await direct_attack_simulator(
-            scenario=scenario, # required adversarial scenario to simulate
-            target=callback, # callback function to simulate against
-            max_conversation_turns=1, #optional, applicable only to conversation scenario
-            max_simulation_results=50, #optional
-            randomization_seed=2,
-        )
-
-
-
-    with Path.open("outputs_jailbreak.jsonl", "w") as f:
-        #f.write(outputs.to_eval_qr_json_lines())
-        f.write(outputs["jailbreak"].to_eval_qr_json_lines())
-    with Path.open("outputs_regular.jsonl", "w") as f:
-        #f.write(outputs.to_eval_qr_json_lines())
-        f.write(outputs["regular"].to_eval_qr_json_lines())
-
-
-
-
-    # %%
-
-    from azure.ai.evaluation import evaluate
-    from azure.ai.evaluation import (
-        ContentSafetyEvaluator,
-
+    direct_attack_simulator = DirectAttackSimulator(
+        azure_ai_project=azure_ai_project, credential=credential
     )
 
+    outputs = await direct_attack_simulator(
+        scenario=scenario,  # required adversarial scenario to simulate
+        target=callback,  # callback function to simulate against
+        max_conversation_turns=1,  # optional, applicable only to conversation scenario
+        max_simulation_results=50,  # optional
+        randomization_seed=2,
+    )
 
-    content_safety_evaluator = ContentSafetyEvaluator(azure_ai_project=azure_ai_project, credential=credential)
+    with Path.open("outputs_jailbreak.jsonl", "w") as f:
+        # f.write(outputs.to_eval_qr_json_lines())
+        f.write(outputs["jailbreak"].to_eval_qr_json_lines())
+    with Path.open("outputs_regular.jsonl", "w") as f:
+        # f.write(outputs.to_eval_qr_json_lines())
+        f.write(outputs["regular"].to_eval_qr_json_lines())
 
+    content_safety_evaluator = ContentSafetyEvaluator(
+        azure_ai_project=azure_ai_project, credential=credential
+    )
 
     models = [
         "model",
     ]
 
-
     path1 = str(pathlib.Path(pathlib.Path.cwd())) + "/outputs_jailbreak.jsonl"
     path2 = str(pathlib.Path(pathlib.Path.cwd())) + "/outputs_regular.jsonl"
     paths = [path1, path2]
 
-    final_results= []
+    final_results = []
     for model in models:
         randomNum = random.randint(1111, 9999)
         for path in paths:
             results = evaluate(
-                evaluation_name="Eval-Run-" + str(randomNum) + "-" + model.title() + "-" + path,
+                evaluation_name="Eval-Run-"
+                + str(randomNum)
+                + "-"
+                + model.title()
+                + "-"
+                + path,
                 data=path,
-                #target=ModelEndpoints(env_var, model),
+                # target=ModelEndpoints(env_var, model),
                 evaluators={
                     "content_safety": content_safety_evaluator,
                 },
                 evaluator_config={
-                    "content_safety": {"query": "${data.query}", "response": "${data.response}"},
+                    "content_safety": {
+                        "query": "${data.query}",
+                        "response": "${data.response}",
+                    },
                 },
             )
             final_results.append(results)
 
     # %%
-    for results in final_results:
-        pprint(results)
+    # for results in final_results:
+    #     pprint(results)
 
     # %%
     pd.DataFrame(final_results[0]["rows"])
@@ -142,9 +146,9 @@ async def async_main_jailbreak(baseline_only=False):
     if baseline_only:
         with Path.open("/baseline_model/rai_jailbreak_result.json", "w") as f:
             f.write(json_result)
-    else:    
+    else:
         with Path.open("/model/rai_jailbreak_result.json", "w") as f:
             f.write(json_result)
-    
-    #with Path.open("/model/rai_jailbreak_result.json", "w") as f:
+
+    # with Path.open("/model/rai_jailbreak_result.json", "w") as f:
     #    f.write(json_result)
