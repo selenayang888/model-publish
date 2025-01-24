@@ -40,10 +40,9 @@ loop = asyncio.get_event_loop()
 #     pass
 
 # # Test the jailbreaking
-try:
-    loop.run_until_complete(async_main_jailbreak())
-except Exception as e:
-    pass
+
+loop.run_until_complete(async_main_jailbreak())
+
 
 # Test the groundness
 # try:
