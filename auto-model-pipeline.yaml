@@ -13,7 +13,7 @@ parameters:
    type: string
    default: true
 
-pool: Onnxruntime-Linux-A10-24G #onnxruntime-Linux-GPU-T4
+pool: Onnxruntime-Linux-A10-12G #onnxruntime-Linux-GPU-T4
 jobs:
 - job: Test
   timeoutInMinutes: 2400
