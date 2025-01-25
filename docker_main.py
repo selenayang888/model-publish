@@ -28,16 +28,16 @@ loop = asyncio.get_event_loop()
 
 
 # # Test the IP
-# try:
-#     loop.run_until_complete(async_main())
-# except Exception as e:
-#     pass
+try:
+    loop.run_until_complete(async_main())
+except Exception as e:
+    pass
 
 # # Test the eci
-# try:
-#     loop.run_until_complete(async_main_eci())
-# except Exception as e:
-#     pass
+try:
+    loop.run_until_complete(async_main_eci())
+except Exception as e:
+    pass
 
 # # Test the jailbreaking
 
@@ -47,10 +47,10 @@ loop = asyncio.get_event_loop()
 #     pass
 
 # # Test the groundness
-try:
-    loop.run_until_complete(async_main_ground())
-except Exception as e:
-    pass
+# try:
+#     loop.run_until_complete(async_main_ground())
+# except Exception as e:
+#     pass
 
 # # Test the Harmful Content
 # try:
