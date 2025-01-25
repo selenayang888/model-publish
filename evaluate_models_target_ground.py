@@ -109,8 +109,11 @@ async def async_main_ground(baseline_only=False):
     # %%
 
     output_file = "outputs_ground.jsonl"
+    query_response = []
     with Path.open(output_file, "w") as file:
         for output in outputs:
+            # add the query response
+            query_response.append(output)
             file.write(output.to_eval_qr_json_lines())
 
     # %%
@@ -121,15 +124,19 @@ async def async_main_ground(baseline_only=False):
     # %%
 
     ## Need to update to grounding pro
-    groundedness_evaluator = GroundednessProEvaluator(model_config=model_config)
-    eval_output = evaluate(
-        data=output_file,
-        evaluators={
-            "groundedness": groundedness_evaluator,
-        },
-        # azure_ai_project=project_scope,
-    )
+    groundedness_pro_eval = GroundednessProEvaluator(model_config=model_config)
+
+    #### TODO: rui-ren --> There is a bug inside this function.
+    # eval_output = evaluate(
+    #     data=output_file,
+    #     evaluators={
+    #         "groundedness": groundedness_evaluator,
+    #     },
+    #     # azure_ai_project=project_scope,
+    # )
     # print(eval_output)
+
+    eval_output = groundedness_pro_eval(**query_response)
 
     # %%
     pd.DataFrame(eval_output["rows"])
