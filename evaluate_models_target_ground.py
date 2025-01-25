@@ -5,7 +5,7 @@ import pandas as pd
 from pathlib import Path
 
 from azure.ai.evaluation import evaluate
-from azure.ai.evaluation import GroundednessEvaluator
+from azure.ai.evaluation import GroundednessEvaluator, GroundednessProEvaluator
 from azure.ai.evaluation.simulator import Simulator
 
 
