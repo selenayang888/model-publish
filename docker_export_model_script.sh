@@ -42,7 +42,7 @@ echo "Download baseline model"
 
 
 echo "Running lemonade command"
-lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --input_path "/build/phi-4-mini-instruct-01222025/hf_version" --device cpu --dtype int4
+lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --input_path "/build/phi-4-mini-instruct-01222025/hf_version" --device cpu --dtype fp16
 
 
 ls -la "/build/oga_models/"
