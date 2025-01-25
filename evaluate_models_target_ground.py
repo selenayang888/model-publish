@@ -63,7 +63,7 @@ with pkg_resources.path(package, resource_name) as grounding_file, Path.open(
 
 for item in data:
     conversation_turns.append([item])
-    if len(conversation_turns) == 3:
+    if len(conversation_turns) == 287:
         break
 
 
