@@ -16,7 +16,7 @@ parameters:
 pool: onnxruntime-extensions-Linux-GPU-A10 #onnxruntime-Linux-GPU-T4
 jobs:
 - job: Test
-  timeoutInMinutes: 2400
+  timeoutInMinutes: 8000
   cancelTimeoutInMinutes: 200
   steps:
   - task: UsePythonVersion@0
