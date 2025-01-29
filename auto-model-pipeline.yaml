@@ -1,4 +1,3 @@
-
 parameters:
  - name: model_name
    displayName: mode name on huggingface website
@@ -23,7 +22,7 @@ parameters:
 
 pool: Onnxruntime-Linux-A10-24G
 jobs:
-- job: ONNX model RAI tests
+- job: ONNX_model_RAI_tests
   timeoutInMinutes: 9000
   cancelTimeoutInMinutes: 200
   steps:
