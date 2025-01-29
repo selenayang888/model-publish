@@ -39,7 +39,10 @@ pip list
 
 echo "Download baseline model"
 
-if [[ $download_from_blob == "false" ]]; then
+echo $download_from_blob
+echo "/build/$MODEL_NAME/hf_version"
+
+if [[ "$download_from_blob" == "false" ]]; then
     
     huggingface-cli download $MODEL_NAME --local-dir /build/oga_models/hf_version/
 else
