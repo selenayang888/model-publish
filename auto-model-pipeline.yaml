@@ -1,10 +1,5 @@
 
 parameters:
- - name: agentPool
-   displayName: the cpu or gpu pool
-   type: string
-   default: onnxruntime-Ubuntu2204-AMD-CPU
-
  - name: model_name
    displayName: mode name on huggingface website
    type: string
@@ -26,7 +21,7 @@ parameters:
    type: string
    default: cuda
 
-pool: ${{ parameters.agentPool }}
+pool: Onnxruntime-Linux-A10-24G
 jobs:
 - job: ONNX model RAI tests
   timeoutInMinutes: 9000
