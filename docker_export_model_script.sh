@@ -38,11 +38,11 @@ echo "Installed turnkeyllm"
 pip list
 
 echo "Download baseline model"
-# huggingface-cli download $MODEL_NAME --local-dir /build/oga_models/hf_version/
+huggingface-cli download $MODEL_NAME --local-dir /build/oga_models/hf_version/
 
 
 echo "Running lemonade command"
-lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --input_path "/build/phi-4-mini-instruct-01222025/hf_version" --device cpu --dtype int4
+lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --device cpu --dtype int4
 
 
 ls -la "/build/oga_models/"
