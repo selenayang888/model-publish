@@ -38,20 +38,20 @@ echo "Installed turnkeyllm"
 pip list
 
 echo "Download baseline model"
-# huggingface-cli download $MODEL_NAME --local-dir /build/oga_models/hf_version/
+huggingface-cli download $MODEL_NAME --local-dir /build/oga_models/hf_version/
 
 
 echo "Running lemonade command"
-lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --input_path "/build/phi-4-mini-instruct-01222025/hf_version" --device cpu --dtype int4
+lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --device cpu --dtype int4
 
 
 ls -la "/build/oga_models/"
 
-mkdir /build/oga_models/baseline_model/
+# mkdir /build/oga_models/baseline_model/
 
-cp -r /build/phi-4-mini-instruct-01222025/hf_version/* /build/oga_models/baseline_model/
+# cp -r /build/phi-4-mini-instruct-01222025/hf_version/* /build/oga_models/baseline_model/
 
-ls -la "/build/oga_models/"
+# ls -la "/build/oga_models/"
 
 echo "lemonade exported onnx model successfully!"
 
