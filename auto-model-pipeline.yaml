@@ -4,9 +4,6 @@ parameters:
    displayName: the cpu or gpu pool
    type: string
    default: onnxruntime-Ubuntu2204-AMD-CPU
-   values:
-    - onnxruntime-Ubuntu2204-AMD-CPU
-    - Onnxruntime-Linux-A10-24G
 
  - name: model_name
    displayName: mode name on huggingface website
