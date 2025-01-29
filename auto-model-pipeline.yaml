@@ -29,7 +29,7 @@ jobs:
     displayName: "dump nvidia-smi"
 
   - script: |
-      azcopy copy "https://sunghchostorageaccount.blob.core.windows.net/phi-4/phi-4-mini-instruct-01222025" --recursive $(Build.BinariesDirectory)
+      azcopy copy "https://kvaishnavistorage.blob.core.windows.net/ortgenai/deepseek-r1-distill-qwen-1.5B/gpu/gpu-int4-rtn-block-32/" --recursive $(Build.BinariesDirectory)
       pwd
     workingDirectory: $(Build.SourcesDirectory)
     displayName: "Download model from azure blob"
