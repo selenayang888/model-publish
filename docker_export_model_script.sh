@@ -42,7 +42,7 @@ huggingface-cli download $MODEL_NAME --local-dir /build/oga_models/hf_version/
 
 
 echo "Running lemonade command"
-lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --device cpu --dtype int4
+lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --device cuda --dtype int4
 
 
 ls -la "/build/oga_models/"
