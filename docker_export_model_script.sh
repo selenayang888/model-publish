@@ -39,13 +39,13 @@ pip list
 
 echo "Download baseline model"
 
-if [[ $download_from_blob == "true" ]]; then
+if [[ $download_from_blob == "false" ]]; then
     
     huggingface-cli download $MODEL_NAME --local-dir /build/oga_models/hf_version/
 else
 
     echo "Running lemonade command"
-    lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --input_path "/build/$MODEL_NAME/hf_version" --device $device --dtype $dtype
+    lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --input_path "/build/$MODEL_NAME/hf_version" --device "$device" --dtype "$dtype"
 fi 
 
 ls -la "/build/oga_models/"
