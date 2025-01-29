@@ -1,5 +1,13 @@
 
 parameters:
+ - name: agentPool
+   displayName: the cpu or gpu pool
+   type: string
+   default: onnxruntime-Ubuntu2204-AMD-CPU
+   values:
+    - onnxruntime-Ubuntu2204-AMD-CPU
+    - Onnxruntime-Linux-A10-24G
+
  - name: model_name
    displayName: mode name on huggingface website
    type: string
@@ -21,9 +29,9 @@ parameters:
    type: string
    default: cuda
 
-pool: onnxruntime-Ubuntu2204-AMD-CPU #onnxruntime-Linux-GPU-T4
+pool: ${{ parameters.agentPool }}
 jobs:
-- job: Test
+- job: ONNX model RAI tests
   timeoutInMinutes: 9000
   cancelTimeoutInMinutes: 200
   steps:
