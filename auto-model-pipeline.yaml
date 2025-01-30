@@ -47,7 +47,7 @@ jobs:
     displayName: "Process checkpoint"
 
   - script: |
-      docker run --gpus all --rm \
+      docker run
           --ipc=host \
           --volume $(Build.SourcesDirectory):/ort_src \
           --volume $(Build.BinariesDirectory):/build \
@@ -72,7 +72,7 @@ jobs:
 
       echo "model folder: $model_config_folder"
       
-      docker run --gpus all --rm \
+      docker run
           --ipc=host \
           --volume $(Build.SourcesDirectory):/ort_src \
           --volume $(Build.BinariesDirectory):/build \
