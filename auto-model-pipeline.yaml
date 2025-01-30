@@ -48,10 +48,6 @@ jobs:
 
   - script: |
       docker run --gpus all --rm \
-          --device /dev/nvidia0:/dev/nvidia0 \
-          --device /dev/nvidiactl:/dev/nvidiactl \
-          --device /dev/nvidia-uvm:/dev/nvidia-uvm \
-          --device /dev/nvidia-uvm-tools:/dev/nvidia-uvm-tools \
           --ipc=host \
           --volume $(Build.SourcesDirectory):/ort_src \
           --volume $(Build.BinariesDirectory):/build \
