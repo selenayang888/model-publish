@@ -13,7 +13,7 @@ parameters:
    type: string
    default: true
 
-pool: Onnxruntime-Linux-A10-24G
+pool: onnxruntime-Ubuntu2204-AMD-CPU
 jobs:
 - job: Test
   timeoutInMinutes: 9000
