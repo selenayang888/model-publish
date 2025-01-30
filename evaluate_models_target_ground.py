@@ -8,9 +8,9 @@ from azure.ai.evaluation import evaluate
 from azure.ai.evaluation import GroundednessEvaluator, GroundednessProEvaluator
 from azure.ai.evaluation.simulator import Simulator
 
-from azure.identity import DefaultAzureCredential
+from azure.identity import AzureCliCredential
 
-credential = DefaultAzureCredential()
+credential = AzureCliCredential()
 import importlib.resources as pkg_resources
 
 from app_target import ModelEndpoints
