@@ -24,9 +24,6 @@ jobs:
       versionSpec: '3.12'
       architecture: 'x64'
 
-  - bash: |
-      nvidia-smi
-    displayName: "dump nvidia-smi"
 
   - script: |
       azcopy copy "https://sunghchostorageaccount.blob.core.windows.net/phi-4/phi-4-mini-instruct-01222025" --recursive $(Build.BinariesDirectory)
