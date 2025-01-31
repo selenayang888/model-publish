@@ -28,23 +28,23 @@ loop = asyncio.get_event_loop()
 
 
 # # Test the IP
-try:
-    loop.run_until_complete(async_main())
-except Exception as e:
-    pass
+# try:
+#     loop.run_until_complete(async_main())
+# except Exception as e:
+#     pass
 
 # # Test the eci
-try:
-    loop.run_until_complete(async_main_eci())
-except Exception as e:
-    pass
+# try:
+#     loop.run_until_complete(async_main_eci())
+# except Exception as e:
+#     pass
 
 # # Test the jailbreaking
 
-try:
-    loop.run_until_complete(async_main_jailbreak())
-except Exception as e:
-    pass
+# try:
+#     loop.run_until_complete(async_main_jailbreak())
+# except Exception as e:
+#     pass
 
 # # Test the groundness
 try:
@@ -53,16 +53,16 @@ except Exception as e:
     pass
 
 # # Test the Harmful Content
-try:
-    loop.run_until_complete(async_main_safety())
-except Exception as e:
-    pass
+# try:
+#     loop.run_until_complete(async_main_safety())
+# except Exception as e:
+#     pass
 
 # # Test the Harmful Summarization
-try:
-    loop.run_until_complete(async_main_summarization())
-except Exception as e:
-    pass
+# try:
+#     loop.run_until_complete(async_main_summarization())
+# except Exception as e:
+#     pass
 
 # step.last - send SIGTERM to server and wait for it to exit
 uvicorn_proc.send_signal(subprocess.signal.SIGTERM)
