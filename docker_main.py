@@ -1,16 +1,17 @@
 import multiprocessing
 import subprocess
+import time
 
 
 # Check the endpoint
 def run_monitor_health():
 
-    subprocess.run(["python", "monitor_health.py"])
+    subprocess.run(["python", "health_check.py"])
 
 
 # Call the endpoint
 def run_endpoint_calling():
-
+    time.sleep(70)
     subprocess.run(["python", "endpoint_calling.py"])
 
 
