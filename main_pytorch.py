@@ -35,6 +35,11 @@ class InputData(BaseModel):
     text: str
 
 
+@app.get("/health")
+async def healthcheck():
+    return {"status": 200}
+
+
 @app.post("/score")
 async def score(input_data: InputData):
     text = input_data.text

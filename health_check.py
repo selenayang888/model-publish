@@ -3,12 +3,11 @@ import subprocess
 import time
 
 # Configurations
-ENDPOINT = "http://127.0.0.1:8000/score"
+ENDPOINT = "http://127.0.0.1:8000/health"
 UVICORN_COMMAND = ["uvicorn", "main:app", "--reload"]
 
 
 def is_endpoint_healthy(endpoint):
-
     try:
         response = requests.get(endpoint, timeout=5)
         return response.status_code == 200
