@@ -142,3 +142,5 @@ async def async_main_summarization(baseline_only=False):
     else:
         with Path.open("/model/rai_summarization_result.json", "w") as f:
             f.write(json_result)
+
+    exit(0)

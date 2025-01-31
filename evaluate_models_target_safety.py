@@ -144,3 +144,5 @@ async def async_main_safety(baseline_only=False):
     else:
         with Path.open("/model/rai_safety_result.json", "w") as f:
             f.write(json_result)
+
+    exit(0)
