@@ -38,7 +38,11 @@ async def score(input_data: InputData):
     prompt = chat_template.format(input=text)
 
     input_tokens = tokenizer.encode(prompt)
+
     output_text = ""
+
+    if input_tokens > 2048:
+        return {"response": "I am a safe AI Robot"}
 
     params = og.GeneratorParams(model)
     params.set_search_options(**search_options)
