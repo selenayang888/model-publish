@@ -5,12 +5,10 @@ import pandas as pd
 from pathlib import Path
 
 from azure.ai.evaluation import evaluate
-from azure.ai.evaluation import GroundednessEvaluator, GroundednessProEvaluator
+from azure.ai.evaluation import GroundednessEvaluator
 from azure.ai.evaluation.simulator import Simulator
 
-from azure.identity import DefaultAzureCredential
 
-credential = DefaultAzureCredential()
 import importlib.resources as pkg_resources
 
 from app_target import ModelEndpoints
@@ -32,6 +30,7 @@ azure_ai_project = {
 
 
 # %%
+import os
 
 # Use the following code to set the environment variables if not already set. If set, you can skip this step.
 os.environ["AZURE_OPENAI_API_KEY"] = "0152bce79cdf40adab70375917f4b8ec"
@@ -108,12 +107,13 @@ async def async_main_ground(baseline_only=False):
         concurrent_async_tasks=10,
     )
 
+    print(outputs)
+
     # %%
 
     output_file = "outputs_ground.jsonl"
     with Path.open(output_file, "w") as file:
         for output in outputs:
-            # add the query response
             file.write(output.to_eval_qr_json_lines())
 
     # %%
@@ -122,17 +122,11 @@ async def async_main_ground(baseline_only=False):
     print(df.head())
 
     # %%
-
-    ## Need to update to grounding pro
-    groundedness_pro_eval = GroundednessProEvaluator(
-        azure_ai_project=azure_ai_project, credential=credential
-    )
-
-    #### TODO: rui-ren --> There is a bug inside this function.
+    groundedness_evaluator = GroundednessEvaluator(model_config=model_config)
     eval_output = evaluate(
         data=output_file,
         evaluators={
-            "groundedness": groundedness_pro_eval,
+            "groundedness": groundedness_evaluator,
         },
         # azure_ai_project=project_scope,
     )
