@@ -41,7 +41,7 @@ async def score(input_data: InputData):
 
     output_text = ""
 
-    if input_tokens > 2048:
+    if len(input_tokens) > 2048:
         return {"response": "I am a safe AI Robot"}
 
     params = og.GeneratorParams(model)
