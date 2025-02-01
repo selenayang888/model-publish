@@ -39,6 +39,9 @@ async def score(input_data: InputData):
 
     input_tokens = tokenizer.encode(prompt)
     output_text = ""
+    
+    if len(input_tokens) > 2048:
+        return {"response": "I am a safe AI Robot"}
 
     params = og.GeneratorParams(model)
     params.set_search_options(**search_options)
