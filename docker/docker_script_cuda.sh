@@ -9,13 +9,14 @@ apt-get update
 apt-get -y install cudnn9-cuda-12
 
 
-echo "Step 1 - installing dependencies"
-pip install -r reuirements-pytorch.txt
+echo "Step 1 Install dependencies"
+pip install -r requirements-onnx-cuda.txt
 
 
+echo "Step 2 Login Azure"
 az login --identity
 echo "print out az account"
 az account show
 
 cd /ort_src
-python ./docker_main_baseline.py
+python ./docker_main.py

@@ -2,7 +2,6 @@ import subprocess
 import time
 import sys
 from evaluate_models_target_ip import async_main
-from evaluate_models_target_eci import async_main_eci
 from evaluate_models_target_jailbreak import async_main_jailbreak
 from evaluate_models_target_ground import async_main_ground
 from evaluate_models_target_safety import async_main_safety
