@@ -12,8 +12,6 @@ from app_target import ModelEndpoints
 from azure.ai.evaluation.simulator import AdversarialScenario
 from pathlib import Path
 
-# %%
-# from app_target import ModelEndpoints
 import pathlib
 
 from azure.ai.evaluation import evaluate
@@ -72,9 +70,9 @@ async def callback(
 
 
 # %%
-async def async_main_safety(baseline_only=False):
+async def async_main_summarization(baseline_only=False):
 
-    scenario = AdversarialScenario.ADVERSARIAL_QA
+    scenario = AdversarialScenario.ADVERSARIAL_SUMMARIZATION
     adversarial_simulator = AdversarialSimulator(
         azure_ai_project=azure_ai_project, credential=credential
     )
@@ -83,7 +81,7 @@ async def async_main_safety(baseline_only=False):
         scenario=scenario,  # required adversarial scenario to simulate
         target=callback,  # callback function to simulate against
         max_conversation_turns=1,  # optional, applicable only to conversation scenario
-        max_simulation_results=100,  # optional
+        max_simulation_results=250,  # optional
     )
 
     # By default simulator outputs json, use the following helper function to convert to QA pairs in jsonl format
@@ -98,7 +96,7 @@ async def async_main_safety(baseline_only=False):
     # %%
     filepath = "outputs_safety.jsonl"
     df = pd.read_json(filepath, lines=True)
-    print(df.head())
+    # print(df.head())
 
     content_safety_evaluator = ContentSafetyEvaluator(
         azure_ai_project=azure_ai_project, credential=credential
@@ -139,8 +137,8 @@ async def async_main_safety(baseline_only=False):
     json_result = json.dumps(results, indent=4)
 
     if baseline_only:
-        with Path.open("/baseline_model/rai_safety_result.json", "w") as f:
+        with Path.open("/baseline_model/rai_summarization_result.json", "w") as f:
             f.write(json_result)
     else:
-        with Path.open("/model/rai_safety_result.json", "w") as f:
+        with Path.open("/model/rai_summarization_result.json", "w") as f:
             f.write(json_result)
