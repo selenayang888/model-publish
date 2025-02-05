@@ -79,7 +79,7 @@ jobs:
           --volume $baseline_model_folder:/baseline_model \
           -p 8000:8000 \
           -e CCACHE_DIR=/cache -w /ort_src \
-          ptebic.azurecr.io/public/aifx/acpt/stable-ubuntu2004-cu121-py310-torch222:biweekly.202410.2 /bin/bash /ort_src/docker_script_baseline.sh
+          ptebic.azurecr.io/public/aifx/acpt/stable-ubuntu2004-cu121-py310-torch222:biweekly.202410.2 /bin/bash /perf/docker_perf_script-${DEVICE_TYPE}.sh
     workingDirectory: $(Build.SourcesDirectory)
     displayName: "start baseline model endpoint and RAI eval in container"
     condition: eq(${{ parameters.run_baseline_model }}, 'true')

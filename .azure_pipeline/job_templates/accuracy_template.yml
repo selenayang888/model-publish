@@ -1,0 +1,40 @@
+parameters:
+  name: ''
+  pool: ''
+  customMatrixes: ''  
+
+
+jobs:
+- job: ${{ parameters.name }}
+  timeoutInMinutes: 9000
+  cancelTimeoutInMinutes: 200
+  pool: ${{ parameters.pool }}
+  strategy:
+    matrix: ${{ parameters.customMatrixes }}
+  
+  steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.12'
+      architecture: 'x64'
+
+  - bash: |
+      nvidia-smi
+    displayName: "dump nvidia-smi"
+    condition: startsWith(variables['DEVICE_TYPE'], 'cu')
+
+  - script: |
+      docker run --gpus all --rm \
+          --device /dev/nvidia0:/dev/nvidia0 \
+          --device /dev/nvidiactl:/dev/nvidiactl \
+          --device /dev/nvidia-uvm:/dev/nvidia-uvm \
+          --device /dev/nvidia-uvm-tools:/dev/nvidia-uvm-tools \
+          --ipc=host \
+          --volume $(Build.SourcesDirectory):/ort_src \
+          --volume $(Build.BinariesDirectory):/build \
+          -e CCACHE_DIR=/cache -w /ort_src \
+          -e HF_TOKEN=$(hf_token) \
+          -e MODEL_NAME=${{ parameters.model_name }} \
+          ptebic.azurecr.io/public/aifx/acpt/stable-ubuntu2004-cu121-py310-torch222:biweekly.202410.2 /bin/bash /accuracy/docker_export_model-$(DEVICE_TYPE).sh
+    workingDirectory: $(Build.SourcesDirectory)
+    displayName: "Export Onnx model by turnkey"

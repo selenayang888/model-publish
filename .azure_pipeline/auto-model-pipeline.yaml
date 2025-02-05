@@ -1,0 +1,135 @@
+stages:
+
+# CPU Test
+# ================================
+- stage: PerformanceTestForCPU
+  displayName: ONNX CPU model Performance Test
+  dependsOn: []
+  jobs:
+  - template: /.azure_pipelines/job_templates/perf-template.yml
+    parameters:
+      name: ONNX-CPU-Performance-Test
+      pool: $(BUILD_POOL_LIN_CPU)
+      customMatrixes:
+        CPU_ONNX_PERF:
+          _MODEL_NAMES: $(MODEL_NAMES)
+          DEVICE_TYPE: cpu
+          DATA_TYPE: int4
+
+- stage: AccuracyTestForCPU
+  displayName: ONNX CPU model Performance Test
+  dependsOn: PerformanceTestForCPU
+  condition: succeeded()
+  jobs:
+  - template: /.azure_pipelines/job_templates/accuracy-template.yml
+    parameters:
+      name: ONNX-CPU-Accuracy-Test
+      pool: $(BUILD_POOL_LIN_CPU)
+      customMatrixes:
+        CPU_ONNX_ACCURACY:
+          _MODEL_NAMES: $(MODEL_NAMES)
+          DEVICE_TYPE: cpu
+          DATA_TYPE: int4
+
+- stage: RAITestForCPU
+  displayName: ONNX CPU model Accuracy Test
+  dependsOn: AccuracyTestForCPU
+  condition: succeeded()
+  jobs:
+  - template: /.azure_pipelines/job_templates/rai-template.yml
+    parameters:
+      name: ONNX-CPU-RAI-Test
+      pool: $(BUILD_POOL_LIN_CPU)
+      customMatrixes:
+        CPU_ONNX_RAI:
+          _MODEL_NAMES: $(MODEL_NAMES)
+          DEVICE_TYPE: cpu
+          DATA_TYPE: int4
+
+# CUDA Test
+# ================================
+
+- stage: PerformanceTestForGPU
+  displayName: ONNX GPU model Performance Test
+  dependsOn: []
+  jobs:
+  - template: /.azure_pipelines/job_templates/perf-template.yml
+    parameters:
+      name: ONNX-GPU-Performance-Test
+      pool: $(BUILD_POOL_LIN_GPU)
+      customMatrixes:
+        CPU_ONNX_PERF:
+          _MODEL_NAMES: $(MODEL_NAMES)
+          DEVICE_TYPE: cuda
+          DATA_TYPE: int4
+
+- stage: AccuracyTestForGPU
+  displayName: ONNX GPU model Accuracy Test
+  dependsOn: PerformanceTestForGPU
+  condition: succeeded()
+  jobs:
+  - template: /.azure_pipelines/job_templates/accuracy-template.yml
+    parameters:
+      name: ONNX-GPU-Accuracy-Test
+      pool: $(BUILD_POOL_LIN_GPU)
+      customMatrixes:
+        GPU_ONNX_ACCURACY:
+          _MODEL_NAMES: $(MODEL_NAMES)
+          DEVICE_TYPE: cuda
+          DATA_TYPE: int4
+
+- stage: RAITestForGPU
+  displayName: ONNX GPU model RAI Test
+  dependsOn: AccuracyTestForGPU
+  condition: succeeded()
+  jobs:
+  - template: /.azure_pipelines/job_templates/rai-template.yml
+    parameters:
+      name: ONNX-GPU-RAI-Test
+      pool: $(BUILD_POOL_LIN_GPU)
+      customMatrixes:
+        GPU_ONNX_RAI:
+          _MODEL_NAMES: $(MODEL_NAMES)
+          DEVICE_TYPE: cuda
+          DATA_TYPE: int4
+
+# PyTorch test
+# ================================
+
+- stage: PerformanceTestForTorch
+  displayName: Torch model Performance Test
+  dependsOn: []
+  jobs:
+  - template: /.azure_pipelines/job_templates/perf-template.yml
+    parameters:
+      name: Torch-Performance-Test
+      pool: $(BUILD_POOL_LIN_GPU)
+      customMatrixes:
+        GPU_Torch_PERF:
+          _MODEL_NAMES: $(MODEL_NAMES)
+
+- stage: AccuracyTestForTorch
+  displayName: Torch model Accuracy Test
+  dependsOn: PerformanceTestForTorch
+  condition: succeeded()
+  jobs:
+  - template: /.azure_pipelines/job_templates/accuracy-template.yml
+    parameters:
+      name: Torch-Accuracy-Test
+      pool: $(BUILD_POOL_LIN_GPU)
+      customMatrixes:
+        GPU_Torch_ACCURACY:
+          _MODEL_NAMES: $(MODEL_NAMES)
+
+- stage: RAITestForTorch
+  displayName: Torch model RAI Test
+  dependsOn: AccuracyTestForGPU
+  condition: succeeded()
+  jobs:
+  - template: /.azure_pipelines/job_templates/rai-template.yml
+    parameters:
+      name: Torch-RAI-Test
+      pool: $(BUILD_POOL_LIN_GPU)
+      customMatrixes:
+        GPUT_Torch_RAI:
+          _MODEL_NAMES: $(MODEL_NAMES)
