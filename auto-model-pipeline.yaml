@@ -6,7 +6,7 @@ stages:
   displayName: ONNX CPU model Performance Test
   dependsOn: []
   jobs:
-  - template: /.github/job_templates/perf-template.yml
+  - template: .github/job_templates/perf-template.yml
     parameters:
       name: ONNX-CPU-Performance-Test
       pool: $(BUILD_POOL_LIN_CPU)
@@ -21,7 +21,7 @@ stages:
   dependsOn: PerformanceTestForCPU
   condition: succeeded()
   jobs:
-  - template: /.github/job_templates/accuracy-template.yml
+  - template: .github/job_templates/accuracy-template.yml
     parameters:
       name: ONNX-CPU-Accuracy-Test
       pool: $(BUILD_POOL_LIN_CPU)
@@ -36,7 +36,7 @@ stages:
   dependsOn: AccuracyTestForCPU
   condition: succeeded()
   jobs:
-  - template: /.github/job_templates/rai-template.yml
+  - template: .github/job_templates/rai-template.yml
     parameters:
       name: ONNX-CPU-RAI-Test
       pool: $(BUILD_POOL_LIN_CPU)
@@ -53,7 +53,7 @@ stages:
   displayName: ONNX GPU model Performance Test
   dependsOn: []
   jobs:
-  - template: /.github/job_templates/perf-template.yml
+  - template: .github/job_templates/perf-template.yml
     parameters:
       name: ONNX-GPU-Performance-Test
       pool: $(BUILD_POOL_LIN_GPU)
@@ -68,7 +68,7 @@ stages:
   dependsOn: PerformanceTestForGPU
   condition: succeeded()
   jobs:
-  - template: /.github/job_templates/accuracy-template.yml
+  - template: .github/job_templates/accuracy-template.yml
     parameters:
       name: ONNX-GPU-Accuracy-Test
       pool: $(BUILD_POOL_LIN_GPU)
@@ -83,7 +83,7 @@ stages:
   dependsOn: AccuracyTestForGPU
   condition: succeeded()
   jobs:
-  - template: /.github/job_templates/rai-template.yml
+  - template: .github/job_templates/rai-template.yml
     parameters:
       name: ONNX-GPU-RAI-Test
       pool: $(BUILD_POOL_LIN_GPU)
@@ -100,7 +100,7 @@ stages:
   displayName: Torch model Performance Test
   dependsOn: []
   jobs:
-  - template: /.github/job_templates/perf-template.yml
+  - template: .github/job_templates/perf-template.yml
     parameters:
       name: Torch-Performance-Test
       pool: $(BUILD_POOL_LIN_GPU)
@@ -113,7 +113,7 @@ stages:
   dependsOn: PerformanceTestForTorch
   condition: succeeded()
   jobs:
-  - template: /.github/job_templates/accuracy-template.yml
+  - template: .github/job_templates/accuracy-template.yml
     parameters:
       name: Torch-Accuracy-Test
       pool: $(BUILD_POOL_LIN_GPU)
@@ -126,7 +126,7 @@ stages:
   dependsOn: AccuracyTestForGPU
   condition: succeeded()
   jobs:
-  - template: /.github/job_templates/rai-template.yml
+  - template: .github/job_templates/rai-template.yml
     parameters:
       name: Torch-RAI-Test
       pool: $(BUILD_POOL_LIN_GPU)
