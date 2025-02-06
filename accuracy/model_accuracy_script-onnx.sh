@@ -5,9 +5,15 @@
 
 # Install Turnkeyml
 echo "Installed turnkeyllm"
-pip install -e .[llm-oga-cpu]
 
-pip list
+if [[ $DEVICE_TYPE == "cpu" ]]; then
+
+    pip install -e .[llm-oga-cpu]
+
+else 
+    pip install -e .[llm-oga-gpu]
+
+fi
 
 # Run MMLU accuracy test
 echo "Running lemonade command"

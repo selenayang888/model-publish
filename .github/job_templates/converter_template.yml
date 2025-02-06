@@ -48,4 +48,5 @@ jobs:
       scriptType: bash
       inlineScript: |
         cd $(Build.BinariesDirectory)
-        azcopy copy './oga_models/' 'https://sunghchostorageaccount.blob.core.windows.net/model_publish/$(MODEL_NAME)' --recursive
+        modified_model_name=$(echo "$MODEL_NAME" | tr '/' '_')
+        azcopy copy './oga_models/' 'https://sunghchostorageaccount.blob.core.windows.net/test/model_publish/$(MODEL_NAME)' --recursive
