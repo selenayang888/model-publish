@@ -36,11 +36,11 @@ jobs:
     displayName: "Export Onnx model by turnkey"
 
   - task: AzureCLI@2
-  displayName: 'upload model to Blob Storage'
-  inputs:
-    azureSubscription: AIInfraBuild
-    scriptLocation: inlineScript
-    scriptType: bash
-    inlineScript: |
-      cd $(Build.BinariesDirectory)
-      azcopy copy './oga_models' 'https://sunghchostorageaccount.blob.core.windows.net/test/${{ parameters.model_name }}' --recursive
+    displayName: 'upload model to Blob Storage'
+    inputs:
+      azureSubscription: AIInfraBuild
+      scriptLocation: inlineScript
+      scriptType: bash
+      inlineScript: |
+        cd $(Build.BinariesDirectory)
+        azcopy copy './oga_models' 'https://sunghchostorageaccount.blob.core.windows.net/test/${{ parameters.model_name }}' --recursive
