@@ -2,9 +2,22 @@ stages:
 
 # CPU Test
 # ================================
+- stage: ONNXConverterCPU
+  displayName: ONNX Model Conversion
+  jobs:
+  - template: .github/job_templates/converter_template.yml
+    parameters:
+      name: ONNX_Converter_CPU
+      pool: $(BUILD_POOL_LIN_CPU)
+      customMatrixes:
+        ONNX_CONVERTER:
+          _MODEL_NAMES: $(MODEL_NAMES)
+
+
 - stage: PerformanceTestForCPU
-  displayName: ONNX CPU model Performance Test
-  dependsOn: []
+  displayName: ONNX CPU Model Performance Test
+  dependsOn: ONNXConverterCPU
+  condition: succeeded()
   jobs:
   - template: .github/job_templates/perf_template.yml
     parameters:
@@ -17,8 +30,8 @@ stages:
           DATA_TYPE: int4
 
 - stage: AccuracyTestForCPU
-  displayName: ONNX CPU model Performance Test
-  dependsOn: PerformanceTestForCPU
+  displayName: ONNX CPU Model Accuracy Test
+  dependsOn: ONNXConverterCPU
   condition: succeeded()
   jobs:
   - template: .github/job_templates/accuracy_template.yml
@@ -32,8 +45,8 @@ stages:
           DATA_TYPE: int4
 
 - stage: RAITestForCPU
-  displayName: ONNX CPU model Accuracy Test
-  dependsOn: AccuracyTestForCPU
+  displayName: ONNX CPU Model RAI Test
+  dependsOn: ONNXConverterCPU
   condition: succeeded()
   jobs:
   - template: .github/job_templates/rai_template.yml
@@ -48,10 +61,21 @@ stages:
 
 # CUDA Test
 # ================================
+- stage: ONNXConverterGPU
+  displayName: ONNX Model Conversion
+  jobs:
+  - template: .github/job_templates/converter_template.yml
+    parameters:
+      name: ONNX_Converter_CUDA
+      pool: $(BUILD_POOL_LIN_CPU)
+      customMatrixes:
+        ONNX_CONVERTER:
+          _MODEL_NAMES: $(MODEL_NAMES)
 
 - stage: PerformanceTestForGPU
-  displayName: ONNX GPU model Performance Test
-  dependsOn: []
+  displayName: ONNX GPU Model Performance Test
+  dependsOn: ONNXConverterGPU
+  condition: succeeded()
   jobs:
   - template: .github/job_templates/perf_template.yml
     parameters:
@@ -64,8 +88,8 @@ stages:
           DATA_TYPE: int4
 
 - stage: AccuracyTestForGPU
-  displayName: ONNX GPU model Accuracy Test
-  dependsOn: PerformanceTestForGPU
+  displayName: ONNX GPU Model Accuracy Test
+  dependsOn: ONNXConverterGPU
   condition: succeeded()
   jobs:
   - template: .github/job_templates/accuracy_template.yml
@@ -79,8 +103,8 @@ stages:
           DATA_TYPE: int4
 
 - stage: RAITestForGPU
-  displayName: ONNX GPU model RAI Test
-  dependsOn: AccuracyTestForGPU
+  displayName: ONNX GPU Model RAI Test
+  dependsOn: ONNXConverterGPU
   condition: succeeded()
   jobs:
   - template: .github/job_templates/rai_template.yml
@@ -97,7 +121,7 @@ stages:
 # ================================
 
 - stage: PerformanceTestForTorch
-  displayName: Torch model Performance Test
+  displayName: Torch Model Performance Test
   dependsOn: []
   jobs:
   - template: .github/job_templates/perf_template.yml
@@ -109,7 +133,7 @@ stages:
           _MODEL_NAMES: $(MODEL_NAMES)
 
 - stage: AccuracyTestForTorch
-  displayName: Torch model Accuracy Test
+  displayName: Torch Model Accuracy Test
   dependsOn: PerformanceTestForTorch
   condition: succeeded()
   jobs:
@@ -122,8 +146,8 @@ stages:
           _MODEL_NAMES: $(MODEL_NAMES)
 
 - stage: RAITestForTorch
-  displayName: Torch model RAI Test
-  dependsOn: AccuracyTestForGPU
+  displayName: Torch Model RAI Test
+  dependsOn: AccuracyTestForTorch
   condition: succeeded()
   jobs:
   - template: .github/job_templates/rai_template.yml
