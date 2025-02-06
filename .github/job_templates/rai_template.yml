@@ -23,7 +23,7 @@ jobs:
     condition: startsWith(variables['DEVICE_TYPE'], 'cu')
 
   - script: |
-      modified_model_name=$(echo "$original" | tr '/' '_')
+      modified_model_name=$(echo "$MODEL_NAME" | tr '/' '_')
       azcopy copy "https://sunghchostorageaccount.blob.core.windows.net/test/model_publish/oga_models/$(modified_model_name)/$(DEVICE_TYPE)-int4" --recursive $(Build.BinariesDirectory)/oga_models/
       ls -al $(Build.BinariesDirectory)
 
