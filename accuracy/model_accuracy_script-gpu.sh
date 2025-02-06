@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Import Trunkeyml Base scripts
-./turnkeyml.sh
+source ./turnkeyml.sh
 
 # Install Turnkeyml
 echo "Installed turnkeyllm"

@@ -23,7 +23,7 @@ jobs:
     condition: startsWith(variables['DEVICE_TYPE'], 'cu')
 
   - script: |
-      azcopy copy "https://sunghchostorageaccount.blob.core.windows.net/model_publish/$(MODEL_NAME)" --recursive $(Build.BinariesDirectory)
+      azcopy copy "https://sunghchostorageaccount.blob.core.windows.net/test/model_publish/$(MODEL_NAME)" --recursive $(Build.BinariesDirectory)
     workingDirectory: $(Build.SourcesDirectory)
     displayName: "Download ONNX model from azure blob"
 
