@@ -26,6 +26,7 @@ jobs:
       modified_model_name=$(echo "$original" | tr '/' '_')
       azcopy copy "https://sunghchostorageaccount.blob.core.windows.net/test/model_publish/oga_models/$(modified_model_name)/$(DEVICE_TYPE)-int4" --recursive $(Build.BinariesDirectory)/oga_models/
       ls -al $(Build.BinariesDirectory)
+      echo "Finish downloading the model!!"
     workingDirectory: $(Build.SourcesDirectory)
     displayName: "Download ONNX model from azure blob"
     condition: in(variables['DEVICE_TYPE'], 'cuda', 'cpu')
