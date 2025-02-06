@@ -18,5 +18,3 @@ az login --identity
 echo "print out az account"
 az account show
 
-cd /ort_src
-python ./docker_main.py

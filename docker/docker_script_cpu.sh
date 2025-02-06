@@ -13,6 +13,3 @@ az login --identity
 echo "print out az account"
 az account show
 
-echo "Step 3 - Run the start the backend server"
-cd /ort_src
-python ./docker_main.py

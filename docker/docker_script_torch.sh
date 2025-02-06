@@ -16,6 +16,3 @@ pip install -r reuirements-pytorch.txt
 az login --identity
 echo "print out az account"
 az account show
-
-cd /ort_src
-python ./docker_main_baseline.py

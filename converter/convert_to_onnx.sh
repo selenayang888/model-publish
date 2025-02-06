@@ -7,6 +7,11 @@ source ./turnkeyml.sh
 
 echo "Installed turnkeyllm"
 
+
+# Install huggingface_hub
+pip install huggingface_hub
+
+
 if [[ $DEVICE_TYPE == "cpu" ]]; then
     echo "Running on CPU"
     pip install -e .[llm-oga-cpu]
