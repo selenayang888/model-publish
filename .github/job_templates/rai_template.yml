@@ -23,11 +23,13 @@ jobs:
     condition: startsWith(variables['DEVICE_TYPE'], 'cu')
 
   - script: |
-      modified_model_name=$(echo "$(MODEL_NAME)" | tr '/' '_')
-      azcopy copy "https://sunghchostorageaccount.blob.core.windows.net/test/model_publish/oga_models/$(modified_model_name)/$(DEVICE_TYPE)-int4" --recursive $(Build.BinariesDirectory)/oga_models/
+      modified_model_name=$(echo $(MODEL_NAME) | tr '/' '_')
+
+      echo modified_model_name: $modified_model_name
+      azcopy copy "https://sunghchostorageaccount.blob.core.windows.net/test/model_publish/oga_models/$modified_model_name/$(DEVICE_TYPE)-int4" --recursive $(Build.BinariesDirectory)/oga_models/
       ls -al $(Build.BinariesDirectory)
 
-      echo "https://sunghchostorageaccount.blob.core.windows.net/test/model_publish/oga_models/$(modified_model_name)/$(DEVICE_TYPE)-int4"
+      echo "https://sunghchostorageaccount.blob.core.windows.net/test/model_publish/oga_models/$modified_model_name/$(DEVICE_TYPE)-int4"
       echo "Finish downloading the model!!"
     workingDirectory: $(Build.SourcesDirectory)
     displayName: "Download ONNX model from azure blob"
