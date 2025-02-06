@@ -41,7 +41,7 @@ jobs:
 
   - script: |
       # search for "genai_config.json" under folder "$(Build.BinariesDirectory)/oga_models/"
-      model_config_folder=`find $(Build.BinariesDirectory)/oga_models/ -name genai_config.json -printf "%h\n"`
+      model_config_folder=`find $(Build.BinariesDirectory)/oga_models/${DEVICE_TYPE}-int4 -name genai_config.json -printf "%h\n"`
       
       # verify only one config is found
       num_models=`echo -n "$model_config_folder" | grep -c '^'`
@@ -78,6 +78,6 @@ jobs:
           ptebic.azurecr.io/public/aifx/acpt/stable-ubuntu2004-cu121-py310-torch222:biweekly.202410.2 /bin/bash /ort_src/docker_script_baseline.sh
     workingDirectory: $(Build.SourcesDirectory)
     displayName: "start baseline model endpoint and RAI eval in container"
-    # condition: eq(${{ parameters.run_baseline_model }}, 'true')
+    condition: eq('false' 'true')
 
 
