@@ -15,10 +15,6 @@ jobs:
       ${{ insert }}: ${{parameters.customMatrixes}}
   
   steps:
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: '3.12'
-      architecture: 'x64'
 
   - bash: |
       nvidia-smi

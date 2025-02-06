@@ -13,6 +13,8 @@ stages:
       customMatrixes:
         ONNX_CONVERTER:
           _MODEL_NAMES: $(MODEL_NAMES)
+          DEVICE_TYPE: "cpu"
+          DATA_TYPE: "int4"
 
 - stage: PerformanceTestForCPU
   displayName: ONNX CPU Model Performance Test
@@ -26,8 +28,8 @@ stages:
       customMatrixes:
         CPU_ONNX_PERF:
           _MODEL_NAMES: $(MODEL_NAMES)
-          DEVICE_TYPE: cpu
-          DATA_TYPE: int4
+          DEVICE_TYPE: "cpu"
+          DATA_TYPE: "int4"
 
 - stage: AccuracyTestForCPU
   displayName: ONNX CPU Model Accuracy Test
@@ -41,8 +43,8 @@ stages:
       customMatrixes:
         CPU_ONNX_ACCURACY:
           _MODEL_NAMES: $(MODEL_NAMES)
-          DEVICE_TYPE: cpu
-          DATA_TYPE: int4
+          DEVICE_TYPE: "cpu"
+          DATA_TYPE: "int4"
 
 - stage: RAITestForCPU
   displayName: ONNX CPU Model RAI Test
@@ -56,8 +58,8 @@ stages:
       customMatrixes:
         CPU_ONNX_RAI:
           _MODEL_NAMES: $(MODEL_NAMES)
-          DEVICE_TYPE: cpu
-          DATA_TYPE: int4
+          DEVICE_TYPE: "cpu"
+          DATA_TYPE: "int4"
 
 # CUDA Test
 # ================================
@@ -72,6 +74,8 @@ stages:
       customMatrixes:
         ONNX_CONVERTER:
           _MODEL_NAMES: $(MODEL_NAMES)
+          DEVICE_TYPE: "cuda"
+          DATA_TYPE: "int4"
 
 - stage: PerformanceTestForGPU
   displayName: ONNX GPU Model Performance Test
@@ -85,8 +89,8 @@ stages:
       customMatrixes:
         CPU_ONNX_PERF:
           _MODEL_NAMES: $(MODEL_NAMES)
-          DEVICE_TYPE: cuda
-          DATA_TYPE: int4
+          DEVICE_TYPE: "cuda"
+          DATA_TYPE: "int4"
 
 - stage: AccuracyTestForGPU
   displayName: ONNX GPU Model Accuracy Test
@@ -100,8 +104,8 @@ stages:
       customMatrixes:
         GPU_ONNX_ACCURACY:
           _MODEL_NAMES: $(MODEL_NAMES)
-          DEVICE_TYPE: cuda
-          DATA_TYPE: int4
+          DEVICE_TYPE: "cuda"
+          DATA_TYPE: "int4"
 
 - stage: RAITestForGPU
   displayName: ONNX GPU Model RAI Test
@@ -115,8 +119,8 @@ stages:
       customMatrixes:
         GPU_ONNX_RAI:
           _MODEL_NAMES: $(MODEL_NAMES)
-          DEVICE_TYPE: cuda
-          DATA_TYPE: int4
+          DEVICE_TYPE: "cuda"
+          DATA_TYPE: "int4"
 
 # PyTorch test
 # ================================
