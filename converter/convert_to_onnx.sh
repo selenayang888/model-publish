@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # Import base script
-source ../turnkeyml.sh
+source ./turnkeyml.sh
 
 # TODO: rui-ren adapt for cpu version
 

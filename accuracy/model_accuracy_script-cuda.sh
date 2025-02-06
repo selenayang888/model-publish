@@ -14,6 +14,21 @@ pip install huggingface_hub
 
 echo "Diagnosis:"
 
+
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.1-1_all.deb
+dpkg -i cuda-keyring_1.1-1_all.deb
+
+apt-get update
+apt-get install -y
+apt-get -y install cudnn9-cuda-12
+
+# echo "Step.1 - onnxruntime-genai-cuda"
+# pip install onnxruntime-genai-cuda
+
+pip install huggingface_hub
+
+echo "Diagnosis:"
+
 conda env list
 
 nvcc --version
