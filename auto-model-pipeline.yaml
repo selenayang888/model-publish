@@ -64,7 +64,7 @@ stages:
 # CUDA Test
 # ================================
 - stage: ONNXConverterGPU
-  displayName: ONNX CUDA Model Conversion
+  displayName: ONNX GPU Model Conversion
   dependsOn: []
   jobs:
   - template: .github/job_templates/converter_template.yml
