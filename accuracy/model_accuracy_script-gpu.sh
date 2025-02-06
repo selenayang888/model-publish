@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 # Import Trunkeyml Base scripts
