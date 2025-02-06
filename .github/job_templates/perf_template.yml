@@ -82,7 +82,7 @@ jobs:
           ptebic.azurecr.io/public/aifx/acpt/stable-ubuntu2004-cu121-py310-torch222:biweekly.202410.2 /bin/bash /perf/docker_perf_script-${DEVICE_TYPE}.sh
     workingDirectory: $(Build.SourcesDirectory)
     displayName: "start baseline model endpoint and RAI eval in container"
-    condition: eq(${{ parameters.run_baseline_model }}, 'true')
+    # condition: eq(${{ parameters.run_baseline_model }}, 'true')
 
   - task: AzureCLI@2
     displayName: 'upload model to Blob Storage'
