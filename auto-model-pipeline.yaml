@@ -8,7 +8,7 @@ stages:
   jobs:
   - template: .github/job_templates/perf_template.yml
     parameters:
-      name: ONNX-CPU-Performance-Test
+      name: ONNX_CPU_Performance_Test
       pool: $(BUILD_POOL_LIN_CPU)
       customMatrixes:
         CPU_ONNX_PERF:
@@ -23,7 +23,7 @@ stages:
   jobs:
   - template: .github/job_templates/accuracy_template.yml
     parameters:
-      name: ONNX-CPU-Accuracy-Test
+      name: ONNX_CPU_Accuracy_Test
       pool: $(BUILD_POOL_LIN_CPU)
       customMatrixes:
         CPU_ONNX_ACCURACY:
@@ -38,7 +38,7 @@ stages:
   jobs:
   - template: .github/job_templates/rai_template.yml
     parameters:
-      name: ONNX-CPU-RAI-Test
+      name: ONNX_CPU_RAI_Test
       pool: $(BUILD_POOL_LIN_CPU)
       customMatrixes:
         CPU_ONNX_RAI:
@@ -55,7 +55,7 @@ stages:
   jobs:
   - template: .github/job_templates/perf_template.yml
     parameters:
-      name: ONNX-GPU-Performance-Test
+      name: ONNX_GPU_Performance_Test
       pool: $(BUILD_POOL_LIN_GPU)
       customMatrixes:
         CPU_ONNX_PERF:
@@ -70,7 +70,7 @@ stages:
   jobs:
   - template: .github/job_templates/accuracy_template.yml
     parameters:
-      name: ONNX-GPU-Accuracy-Test
+      name: ONNX_GPU_Accuracy_Test
       pool: $(BUILD_POOL_LIN_GPU)
       customMatrixes:
         GPU_ONNX_ACCURACY:
@@ -85,7 +85,7 @@ stages:
   jobs:
   - template: .github/job_templates/rai_template.yml
     parameters:
-      name: ONNX-GPU-RAI-Test
+      name: ONNX_GPU_RAI_Test
       pool: $(BUILD_POOL_LIN_GPU)
       customMatrixes:
         GPU_ONNX_RAI:
@@ -102,7 +102,7 @@ stages:
   jobs:
   - template: .github/job_templates/perf_template.yml
     parameters:
-      name: Torch-Performance-Test
+      name: Torch_Performance_Test
       pool: $(BUILD_POOL_LIN_GPU)
       customMatrixes:
         GPU_Torch_PERF:
@@ -115,7 +115,7 @@ stages:
   jobs:
   - template: .github/job_templates/accuracy_template.yml
     parameters:
-      name: Torch-Accuracy-Test
+      name: Torch_Accuracy_Test
       pool: $(BUILD_POOL_LIN_GPU)
       customMatrixes:
         GPU_Torch_ACCURACY:
@@ -128,7 +128,7 @@ stages:
   jobs:
   - template: .github/job_templates/rai_template.yml
     parameters:
-      name: Torch-RAI-Test
+      name: Torch_RAI_Test
       pool: $(BUILD_POOL_LIN_GPU)
       customMatrixes:
         GPUT_Torch_RAI:
