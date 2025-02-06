@@ -29,7 +29,7 @@ jobs:
           -e CCACHE_DIR=/cache -w /ort_src \
           -e HF_TOKEN=$(hf_token) \
           -e MODEL_NAME=$(MODEL_NAME) \
-          ptebic.azurecr.io/public/aifx/acpt/stable-ubuntu2004-cu121-py310-torch222:biweekly.202410.2 /bin/bash /converter/convert_to_onnx.sh
+          ptebic.azurecr.io/public/aifx/acpt/stable-ubuntu2004-cu121-py310-torch222:biweekly.202410.2 /bin/bash converter/convert_to_onnx.sh
     env:
       hf_token: $(hf_token)
       MODEL_NAME: $(MODEL_NAME)
