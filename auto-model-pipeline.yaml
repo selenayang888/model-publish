@@ -4,6 +4,7 @@ stages:
 # ================================
 - stage: ONNXConverterCPU
   displayName: ONNX CPU Model Conversion
+  dependsOn: []
   jobs:
   - template: .github/job_templates/converter_template.yml
     parameters:
@@ -12,7 +13,6 @@ stages:
       customMatrixes:
         ONNX_CONVERTER:
           _MODEL_NAMES: $(MODEL_NAMES)
-
 
 - stage: PerformanceTestForCPU
   displayName: ONNX CPU Model Performance Test
@@ -63,6 +63,7 @@ stages:
 # ================================
 - stage: ONNXConverterGPU
   displayName: ONNX CUDA Model Conversion
+  dependsOn: []
   jobs:
   - template: .github/job_templates/converter_template.yml
     parameters:
