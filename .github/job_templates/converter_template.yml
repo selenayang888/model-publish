@@ -48,4 +48,4 @@ jobs:
       scriptType: bash
       inlineScript: |
         cd $(Build.BinariesDirectory)
-        azcopy copy './oga_models' 'https://sunghchostorageaccount.blob.core.windows.net/model_publish/$(MODEL_NAME)' --recursive
+        azcopy copy './oga_models/' 'https://sunghchostorageaccount.blob.core.windows.net/model_publish/$(MODEL_NAME)' --recursive

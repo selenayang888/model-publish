@@ -32,14 +32,15 @@ huggingface-cli download $MODEL_NAME --local-dir /build/oga_models/hf_version/
 echo "Running lemonade command"
 # lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --input_path "/build/phi-4-mini-instruct-01072025/hf_version" --device cuda --dtype int4 accuracy-mmlu --tests management
 
+echo "lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --device $DEVICE_TYPE --dtype $DATA_TYPE"
+
 lemonade -i $MODEL_NAME --cache-dir "/build" oga-load --device $DEVICE_TYPE --dtype $DATA_TYPE
 
 # echo "Copying the model to ort_src"
 
 ls -la "/build/oga_models/"
 
-mkdir /build/oga_models/baseline_model/
-
-ls -la "/build/oga_models/"
+# remove the hf_version and do not upload to the azure blob
+rm -rf /build/oga_models/hf_version
 
 echo "lemonade exported onnx model successfully!"
