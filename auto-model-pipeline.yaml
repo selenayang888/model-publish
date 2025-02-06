@@ -68,7 +68,7 @@ stages:
   - template: .github/job_templates/converter_template.yml
     parameters:
       name: ONNX_Converter_CUDA
-      pool: $(BUILD_POOL_LIN_CPU)
+      pool: $(BUILD_POOL_LIN_GPU)
       customMatrixes:
         ONNX_CONVERTER:
           _MODEL_NAMES: $(MODEL_NAMES)

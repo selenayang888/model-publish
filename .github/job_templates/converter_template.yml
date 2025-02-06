@@ -8,9 +8,11 @@ jobs:
 - job: ${{ parameters.name }}
   timeoutInMinutes: 9000
   cancelTimeoutInMinutes: 200
-  pool: ${{ parameters.pool }}
+  pool: 
+    name: ${{ parameters.pool }}
   strategy:
-    matrix: ${{ parameters.customMatrixes }}
+    matrix:
+      ${{ insert }}: ${{parameters.customMatrixes}}
   
   steps:
   - task: UsePythonVersion@0
