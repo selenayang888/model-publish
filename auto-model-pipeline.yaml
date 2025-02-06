@@ -3,7 +3,7 @@ stages:
 # CPU Test
 # ================================
 - stage: ONNXConverterCPU
-  displayName: ONNX Model Conversion
+  displayName: ONNX CPU Model Conversion
   jobs:
   - template: .github/job_templates/converter_template.yml
     parameters:
@@ -62,7 +62,7 @@ stages:
 # CUDA Test
 # ================================
 - stage: ONNXConverterGPU
-  displayName: ONNX Model Conversion
+  displayName: ONNX CUDA Model Conversion
   jobs:
   - template: .github/job_templates/converter_template.yml
     parameters:
