@@ -28,8 +28,13 @@ jobs:
           --volume $(Build.BinariesDirectory):/build \
           -e CCACHE_DIR=/cache -w /ort_src \
           -e HF_TOKEN=$(hf_token) \
-          -e MODEL_NAME=${{ parameters.model_name }} \
-          ptebic.azurecr.io/public/aifx/acpt/stable-ubuntu2004-cu121-py310-torch222:biweekly.202410.2 /bin/bash /accuracy/docker_export_model-$(DEVICE_TYPE).sh
+          -e MODEL_NAME=$(MODEL_NAME) \
+          ptebic.azurecr.io/public/aifx/acpt/stable-ubuntu2004-cu121-py310-torch222:biweekly.202410.2 /bin/bash /converter/convert_to_onnx.sh
+    env:
+      hf_token: $(hf_token)
+      MODEL_NAME: $(MODEL_NAME)
+      DEVICE_TYPE: $(DEVICE_TYPE)
+      DATA_TYPE: $(DATA_TYPE)
     workingDirectory: $(Build.SourcesDirectory)
     displayName: "Export Onnx model by turnkey"
 
@@ -41,4 +46,4 @@ jobs:
       scriptType: bash
       inlineScript: |
         cd $(Build.BinariesDirectory)
-        azcopy copy './oga_models' 'https://sunghchostorageaccount.blob.core.windows.net/test/${{ parameters.model_name }}' --recursive
+        azcopy copy './oga_models' 'https://sunghchostorageaccount.blob.core.windows.net/test/$(MODEL_NAME)' --recursive
