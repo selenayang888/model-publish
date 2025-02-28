@@ -1,108 +1,165 @@
 
-parameters:
- - name: model_name
-   displayName: mode name on huggingface website
-   type: string
-   default: meta-llama/Llama-3.2-3B-Instruct
+stages:
 
-pool: Onnxruntime-Linux-A10-24G
-jobs:
-- job: Test
-  timeoutInMinutes: 180
-  cancelTimeoutInMinutes: 20
-  steps:
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: '3.10'
-      architecture: 'x64'
+# CPU Test
+# ================================
+- stage: ONNXConverterCPU
+  displayName: ONNX CPU Model Conversion
+  dependsOn: []
+  jobs:
+  - template: .github/job_templates/converter_template.yml
+    parameters:
+      name: ONNX_Converter_CPU
+      pool: $(BUILD_POOL_LIN_CPU)
+      customMatrixes:
+        ONNX_CONVERTER:
+          _MODEL_NAMES: $(MODEL_NAMES)
+          DEVICE_TYPE: "cpu"
+          DATA_TYPE: "int4"
 
-  - bash: |
-      pip install -r llama-requirements.txt
-    displayName: install the necessary packages
-    workingDirectory: $(Build.SourcesDirectory)
+- stage: PerformanceTestForCPU
+  displayName: ONNX CPU Model Performance Test
+  dependsOn: ONNXConverterCPU
+  condition: succeeded()
+  jobs:
+  - template: .github/job_templates/perf_template.yml
+    parameters:
+      name: ONNX_CPU_Performance_Test
+      pool: $(BUILD_POOL_LIN_CPU)
+      customMatrixes:
+        CPU_ONNX_PERF:
+          _MODEL_NAMES: $(MODEL_NAMES)
+          DEVICE_TYPE: "cpu"
+          DATA_TYPE: "int4"
 
-  #  - script: pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge
-  #    displayName: 'upgrade azure cli'
+- stage: AccuracyTestForCPU
+  displayName: ONNX CPU Model Accuracy Test
+  dependsOn: ONNXConverterCPU
+  condition: succeeded()
+  jobs:
+  - template: .github/job_templates/accuracy_template.yml
+    parameters:
+      name: ONNX_CPU_Accuracy_Test
+      pool: $(BUILD_POOL_LIN_CPU)
+      customMatrixes:
+        CPU_ONNX_ACCURACY:
+          _MODEL_NAMES: $(MODEL_NAMES)
+          DEVICE_TYPE: "cpu"
+          DATA_TYPE: "int4"
 
-  #  - script: az --version
-  #    displayName: 'Show Azure CLI version'
+- stage: RAITestForCPU
+  displayName: ONNX CPU Model RAI Test
+  dependsOn: ONNXConverterCPU
+  condition: succeeded()
+  jobs:
+  - template: .github/job_templates/rai_template.yml
+    parameters:
+      name: ONNX_CPU_RAI_Test
+      pool: $(BUILD_POOL_LIN_CPU)
+      customMatrixes:
+        CPU_ONNX_RAI:
+          _MODEL_NAMES: $(MODEL_NAMES)
+          DEVICE_TYPE: "cpu"
+          DATA_TYPE: "int4"
 
-  #  - script: |
-  #       python -c "with open('hello.txt', 'w') as f:f.write('hello world')"
-  #       azcopy cp --recursive "./hello.txt" 'https://sunghchostorageaccount.blob.core.windows.net/test'
-  #       ls
-  #    displayName: 'try azcopy upload to sun blob'
+# CUDA Test
+# ================================
+- stage: ONNXConverterGPU
+  displayName: ONNX GPU Model Conversion
+  dependsOn: []
+  jobs:
+  - template: .github/job_templates/converter_template.yml
+    parameters:
+      name: ONNX_Converter_CUDA
+      pool: $(BUILD_POOL_LIN_GPU)
+      customMatrixes:
+        ONNX_CONVERTER:
+          _MODEL_NAMES: $(MODEL_NAMES)
+          DEVICE_TYPE: "cuda"
+          DATA_TYPE: "int4"
 
+- stage: PerformanceTestForGPU
+  displayName: ONNX GPU Model Performance Test
+  dependsOn: ONNXConverterGPU
+  condition: succeeded()
+  jobs:
+  - template: .github/job_templates/perf_template.yml
+    parameters:
+      name: ONNX_GPU_Performance_Test
+      pool: $(BUILD_POOL_LIN_GPU)
+      customMatrixes:
+        CPU_ONNX_PERF:
+          _MODEL_NAMES: $(MODEL_NAMES)
+          DEVICE_TYPE: "cuda"
+          DATA_TYPE: "int4"
 
-  #  - script: |
-  #      az account list
-  #      python -c "with open('hello-test.txt', 'w') as f:f.write('hello world')"
-  #      azcopy cp --recursive "./hello-test.txt" 'https://sunghchostorageaccount.blob.core.windows.net/test'
-  #      az ml data create --name testfile --version 1 --path './hello-test.txt' --registry-name model-publish-test --description "test file"
-  #    displayName: "try upload to AzureML"
+- stage: AccuracyTestForGPU
+  displayName: ONNX GPU Model Accuracy Test
+  dependsOn: ONNXConverterGPU
+  condition: succeeded()
+  jobs:
+  - template: .github/job_templates/accuracy_template.yml
+    parameters:
+      name: ONNX_GPU_Accuracy_Test
+      pool: $(BUILD_POOL_LIN_GPU)
+      customMatrixes:
+        GPU_ONNX_ACCURACY:
+          _MODEL_NAMES: $(MODEL_NAMES)
+          DEVICE_TYPE: "cuda"
+          DATA_TYPE: "int4"
 
+- stage: RAITestForGPU
+  displayName: ONNX GPU Model RAI Test
+  dependsOn: ONNXConverterGPU
+  condition: succeeded()
+  jobs:
+  - template: .github/job_templates/rai_template.yml
+    parameters:
+      name: ONNX_GPU_RAI_Test
+      pool: $(BUILD_POOL_LIN_GPU)
+      customMatrixes:
+        GPU_ONNX_RAI:
+          _MODEL_NAMES: $(MODEL_NAMES)
+          DEVICE_TYPE: "cuda"
+          DATA_TYPE: "int4"
 
+# PyTorch test
+# ================================
 
-  - bash: |
-      echo Authenticate with Huggingface repository 
+- stage: PerformanceTestForTorch
+  displayName: Torch Model Performance Test
+  dependsOn: []
+  jobs:
+  - template: .github/job_templates/perf_template.yml
+    parameters:
+      name: Torch_Performance_Test
+      pool: $(BUILD_POOL_LIN_GPU)
+      customMatrixes:
+        GPU_Torch_PERF:
+          _MODEL_NAMES: $(MODEL_NAMES)
 
-      huggingface-cli login --token $(hf_token)
+- stage: AccuracyTestForTorch
+  displayName: Torch Model Accuracy Test
+  dependsOn: PerformanceTestForTorch
+  condition: succeeded()
+  jobs:
+  - template: .github/job_templates/accuracy_template.yml
+    parameters:
+      name: Torch_Accuracy_Test
+      pool: $(BUILD_POOL_LIN_GPU)
+      customMatrixes:
+        GPU_Torch_ACCURACY:
+          _MODEL_NAMES: $(MODEL_NAMES)
 
-    displayName: "Authentication to Huggingface repo" 
-
-  - bash: |
-      pip list 
-    displayName: "dump pip list"
-
-
-  #- bash: |
-  #   nvidia-smi
-  #  displayName: "dump nvidia-smi"
-
-  - script: | 
-
-      python $(Build.SourcesDirectory)/llama_model_builder.py --model_name '${{ parameters.model_name }}' --output_dir '$(Build.BinariesDirectory)'
-
-    displayName: "Convert Huggingface model to ONNX model"
-      
-    workingDirectory: $(Build.SourcesDirectory)
-
-  - task: AzureCLI@2
-    displayName: 'upload model to Blob Storage'
-    inputs:
-      azureSubscription: AIInfraBuild
-      scriptLocation: inlineScript
-      scriptType: bash
-      inlineScript: |
-        cd $(Build.BinariesDirectory)
-        azcopy copy './models/${{ parameters.model_name }}/output_model/model' 'https://sunghchostorageaccount.blob.core.windows.net/test' --recursive
-
-
-  - task: AzureCLI@2
-    displayName: 'upload model to AzureML registry'
-    inputs:
-      azureSubscription: AIInfraBuild
-      scriptLocation: inlineScript
-      scriptType: bash
-      inlineScript: |
-        cd $(Build.BinariesDirectory)
-        az extension add -n ml -y
-        az extension list
-        az account list
-        az ml data create --name llama32-3b-instruct-for-test-only --version 1 --path './models/${{ parameters.model_name }}/output_model/model' --registry-name model-publish-test --description "llama3.2-3b-instruct-test-only from pipeline"
-
-
-  #- bash: |
-  #    pip install fastapi
-  #    pip install uvicorn
-  #    pip install onnxruntime-genai-cuda
-
-  #  displayName: install fastapi packages
-
-  #- script: | 
-
-  #    uvicorn main:app --reload
-
-  #  displayName: "Start model endpoint"
-      
-  #  workingDirectory: $(Build.SourcesDirectory)
+- stage: RAITestForTorch
+  displayName: Torch Model RAI Test
+  dependsOn: AccuracyTestForTorch
+  condition: succeeded()
+  jobs:
+  - template: .github/job_templates/rai_template.yml
+    parameters:
+      name: Torch_RAI_Test
+      pool: $(BUILD_POOL_LIN_GPU)
+      customMatrixes:
+        GPUT_Torch_RAI:
+          _MODEL_NAMES: $(MODEL_NAMES)

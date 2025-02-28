@@ -1,0 +1,93 @@
+
+parameters:
+  name: ''
+  pool: ''
+  customMatrixes: ''  
+
+
+jobs:
+- job: ${{ parameters.name }}
+  timeoutInMinutes: 9000
+  cancelTimeoutInMinutes: 200
+  pool: 
+    name: ${{ parameters.pool }}
+  strategy:
+    matrix:
+      ${{ insert }}: ${{parameters.customMatrixes}}
+  
+  steps:
+  
+  - bash: |
+      nvidia-smi
+    displayName: "dump nvidia-smi"
+    condition: startsWith(variables['DEVICE_TYPE'], 'cu')
+
+  - script: |
+      modified_model_name=$(echo $(MODEL_NAME) | tr '/' '_')
+
+      echo modified_model_name: $modified_model_name
+      azcopy copy "https://sunghchostorageaccount.blob.core.windows.net/test/model_publish/oga_models/$modified_model_name/$(DEVICE_TYPE)-int4" --recursive $(Build.BinariesDirectory)/oga_models/
+      ls -al $(Build.BinariesDirectory)
+
+      echo "https://sunghchostorageaccount.blob.core.windows.net/test/model_publish/oga_models/$modified_model_name/$(DEVICE_TYPE)-int4"
+      echo "Finish downloading the model!!"
+    workingDirectory: $(Build.SourcesDirectory)
+    displayName: "Download ONNX model from azure blob"
+    condition: in(variables['DEVICE_TYPE'], 'cuda', 'cpu')
+
+  - bash: |
+      echo "Processing checkpoint"
+      checkpoint="${{ parameters.model_name }}"
+      formatted_checkpoint=$(echo "$checkpoint" | tr '/' '_' | tr '[:upper:]' '[:lower:]')
+      formatted_name=$(echo "$formatted_checkpoint" | tr '.' '_' | tr '[:upper:]' '[:lower:]')
+      echo "##vso[task.setvariable variable=formatted_checkpoint]$formatted_checkpoint"
+      echo "##vso[task.setvariable variable=formatted_name]$formatted_name"
+      echo "Formatted checkpoint: $formatted_checkpoint"
+      echo "Formatted name: $formatted_name"
+    displayName: "Process checkpoint"
+
+
+  - script: |
+      # search for "genai_config.json" under folder "$(Build.BinariesDirectory)"
+      model_config_folder=`find $(Build.BinariesDirectory)/oga_models/ -name genai_config.json -printf "%h\n"`
+      ls
+      # verify only one config is found
+      # num_models=`echo -n "$model_config_folder" | grep -c '^'`
+      # if [[ $num_models -ne 1 ]]; then
+      #   echo "The output model folder should contains exactly one genai_config.json file, but found $num_models"
+      #   exit 1
+      # fi
+
+      # echo "model folder: $model_config_folder"
+      
+      # docker run --gpus all --rm \
+      #     --ipc=host \
+      #     --volume $(Build.SourcesDirectory):/ort_src \
+      #     --volume $(Build.BinariesDirectory):/build \
+      #     --volume $model_config_folder:/model \
+      #     -p 8000:8000 \
+      #     -e CCACHE_DIR=/cache -w /ort_src \
+      #     ptebic.azurecr.io/public/aifx/acpt/stable-ubuntu2004-cu121-py310-torch222:biweekly.202410.2 /bin/bash /RAI/rai_script.sh
+      ls $(Build.BinariesDirectory)
+    workingDirectory: $(Build.SourcesDirectory)
+    displayName: "start onnx model endpoint and RAI eval in container"
+
+  - script: |
+      baseline_model_folder=`find $(Build.BinariesDirectory)/oga_models/ -name config.json -printf "%h\n"`
+
+      echo "baseline_model folder: $baseline_model_folder"
+      
+      docker run --gpus all --rm \
+          --ipc=host \
+          --volume $(Build.SourcesDirectory):/ort_src \
+          --volume $(Build.BinariesDirectory):/build \
+          --volume $baseline_model_folder:/baseline_model \
+          -p 8000:8000 \
+          -e CCACHE_DIR=/cache -w /ort_src \
+          ptebic.azurecr.io/public/aifx/acpt/stable-ubuntu2004-cu121-py310-torch222:biweekly.202410.2 /bin/bash /ort_src/docker_script_baseline.sh
+    workingDirectory: $(Build.SourcesDirectory)
+    displayName: "start baseline model endpoint and RAI eval in container"
+    condition: eq(variables['DEVICE_TYPE'], 'torch')
+
+
+

@@ -1,0 +1,12 @@
+# backend server
+fastapi==0.115.8
+uvicorn==0.34.0
+
+# runtime engine
+onnxruntime-genai-cuda==0.6.0rc1
+
+# Azure AI
+azure-cli --pre --extra-index-url=https://azurecliprod.blob.core.windows.net/edge
+azure-ai-evaluation
+promptflow-azure 
+marshmallow==3.23.2

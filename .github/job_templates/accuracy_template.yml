@@ -1,0 +1,40 @@
+parameters:
+  name: ''
+  pool: ''
+  customMatrixes: ''  
+
+
+jobs:
+- job: ${{ parameters.name }}
+  timeoutInMinutes: 9000
+  cancelTimeoutInMinutes: 200
+  pool: 
+    name: ${{ parameters.pool }}
+  strategy:
+    matrix:
+      ${{ insert }}: ${{parameters.customMatrixes}}
+  
+  steps:
+  - bash: |
+      nvidia-smi
+    displayName: "dump nvidia-smi"
+    condition: startsWith(variables['DEVICE_TYPE'], 'cu')
+
+  - script: |
+
+      # modified_model_name=$(echo "$MODEL_NAME" | tr '/' '_')
+      azcopy copy "https://sunghchostorageaccount.blob.core.windows.net/test/model_publish/$(MODEL_NAME)" --recursive $(Build.BinariesDirectory)
+    workingDirectory: $(Build.SourcesDirectory)
+    displayName: "Download ONNX model from azure blob"
+
+  - script: |
+      docker run --gpus all --rm \
+          --ipc=host \
+          --volume $(Build.SourcesDirectory):/ort_src \
+          --volume $(Build.BinariesDirectory):/build \
+          -e CCACHE_DIR=/cache -w /ort_src \
+          -e HF_TOKEN=$(hf_token) \
+          -e MODEL_NAME=$(MODEL_NAME) \
+          ptebic.azurecr.io/public/aifx/acpt/stable-ubuntu2004-cu121-py310-torch222:biweekly.202410.2 /bin/bash accuracy/model_accuracy_script-$(DEVICE_TYPE).sh
+    workingDirectory: $(Build.SourcesDirectory)
+    displayName: "Calculate Accuracy for Onnx model using turnkey"
