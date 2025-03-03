@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 def get_logger(name: str):
     """
     Return logger instance with given name
