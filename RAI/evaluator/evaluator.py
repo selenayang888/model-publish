@@ -29,14 +29,14 @@ async def async_main_evaluator(rai_target_name: str, baseline_only=False):
     path = str(pathlib.Path(pathlib.Path.cwd())) + f"/outputs_{rai_target_name}.jsonl"
 
     Evaluator = EVALUATOR_CLASSES["rai_target_name"]
-    eci_evaluator = Evaluator(azure_ai_project=azure_ai_project, credential=credential)
+    rai_evaluator = Evaluator(azure_ai_project=azure_ai_project, credential=credential)
 
     randomNum = random.randint(1111, 9999)
     results = evaluate(
         evaluation_name="Eval-Run-" + str(randomNum) + "-" + model.title(),
         data=path,
         evaluators={
-            f"{rai_target_name}": Evaluator,
+            f"{rai_target_name}": rai_evaluator,
         },
         evaluator_config={
             f"{rai_target_name}": {

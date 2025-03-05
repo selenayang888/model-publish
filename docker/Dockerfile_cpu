@@ -1,0 +1,26 @@
+# Build Docker image for model publish pipeline
+FROM ptebic.azurecr.io/public/aifx/acpt/stable-ubuntu2004-cu121-py310-torch24x:biweekly.202502.2
+
+
+# Update python version
+RUN conda install python=3.12
+
+# Update the gcc version
+RUN apt install build-essential manpages-dev software-properties-common \
+    add-apt-repository ppa:ubuntu-toolchain-r/test \
+    apt update && sudo apt install gcc-11 g++-11 \
+    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 100 \
+    update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 100
+
+# Update the cudnn
+RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.1-1_all.deb \
+    dpkg -i cuda-keyring_1.1-1_all.deb \
+    apt-get update \
+	apt-get install -y \
+	apt-get -y install cudnn9-cuda-12 \
+    rm -rf cuda-keyring_1.1-1_all.deb
+
+# Install the dependencies
+RUN pip install --upgrade pip
+
+
