@@ -10,6 +10,10 @@ apt-get -y install cudnn9-cuda-12
 
 
 echo "Step.1 - installing fastapi uvicorn onnxruntime-genai-cuda"
+
+# TODO: install azure-cognitiveservices-speech
+pip install azure-cognitiveservices-speech
+
 # TODO: update the package
 pip install fastapi uvicorn onnxruntime-genai-cuda==0.6.0rc1
 

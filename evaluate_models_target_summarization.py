@@ -7,7 +7,7 @@ import random
 import json
 
 from azure.ai.evaluation.simulator import AdversarialSimulator
-from azure.identity import DefaultAzureCredential, get_bearer_token_provider
+from azure.identity import AzureCliCredential, get_bearer_token_provider
 from app_target import ModelEndpoints
 from azure.ai.evaluation.simulator import AdversarialScenario
 from pathlib import Path
@@ -18,6 +18,11 @@ from azure.ai.evaluation import evaluate
 from azure.ai.evaluation import (
     ContentSafetyEvaluator,
 )
+
+import logging
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 # %%
 env_var = {
@@ -33,7 +38,7 @@ azure_ai_project = {
     "resource_group_name": "yangselenaai",
     "project_name": "azure_ai_studio_sdk",
 }
-credential = DefaultAzureCredential()
+credential = AzureCliCredential()
 
 
 # %%
@@ -71,6 +76,8 @@ async def callback(
 
 # %%
 async def async_main_summarization(baseline_only=False):
+
+    logger.info("Starting my_async_function")
 
     scenario = AdversarialScenario.ADVERSARIAL_SUMMARIZATION
     adversarial_simulator = AdversarialSimulator(
@@ -140,5 +147,5 @@ async def async_main_summarization(baseline_only=False):
         with Path.open("/baseline_model/rai_summarization_result.json", "w") as f:
             f.write(json_result)
     else:
-        with Path.open("/model/rai_summarization_result.json", "w") as f:
+        with Path.open("./rai_summarization_result.json", "w") as f:
             f.write(json_result)

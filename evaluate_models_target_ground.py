@@ -143,5 +143,5 @@ async def async_main_ground(baseline_only=False):
         with Path.open("/baseline_model/rai_ground_result.json", "w") as f:
             f.write(json_result)
     else:
-        with Path.open("/model/rai_ground_result.json", "w") as f:
+        with Path.open("./rai_ground_result.json", "w") as f:
             f.write(json_result)

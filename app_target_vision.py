@@ -14,7 +14,7 @@ class ModelEndpoints:
         response: str
 
     @trace
-    def __call__(self: Self, question: str) -> Response:
+    def __call__(self: Self, question: list[dict]) -> Response:
         #self.model_type == "onnx-model":
         output = self.call_onnx_endpoint(question)
         return output
@@ -23,7 +23,7 @@ class ModelEndpoints:
         response = requests.post(url=endpoint, headers=headers, json=payload)
         return response.json()
 
-    def call_onnx_endpoint(self: Self, question: str) -> Response:
+    def call_onnx_endpoint(self: Self, question: list[dict]) -> Response:
         endpoint = self.env["onnx-model"]["endpoint"]
         key = self.env["onnx-model"]["key"]
 
@@ -31,24 +31,10 @@ class ModelEndpoints:
         #headers = {"Content-Type": "application/json"}
 
         #payload = {"messages": [{"role": "user", "content": question}], "max_tokens": 500}
-        payload = {"text": question}
-        
+
+        payload = {"request": question}
+
         output = self.query(endpoint=endpoint, headers=headers, payload=payload)
         #answer = output["choices"][0]["message"]["content"]
         answer = output["response"]
         return {"query": question, "response": answer}
-
-    def call_onnx_audio_endpoint(self: Self, question: str, audio: str) -> Response:
-        endpoint = self.env["onnx-model"]["endpoint"]
-        key = self.env["onnx-model"]["key"]
-
-        headers = {"Content-Type": "application/json", "api-key": key}
-        #headers = {"Content-Type": "application/json"}
-
-        #payload = {"messages": [{"role": "user", "content": question}], "max_tokens": 500}
-        payload = {"text": question, "audios_paths": audio}
-        
-        output = self.query(endpoint=endpoint, headers=headers, payload=payload)
-        #answer = output["choices"][0]["message"]["content"]
-        answer = output["response"]
-        return {"query": question, "audio": audio, "response": answer}

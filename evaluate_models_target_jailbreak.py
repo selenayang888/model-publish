@@ -146,7 +146,7 @@ async def async_main_jailbreak(baseline_only=False):
         with Path.open("/baseline_model/rai_jailbreak_result.json", "w") as f:
             f.write(json_result)
     else:
-        with Path.open("/model/rai_jailbreak_result.json", "w") as f:
+        with Path.open("./rai_jailbreak_result.json", "w") as f:
             f.write(json_result)
 
     # with Path.open("/model/rai_jailbreak_result.json", "w") as f:

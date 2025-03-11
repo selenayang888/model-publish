@@ -20,17 +20,20 @@ tokenizer_stream = processor.create_stream()
 print("The model is loaded!!")
 
 # Set the search options
-search_options = {"max_length": 4096}
+search_options = {"max_length": 2048}
 
 
 # Define the input schema
 class InputData(BaseModel):
-    text: str
+    # text: str
+    audios_paths: str
 
 
 @app.post("/score")
 async def score(input_data: InputData):
-    text = input_data.text
+    # text = input_data.text
+    text = None
+    audios_paths = input_data.audios_paths
 
     print("### main.py: start run")
     # The chat template needs to update later.
@@ -38,9 +41,25 @@ async def score(input_data: InputData):
 
     prompt = "<|user|>\n"
 
+    # Get audios
+    if len(audios_paths) == 0:
+        print("No audio provided")
+    else:
+        if not os.path.exists(audios_paths):
+            raise FileNotFoundError(f"Audio file not found: {audios_paths}")
+            print(f"Using audio: {audios_paths}")
+        
+        prompt += f"<|audio_1|>\n"
+        audios = og.Audios.open(audios_paths)
+
+    # Get Text
+    text = None
+
     prompt += f"{text}<|end|>\n<|assistant|>\n"
 
-    inputs = processor(prompt, images=None, audios=None)
+    audios = og.Audios.open(audios_paths)
+
+    inputs = processor(prompt, images=None, audios=audios)
     output_text = ""
 
     params = og.GeneratorParams(model)
